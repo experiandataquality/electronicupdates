@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MetadataWebApi", "MetadataWebApi\MetadataWebApi.vbproj", "{81340D5E-B260-4F26-B641-D13F9DBBB877}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{76514EA6-0412-4E0B-A583-3F2FA29C8C4F}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\.gitattributes = ..\..\.gitattributes
+		..\..\.gitignore = ..\..\.gitignore
+		Build.cmd = Build.cmd
+		Experian.ico = Experian.ico
+		FxCopDictionary.xml = FxCopDictionary.xml
+		..\..\LICENSE = ..\..\LICENSE
+		license.txt = license.txt
+		MetadataWebApi.msbuild = MetadataWebApi.msbuild
+		MetadataWebApi.ruleset = MetadataWebApi.ruleset
+		MetadataWebApi.snk = MetadataWebApi.snk
+		MetadataWebApi.targets = MetadataWebApi.targets
+		..\..\README.md = ..\..\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{4CE36FD6-8EB7-493B-9F96-5600E68DB138}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{F96E8573-965E-4D1B-92CF-C9CD95E958CF}"
+	ProjectSection(SolutionItems) = preProject
+		Tools\NuGet\NuGet.config = Tools\NuGet\NuGet.config
+		Tools\NuGet\NuGet.exe = Tools\NuGet\NuGet.exe
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81340D5E-B260-4F26-B641-D13F9DBBB877}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81340D5E-B260-4F26-B641-D13F9DBBB877}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81340D5E-B260-4F26-B641-D13F9DBBB877}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81340D5E-B260-4F26-B641-D13F9DBBB877}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4CE36FD6-8EB7-493B-9F96-5600E68DB138} = {76514EA6-0412-4E0B-A583-3F2FA29C8C4F}
+		{F96E8573-965E-4D1B-92CF-C9CD95E958CF} = {4CE36FD6-8EB7-493B-9F96-5600E68DB138}
+	EndGlobalSection
+EndGlobal

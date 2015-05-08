@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- MSBuild Targets file containing common MSBuild properties for the MetadataWebApi solution -->
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>$(SolutionDir)MetadataWebApi.snk</AssemblyOriginatorKeyFile>
+    <CodeAnalysisRuleSet>$(SolutionDir)MetadataWebApi.ruleset</CodeAnalysisRuleSet>
+    <DefineConstants>$(DefineConstants);CODE_ANALYSIS</DefineConstants>
+    <HighEntropyVA>true</HighEntropyVA>
+    <RestorePackages>true</RestorePackages>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(BuildingInsideVisualStudio)' != 'true'">
+    <CodeAnalysisTreatWarningsAsErrors Condition="'$(CodeAnalysisTreatWarningsAsErrors)' == ''">true</CodeAnalysisTreatWarningsAsErrors>
+    <TreatWarningsAsErrors Condition="'$(TreatWarningsAsErrors)' == ''">true</TreatWarningsAsErrors>
+  </PropertyGroup>
+</Project>
