@@ -43,6 +43,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{137CD29F
 		Tools\NuGet\NuGet.exe = Tools\NuGet\NuGet.exe
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetadataWebApi.Tests", "MetadataWebApi.Tests\MetadataWebApi.Tests.csproj", "{6574A1FC-DE2A-47E7-B30D-B042DD00891D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0744A245-D39F-4355-839A-5ACB481187E0}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +60,10 @@ Global
 		{B3A7B441-933E-49CF-B567-EF9D6C8333E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3A7B441-933E-49CF-B567-EF9D6C8333E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3A7B441-933E-49CF-B567-EF9D6C8333E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6574A1FC-DE2A-47E7-B30D-B042DD00891D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6574A1FC-DE2A-47E7-B30D-B042DD00891D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6574A1FC-DE2A-47E7-B30D-B042DD00891D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6574A1FC-DE2A-47E7-B30D-B042DD00891D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

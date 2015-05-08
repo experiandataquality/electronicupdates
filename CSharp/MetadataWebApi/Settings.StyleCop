@@ -3,11 +3,21 @@
     <Parser ParserId="StyleCop.CSharp.CsParser">
       <ParserSettings>
         <BooleanProperty Name="AnalyzeDesignerFiles">False</BooleanProperty>
+        <CollectionProperty Name="GeneratedFileFilters">
+          <Value>\\TemporaryGeneratedFile_.+\.cs$</Value>
+        </CollectionProperty>
       </ParserSettings>
     </Parser>
   </Parsers>
   <Analyzers>
     <Analyzer AnalyzerId="StyleCop.CSharp.DocumentationRules">
+      <Rules>
+        <Rule Name="ElementsMustBeDocumented">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+      </Rules>
       <AnalyzerSettings>
         <StringProperty Name="Copyright">Copyright (c) Experian. All rights reserved.</StringProperty>
         <StringProperty Name="CompanyName">Experian Data Quality</StringProperty>
@@ -59,13 +69,4 @@
       <AnalyzerSettings />
     </Analyzer>
   </Analyzers>
-  <Parsers>
-    <Parser ParserId="StyleCop.CSharp.CsParser">
-      <ParserSettings>
-        <CollectionProperty Name="GeneratedFileFilters">
-          <Value>\\TemporaryGeneratedFile_.+\.cs$</Value>
-        </CollectionProperty>
-      </ParserSettings>
-    </Parser>
-  </Parsers>
 </StyleCopSettings>

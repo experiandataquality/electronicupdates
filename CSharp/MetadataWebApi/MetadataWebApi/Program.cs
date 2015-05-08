@@ -32,120 +32,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
 
             try
             {
-                // Get the configuration settings for downloading files
-                string downloadRootPath = MetadataApiFactory.GetAppSetting("DownloadRootPath");
-                string verifyDownloadsString = MetadataApiFactory.GetAppSetting("ValidateDownloads");
-
-                bool verifyDownloads;
-
-                if (!bool.TryParse(verifyDownloadsString, out verifyDownloads))
-                {
-                    verifyDownloads = true;
-                }
-
-                if (string.IsNullOrEmpty(downloadRootPath))
-                {
-                    downloadRootPath = "QASData";
-                }
-
-                downloadRootPath = Path.GetFullPath(downloadRootPath);
-
-                // Create the service implementation
-                IMetadataApiFactory factory = new MetadataApiFactory();
-                IMetadataApi service = factory.CreateMetadataApi();
-
-                Console.WriteLine("QAS Electronic Updates Metadata REST API: {0}", service.ServiceUri);
-                Console.WriteLine();
-                Console.WriteLine("User Name: {0}", service.UserName);
-                Console.WriteLine();
-
-                // Query the packages available to the account
-                AvailablePackagesReply response = service.GetAvailablePackagesAsync().Result;
-
-                Console.WriteLine("Available Package Groups:");
-                Console.WriteLine();
-
-                // Enumerate the package groups and list their packages and files
-                if (response.PackageGroups != null && response.PackageGroups.Count > 0)
-                {
-                    using (CancellationTokenSource tokenSource = new CancellationTokenSource())
-                    {
-                        // Cancel the tasks if Ctrl+C is entered to the console
-                        Console.CancelKeyPress += (sender, e) =>
-                        {
-                            if (!tokenSource.IsCancellationRequested)
-                            {
-                                tokenSource.Cancel();
-                            }
-
-                            e.Cancel = true;
-                        };
-
-                        try
-                        {
-                            List<Task> downloadTasks = new List<Task>();
-
-                            Stopwatch stopwatch = Stopwatch.StartNew();
-
-                            // Create a file store in which to cache information about which files
-                            // have already been downloaded from the Metadata API service.
-                            using (IFileStore fileStore = new LocalFileStore())
-                            {
-                                foreach (PackageGroup group in response.PackageGroups)
-                                {
-                                    Console.WriteLine("Group Name: {0} ({1})", group.PackageGroupCode, group.Vintage);
-                                    Console.WriteLine();
-                                    Console.WriteLine("Packages:");
-                                    Console.WriteLine();
-
-                                    foreach (Package package in group.Packages)
-                                    {
-                                        Console.WriteLine("Package Name: {0}", package.PackageCode);
-                                        Console.WriteLine();
-                                        Console.WriteLine("Files:");
-                                        Console.WriteLine();
-
-                                        foreach (DataFile file in package.Files)
-                                        {
-                                            if (fileStore.ContainsFile(file.MD5Hash))
-                                            {
-                                                // We already have this file, download not required
-                                                Console.WriteLine("File with hash '{0}' already downloaded.", file.MD5Hash);
-                                                continue;
-                                            }
-
-                                            // Queue each file to download asynchronously
-                                            Task task = DownloadFileAsync(service, fileStore, group, file, downloadRootPath, verifyDownloads, tokenSource.Token);
-                                            downloadTasks.Add(task);
-                                        }
-
-                                        Console.WriteLine();
-                                    }
-
-                                    Console.WriteLine();
-                                }
-                            }
-
-                            // Wait for all of the tasks to download files to complete
-                            Task.WaitAll(downloadTasks.ToArray(), tokenSource.Token);
-
-                            stopwatch.Stop();
-                            Console.WriteLine("Downloaded data in {0:hh\\:mm\\:ss}.", stopwatch.Elapsed);
-                        }
-                        catch (OperationCanceledException ex)
-                        {
-                            // Only an error if not cancelled by the user
-                            if (ex.CancellationToken != tokenSource.Token)
-                            {
-                                throw;
-                            }
-
-                            Console.WriteLine("File download cancelled by user.");
-                        }
-
-                        Console.WriteLine();
-                    }
-                }
+                MainInternal();
             }
             catch (Exception ex)
             {
@@ -154,6 +41,127 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
 
             Console.Write("Press any key to exit...");
             Console.ReadKey();
+        }
+
+        /// <summary>
+        /// Downloads the available data files from the QAS Electronic Updates Metadata REST API.
+        /// </summary>
+        internal static void MainInternal()
+        {
+            // Get the configuration settings for downloading files
+            string downloadRootPath = MetadataApiFactory.GetAppSetting("DownloadRootPath");
+            string verifyDownloadsString = MetadataApiFactory.GetAppSetting("ValidateDownloads");
+
+            bool verifyDownloads;
+
+            if (!bool.TryParse(verifyDownloadsString, out verifyDownloads))
+            {
+                verifyDownloads = true;
+            }
+
+            if (string.IsNullOrEmpty(downloadRootPath))
+            {
+                downloadRootPath = "QASData";
+            }
+
+            downloadRootPath = Path.GetFullPath(downloadRootPath);
+
+            // Create the service implementation
+            IMetadataApiFactory factory = new MetadataApiFactory();
+            IMetadataApi service = factory.CreateMetadataApi();
+
+            Console.WriteLine("QAS Electronic Updates Metadata REST API: {0}", service.ServiceUri);
+            Console.WriteLine();
+            Console.WriteLine("User Name: {0}", service.UserName);
+            Console.WriteLine();
+
+            // Query the packages available to the account
+            AvailablePackagesReply response = service.GetAvailablePackagesAsync().Result;
+
+            Console.WriteLine("Available Package Groups:");
+            Console.WriteLine();
+
+            // Enumerate the package groups and list their packages and files
+            if (response.PackageGroups != null && response.PackageGroups.Count > 0)
+            {
+                using (CancellationTokenSource tokenSource = new CancellationTokenSource())
+                {
+                    // Cancel the tasks if Ctrl+C is entered to the console
+                    Console.CancelKeyPress += (sender, e) =>
+                    {
+                        if (!tokenSource.IsCancellationRequested)
+                        {
+                            tokenSource.Cancel();
+                        }
+
+                        e.Cancel = true;
+                    };
+
+                    try
+                    {
+                        List<Task> downloadTasks = new List<Task>();
+
+                        Stopwatch stopwatch = Stopwatch.StartNew();
+
+                        // Create a file store in which to cache information about which files
+                        // have already been downloaded from the Metadata API service.
+                        using (IFileStore fileStore = new LocalFileStore())
+                        {
+                            foreach (PackageGroup group in response.PackageGroups)
+                            {
+                                Console.WriteLine("Group Name: {0} ({1})", group.PackageGroupCode, group.Vintage);
+                                Console.WriteLine();
+                                Console.WriteLine("Packages:");
+                                Console.WriteLine();
+
+                                foreach (Package package in group.Packages)
+                                {
+                                    Console.WriteLine("Package Name: {0}", package.PackageCode);
+                                    Console.WriteLine();
+                                    Console.WriteLine("Files:");
+                                    Console.WriteLine();
+
+                                    foreach (DataFile file in package.Files)
+                                    {
+                                        if (fileStore.ContainsFile(file.MD5Hash))
+                                        {
+                                            // We already have this file, download not required
+                                            Console.WriteLine("File with hash '{0}' already downloaded.", file.MD5Hash);
+                                            continue;
+                                        }
+
+                                        // Queue each file to download asynchronously
+                                        Task task = DownloadFileAsync(service, fileStore, group, file, downloadRootPath, verifyDownloads, tokenSource.Token);
+                                        downloadTasks.Add(task);
+                                    }
+
+                                    Console.WriteLine();
+                                }
+
+                                Console.WriteLine();
+                            }
+                        }
+
+                        // Wait for all of the tasks to download files to complete
+                        Task.WaitAll(downloadTasks.ToArray(), tokenSource.Token);
+
+                        stopwatch.Stop();
+                        Console.WriteLine("Downloaded data in {0:hh\\:mm\\:ss}.", stopwatch.Elapsed);
+                    }
+                    catch (OperationCanceledException ex)
+                    {
+                        // Only an error if not cancelled by the user
+                        if (ex.CancellationToken != tokenSource.Token)
+                        {
+                            throw;
+                        }
+
+                        Console.WriteLine("File download cancelled by user.");
+                    }
+
+                    Console.WriteLine();
+                }
+            }
         }
 
         /// <summary>

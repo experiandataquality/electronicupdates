@@ -27,8 +27,8 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         public virtual IMetadataApi CreateMetadataApi()
         {
             // Get the credentials to use to connect to the QAS Electronic Updates Metadata REST API            
-            string userName = GetAppSetting("UserName");
-            string password = GetAppSetting("Password");
+            string userName = GetConfigSetting("UserName");
+            string password = GetConfigSetting("Password");
 
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
             {
@@ -36,7 +36,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
             }
 
             // Has the REST API endpoint URI been overridden?
-            string serviceUrl = GetAppSetting("ServiceUri");
+            string serviceUrl = GetConfigSetting("ServiceUri");
 
             Uri serviceUri;
 
@@ -75,7 +75,19 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
                 value = Environment.GetEnvironmentVariable(name);
             }
 
-            return value;
+            return value ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Gets the configuration setting with the specified name.
+        /// </summary>
+        /// <param name="name">The name of the configuration setting to obtain.</param>
+        /// <returns>
+        /// The value of the specified configuration setting, if found; otherwise <see cref="String.Empty"/>.
+        /// </returns>
+        protected internal virtual string GetConfigSetting(string name)
+        {
+            return GetAppSetting(name);
         }
     }
 }

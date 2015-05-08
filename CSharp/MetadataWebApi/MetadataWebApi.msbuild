@@ -6,6 +6,7 @@
     <SolutionFile>MetadataWebApi.sln</SolutionFile>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">$(MSBuildThisFileDirectory)</SolutionDir>
     <OutputPath>$(SolutionDir)\BuildOutput</OutputPath>
+    <RunTests Condition="'$(RunTests)' == ''">true</RunTests>
     <BuildProperties>Platform=$(Platform);OutputPath=$(OutputPath)</BuildProperties>
   </PropertyGroup>
   <Target Name="Clean">
@@ -17,6 +18,9 @@
   <Target Name="Rebuild" DependsOnTargets="RestorePackages">
     <MSBuild Targets="Rebuild" Projects="$(SolutionFile)" Properties="Configuration=$(Configuration);$(BuildProperties)" />
   </Target>
+  <Target Name="AfterBuild" AfterTargets="Build;Rebuild">
+    <CallTarget Targets="Test" Condition="'$(RunTests)' == 'true'" />
+  </Target>
   <Target Name="RestorePackages">
     <PropertyGroup>
       <NuGetToolsPath>$([System.IO.Path]::Combine($(SolutionDir), "Tools", "NuGet"))</NuGetToolsPath>
@@ -25,5 +29,17 @@
     </PropertyGroup>
     <Message Text="Restoring NuGet packages..." Importance="normal" />
     <Exec Command="%22$(NuGetExePath)%22 restore %22$(SolutionFile)%22" LogStandardErrorAsError="true" />
+  </Target>
+  <Target Name="Test">
+    <ItemGroup Condition="'$(TestTool)' == ''">
+      <TestTool Include="$(SolutionDir)packages\xunit.runner.console.*\tools\xunit.console.exe" />
+    </ItemGroup>
+    <PropertyGroup Condition="'$(TestTool)' == ''">
+      <TestTool>@(TestTool)</TestTool>
+    </PropertyGroup>
+    <ItemGroup>
+      <TestContainer Include="$(OutputPath)\MetadataWebApi.*test*.dll" />
+    </ItemGroup>
+    <Exec Command="%22$(TestTool)%22 @(TestContainer->'%22%(fullpath)%22', ' ')" WorkingDirectory="$(OutputPath)" />
   </Target>
 </Project>
