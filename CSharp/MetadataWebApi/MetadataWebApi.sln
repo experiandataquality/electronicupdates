@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetadataWebApi", "MetadataWebApi\MetadataWebApi.csproj", "{B3A7B441-933E-49CF-B567-EF9D6C8333E5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CB89B19A-2982-408E-8EAC-6BAD0EFAE808}"
+	ProjectSection(SolutionItems) = preProject
+		Build.cmd = Build.cmd
+		Experian.ico = Experian.ico
+		FxCopDictionary.xml = FxCopDictionary.xml
+		..\..\LICENSE = ..\..\LICENSE
+		MetadataWebApi.msbuild = MetadataWebApi.msbuild
+		MetadataWebApi.ruleset = MetadataWebApi.ruleset
+		MetadataWebApi.snk = MetadataWebApi.snk
+		MetadataWebApi.targets = MetadataWebApi.targets
+		..\..\README.md = ..\..\README.md
+		Settings.StyleCop = Settings.StyleCop
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{E1292E0F-FAA1-4D92-B06C-92E1661F74A9}"
+	ProjectSection(SolutionItems) = preProject
+		Tools\NuGet\NuGet.config = Tools\NuGet\NuGet.config
+		Tools\NuGet\NuGet.exe = Tools\NuGet\NuGet.exe
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B3A7B441-933E-49CF-B567-EF9D6C8333E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3A7B441-933E-49CF-B567-EF9D6C8333E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3A7B441-933E-49CF-B567-EF9D6C8333E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3A7B441-933E-49CF-B567-EF9D6C8333E5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E1292E0F-FAA1-4D92-B06C-92E1661F74A9} = {CB89B19A-2982-408E-8EAC-6BAD0EFAE808}
+	EndGlobalSection
+EndGlobal
