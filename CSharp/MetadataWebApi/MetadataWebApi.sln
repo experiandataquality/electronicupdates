@@ -37,6 +37,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StyleCop", "StyleCop", "{E2
 		Tools\StyleCop\StyleCop.Targets = Tools\StyleCop\StyleCop.Targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{137CD29F-91BE-4E16-A229-7B9321281179}"
+	ProjectSection(SolutionItems) = preProject
+		Tools\NuGet\NuGet.config = Tools\NuGet\NuGet.config
+		Tools\NuGet\NuGet.exe = Tools\NuGet\NuGet.exe
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,5 +60,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E1292E0F-FAA1-4D92-B06C-92E1661F74A9} = {CB89B19A-2982-408E-8EAC-6BAD0EFAE808}
 		{E2F00DAF-E66E-484E-BAF9-4353A4270F8F} = {E1292E0F-FAA1-4D92-B06C-92E1661F74A9}
+		{137CD29F-91BE-4E16-A229-7B9321281179} = {E1292E0F-FAA1-4D92-B06C-92E1661F74A9}
 	EndGlobalSection
 EndGlobal
