@@ -9,5 +9,12 @@
     <RestorePackages>true</RestorePackages>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <SignAssembly>true</SignAssembly>
+    <SourceAnalysisOverrideSettingsFile>$(SolutionDir)\StyleCop.settings</SourceAnalysisOverrideSettingsFile>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(BuildingInsideVisualStudio)' != 'true'">
+    <CodeAnalysisTreatWarningsAsErrors Condition="'$(CodeAnalysisTreatWarningsAsErrors)' == ''">true</CodeAnalysisTreatWarningsAsErrors>
+    <SourceAnalysisTreatErrorsAsWarnings Condition="'$(SourceAnalysisTreatErrorsAsWarnings)' == ''">false</SourceAnalysisTreatErrorsAsWarnings>
+    <TreatWarningsAsErrors Condition="'$(TreatWarningsAsErrors)' == ''">true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)Tools\StyleCop\StyleCop.targets" />
 </Project>
