@@ -104,18 +104,25 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         }
 
         [Fact]
-        public static void MetadataApiFactory_GetAppSetting_Reads_Settings_Correctly()
+        public static void MetadataApiFactory_GetAppSetting_Reads_Settings_Correctly_From_Environment_Variable()
         {
             // Arrange
             Environment.SetEnvironmentVariable("QAS:ElectronicUpdates:foo", "bar");
 
             // Act and Assert
             Assert.Equal("bar", MetadataApiFactory.GetAppSetting("foo"));
-            Assert.Equal("MyPassword", MetadataApiFactory.GetAppSetting("Password"));
-            Assert.Equal("MyUserName", MetadataApiFactory.GetAppSetting("UserName"));
-            Assert.Equal(string.Empty, MetadataApiFactory.GetAppSetting(null));
-            Assert.Equal(string.Empty, MetadataApiFactory.GetAppSetting(string.Empty));
-            Assert.Equal(string.Empty, MetadataApiFactory.GetAppSetting("Foobar"));
+        }
+
+        [Theory]
+        [InlineData("Password", "MyPassword")]
+        [InlineData("UserName", "MyUserName")]
+        [InlineData(null, "")]
+        [InlineData("", "")]
+        [InlineData("Foobar", "")]
+        public static void MetadataApiFactory_GetAppSetting_Reads_Setting_Value_Correctly(string name, string value)
+        {
+            // Act and Assert
+            Assert.Equal(value, MetadataApiFactory.GetAppSetting(name));
         }
     }
 }
