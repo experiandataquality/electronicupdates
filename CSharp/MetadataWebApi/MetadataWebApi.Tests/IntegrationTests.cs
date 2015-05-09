@@ -21,13 +21,10 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
             _output = output;
         }
 
-        [Fact(Skip = "Requires access to a dedicated test account.")]
+        [RequiresServiceCredentialsFact]
         public void Program_Downloads_Data_Files()
         {
             // Arrange
-            Environment.SetEnvironmentVariable("QAS:ElectronicUpdates:UserName", string.Empty);
-            Environment.SetEnvironmentVariable("QAS:ElectronicUpdates:Password", string.Empty);
-
             using (TextWriter writer = new StringWriter(CultureInfo.InvariantCulture))
             {
                 Console.SetOut(writer);
@@ -44,6 +41,19 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
                 finally
                 {
                     _output.WriteLine(writer.ToString());
+                }
+            }
+        }
+
+        private sealed class RequiresServiceCredentialsFact : FactAttribute
+        {
+            public RequiresServiceCredentialsFact()
+                : base()
+            {
+                if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("QAS:ElectronicUpdates:UserName")) ||
+                    string.IsNullOrEmpty(Environment.GetEnvironmentVariable("QAS:ElectronicUpdates:Password")))
+                {
+                    this.Skip = "No service credentials are configured.";
                 }
             }
         }
