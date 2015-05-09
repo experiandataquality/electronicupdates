@@ -52,8 +52,12 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="IMetadataApiExtensionsTests.cs" />
     <Compile Include="IntegrationTests.cs" />
+    <Compile Include="LocalFileStoreTests.cs" />
+    <Compile Include="MetadataApiExceptionTests.cs" />
     <Compile Include="MetadataApiFactoryTests.cs" />
+    <Compile Include="MetadataApiTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

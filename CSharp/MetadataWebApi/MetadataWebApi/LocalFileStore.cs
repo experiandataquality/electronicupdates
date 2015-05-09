@@ -21,7 +21,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         /// <summary>
         /// The name of the file containing the serialized data.
         /// </summary>
-        private const string DataFileName = "FileStore.eu";
+        private readonly string _dataFileName = "FileStore.eu";
 
         /// <summary>
         /// A dictionary containing the map of file hashes to paths.
@@ -37,13 +37,24 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         /// Initializes a new instance of the <see cref="LocalFileStore" /> class.
         /// </summary>
         public LocalFileStore()
+            : this("FileStore.eu")
         {
-            if (File.Exists(DataFileName))
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LocalFileStore" /> class.
+        /// </summary>
+        /// <param name="dataFileName">The name of the data file storing information about the downloaded files.</param>
+        internal LocalFileStore(string dataFileName)
+        {
+            _dataFileName = dataFileName;
+
+            if (File.Exists(_dataFileName))
             {
                 DataContractSerializer serializer = new DataContractSerializer(typeof(Dictionary<string, string>));
 
                 // Deserialize the available files from the local file store data file
-                using (Stream stream = File.OpenRead(DataFileName))
+                using (Stream stream = File.OpenRead(_dataFileName))
                 {
                     IDictionary<string, string> data = serializer.ReadObject(stream) as Dictionary<string, string>;
 
@@ -133,7 +144,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
                 // Serialize the data currently stored in memory to disk
                 DataContractSerializer serializer = new DataContractSerializer(typeof(Dictionary<string, string>));
 
-                using (Stream stream = File.Create(DataFileName))
+                using (Stream stream = File.Create(_dataFileName))
                 {
                     serializer.WriteObject(stream, _fileStore);
                 }
