@@ -1,5 +1,9 @@
 version: 2.0.{build}
 
+environment:
+  CoverallsRepoToken:
+    secure: jQYlNHmw9dSnozkB1zahsVfkDLwSOqdR9dPZQ1tzNZKj4K9eqcu2xbn7mNbQhJk+
+
 assembly_info:
   patch: true
   file: CommonAssemblyInfo.cs
