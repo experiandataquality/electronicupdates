@@ -2,6 +2,11 @@
 
 [![Issues](https://img.shields.io/github/issues/experiandataquality/electronicupdates.svg?label=Issues)](https://github.com/experiandataquality/electronicupdates/issues) [![License](https://img.shields.io/github/license/experiandataquality/electronicupdates.svg?label=License)](https://github.com/experiandataquality/electronicupdates/blob/master/LICENSE)
 
+| | Windows |
+|:-:|:-:|
+|------------|-----------|
+| *C#* | [![Build status](https://img.shields.io/appveyor/ci/experiandataquality/electronicupdates/master.svg)](https://ci.appveyor.com/project/experiandataquality/electronicupdates) |
+
 ## Overview
 
 This GitHub repository hosts the sample integration code for the QAS Electronic Updates product from Experian.
