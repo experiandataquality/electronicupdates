@@ -4,8 +4,7 @@
 
 | | Windows |
 |:-:|:-:|
-|------------|-----------|
-| *C#* | [![Build status](https://img.shields.io/appveyor/ci/experiandataquality/electronicupdates/master.svg)](https://ci.appveyor.com/project/experiandataquality/electronicupdates) |
+| **C#** | [![Build status](https://img.shields.io/appveyor/ci/experiandataquality/electronicupdates/master.svg)](https://ci.appveyor.com/project/experiandataquality/electronicupdates) |
 
 ## Overview
 
