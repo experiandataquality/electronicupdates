@@ -3,8 +3,8 @@
   <PropertyGroup>
     <Configuration>Release</Configuration>
     <Platform>Any CPU</Platform>
-    <SolutionFile>MetadataWebApi.sln</SolutionFile>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">$(MSBuildThisFileDirectory)</SolutionDir>
+    <SolutionFile>$(SolutionDir)MetadataWebApi.sln</SolutionFile>
     <OutputPath>$(SolutionDir)\BuildOutput</OutputPath>
     <RunTests Condition="'$(RunTests)' == ''">true</RunTests>
     <BuildProperties>Platform=$(Platform);OutputPath=$(OutputPath)</BuildProperties>
@@ -21,16 +21,16 @@
   <Target Name="AfterBuild" AfterTargets="Build;Rebuild">
     <CallTarget Targets="Test" Condition="'$(RunTests)' == 'true'" />
   </Target>
-  <Target Name="RestorePackages">
+  <Target Name="RestorePackages" Condition="'$(TRAVIS)' == ''">
     <PropertyGroup>
       <NuGetToolsPath>$([System.IO.Path]::Combine($(SolutionDir), "Tools", "NuGet"))</NuGetToolsPath>
-      <NuGetExePath>$(NuGetToolsPath)\nuget.exe</NuGetExePath>
+      <NuGetExePath>$(NuGetToolsPath)\NuGet.exe</NuGetExePath>
       <RequireRestoreConsent>false</RequireRestoreConsent>
     </PropertyGroup>
     <Message Text="Restoring NuGet packages..." Importance="normal" />
     <Exec Command="%22$(NuGetExePath)%22 restore %22$(SolutionFile)%22" LogStandardErrorAsError="true" />
   </Target>
-  <Target Name="Test">
+  <Target Name="Test" Condition="'$(OS)' != 'Unix'">
     <ItemGroup Condition="'$(TestTool)' == ''">
       <TestTool Include="$(SolutionDir)packages\xunit.runner.console.*\tools\xunit.console.exe" />
     </ItemGroup>
@@ -38,8 +38,9 @@
       <TestTool>@(TestTool)</TestTool>
     </PropertyGroup>
     <ItemGroup>
-      <TestContainer Include="$(OutputPath)\MetadataWebApi.*test*.dll" />
+      <TestContainer Include="$(OutputPath)\MetadataWebApi.*Test*.dll" />
     </ItemGroup>
+    <Exec Condition="'$(OS)' == 'Unix'" Command="chmod +x %22$(TestTool)%22" />
     <Exec Command="%22$(TestTool)%22 @(TestContainer->'%22%(fullpath)%22', ' ')" WorkingDirectory="$(OutputPath)" />
   </Target>
 </Project>

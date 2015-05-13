@@ -28,8 +28,6 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         /// </summary>
         internal static void Main()
         {
-            PrintBanner();
-
             try
             {
                 MainInternal();
@@ -48,6 +46,8 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         /// </summary>
         internal static void MainInternal()
         {
+            PrintBanner();
+
             // Get the configuration settings for downloading files
             string downloadRootPath = MetadataApiFactory.GetAppSetting("DownloadRootPath");
             string verifyDownloadsString = MetadataApiFactory.GetAppSetting("ValidateDownloads");
@@ -140,10 +140,10 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
 
                                 Console.WriteLine();
                             }
-                        }
 
-                        // Wait for all of the tasks to download files to complete
-                        Task.WaitAll(downloadTasks.ToArray(), tokenSource.Token);
+                            // Wait for all of the tasks to download files to complete
+                            Task.WaitAll(downloadTasks.ToArray(), tokenSource.Token);
+                        }
 
                         stopwatch.Stop();
                         Console.WriteLine("Downloaded data in {0:hh\\:mm\\:ss}.", stopwatch.Elapsed);

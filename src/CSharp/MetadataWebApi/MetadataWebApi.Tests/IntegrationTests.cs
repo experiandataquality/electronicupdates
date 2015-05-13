@@ -44,18 +44,5 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
                 }
             }
         }
-
-        private sealed class RequiresServiceCredentialsFact : FactAttribute
-        {
-            public RequiresServiceCredentialsFact()
-                : base()
-            {
-                if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("QAS:ElectronicUpdates:UserName")) ||
-                    string.IsNullOrEmpty(Environment.GetEnvironmentVariable("QAS:ElectronicUpdates:Password")))
-                {
-                    this.Skip = "No service credentials are configured.";
-                }
-            }
-        }
     }
 }

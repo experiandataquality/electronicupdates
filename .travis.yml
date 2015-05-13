@@ -1,0 +1,4 @@
+language: csharp
+solution: ./src/CSharp/MetadataWebApi/MetadataWebApi.sln
+script:
+  - ./src/CSharp/MetadataWebApi/build.sh

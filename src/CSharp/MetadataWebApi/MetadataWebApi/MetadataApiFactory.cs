@@ -64,15 +64,16 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         internal static string GetAppSetting(string name)
         {
             // Build the full name of the setting
-            name = string.Format(CultureInfo.InvariantCulture, "QAS:ElectronicUpdates:{0}", name);
+            string settingName = string.Format(CultureInfo.InvariantCulture, "QAS:ElectronicUpdates:{0}", name);
 
             // Is the setting configured in the application configuration file?
-            string value = ConfigurationManager.AppSettings[name];
+            string value = ConfigurationManager.AppSettings[settingName];
 
             // If not, try the environment variables
             if (string.IsNullOrEmpty(value))
             {
-                value = Environment.GetEnvironmentVariable(name);
+                settingName = string.Format(CultureInfo.InvariantCulture, "QAS_ElectronicUpdates_{0}", name);
+                value = Environment.GetEnvironmentVariable(settingName);
             }
 
             return value ?? string.Empty;

@@ -107,7 +107,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         public static void MetadataApiFactory_GetAppSetting_Reads_Settings_Correctly_From_Environment_Variable()
         {
             // Arrange
-            Environment.SetEnvironmentVariable("QAS:ElectronicUpdates:foo", "bar");
+            Environment.SetEnvironmentVariable("QAS_ElectronicUpdates_foo", "bar");
 
             // Act and Assert
             Assert.Equal("bar", MetadataApiFactory.GetAppSetting("foo"));
