@@ -10,8 +10,8 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <SignAssembly>true</SignAssembly>
     <SourceAnalysisOverrideSettingsFile>$(SolutionDir)\StyleCop.settings</SourceAnalysisOverrideSettingsFile>
-  <StyleCopEnabled Condition="'$(Registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5@Version)' == ''">false</StyleCopEnabled>
-  <StyleCopEnabled Condition="'$(Registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5@Version)' != ''">true</StyleCopEnabled>
+    <StyleCopEnabled Condition="'$(Registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5@Version)' == ''">false</StyleCopEnabled>
+    <StyleCopEnabled Condition="'$(Registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5@Version)' != ''">true</StyleCopEnabled>
   </PropertyGroup>
   <PropertyGroup Condition="'$(BuildingInsideVisualStudio)' != 'true'">
     <CodeAnalysisTreatWarningsAsErrors Condition="'$(CodeAnalysisTreatWarningsAsErrors)' == ''">true</CodeAnalysisTreatWarningsAsErrors>
