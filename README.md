@@ -2,9 +2,9 @@
 
 [![Issues](https://img.shields.io/github/issues/experiandataquality/electronicupdates.svg?label=Issues)](https://github.com/experiandataquality/electronicupdates/issues) [![License](https://img.shields.io/github/license/experiandataquality/electronicupdates.svg?label=License)](https://github.com/experiandataquality/electronicupdates/blob/master/LICENSE)
 
-| | Windows |
-|:-:|:-:|
-| **C#** | [![Build status](https://img.shields.io/appveyor/ci/experiandataquality/electronicupdates/master.svg)](https://ci.appveyor.com/project/experiandataquality/electronicupdates) |
+| | Linux | Windows |
+|:-:|:-:|:-:|
+| **C#** | [![Build status](https://img.shields.io/travis/experiandataquality/electronicupdates/master.svg)](https://travis-ci.org/experiandataquality/electronicupdates) | [![Build status](https://img.shields.io/appveyor/ci/experiandataquality/electronicupdates/master.svg)](https://ci.appveyor.com/project/experiandataquality/electronicupdates) |
 
 ## Overview
 

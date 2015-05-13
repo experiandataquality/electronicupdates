@@ -51,12 +51,12 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
 
             if (File.Exists(_dataFileName))
             {
-                DataContractSerializer serializer = new DataContractSerializer(typeof(Dictionary<string, string>));
+                DataContractSerializer serializer = new DataContractSerializer(typeof(ConcurrentDictionary<string, string>));
 
                 // Deserialize the available files from the local file store data file
                 using (Stream stream = File.OpenRead(_dataFileName))
                 {
-                    IDictionary<string, string> data = serializer.ReadObject(stream) as Dictionary<string, string>;
+                    IDictionary<string, string> data = serializer.ReadObject(stream) as IDictionary<string, string>;
 
                     if (data != null)
                     {
@@ -142,7 +142,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
                 }
 
                 // Serialize the data currently stored in memory to disk
-                DataContractSerializer serializer = new DataContractSerializer(typeof(Dictionary<string, string>));
+                DataContractSerializer serializer = new DataContractSerializer(typeof(ConcurrentDictionary<string, string>));
 
                 using (Stream stream = File.Create(_dataFileName))
                 {

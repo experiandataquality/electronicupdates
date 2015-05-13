@@ -14,6 +14,7 @@ obj
 packages
 StyleCop.Cache
 TestResults
+*~
 *.DotSettings
 *.GhostDoc.xml
 *.sln.cache
