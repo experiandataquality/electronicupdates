@@ -14,10 +14,10 @@ Using either a Git client or the GitHub website, you can download sample code fo
 
 Sample code is available for the following programming languages:
 
- * C#
- * Java
- * Python
- * VB.NET
+ * [C#](https://github.com/experiandataquality/electronicupdates/tree/master/src/CSharp)
+ * [Java](https://github.com/experiandataquality/electronicupdates/tree/master/src/Java)
+ * [Python](https://github.com/experiandataquality/electronicupdates/tree/master/src/Python)
+ * [VB.NET](https://github.com/experiandataquality/electronicupdates/tree/master/src/VB.NET)
 
 ## About QAS Electronic Updates
 
