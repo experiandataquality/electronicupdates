@@ -130,7 +130,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
             }
         }
 
-        [RequiresServiceCredentialsFact(Skip = "Test hangs at non-deterministic points in AppVeyor CI - reason unknown.")]
+        [RequiresServiceCredentialsFact]
         public async Task Program_MainAsync_Downloads_Data_Files()
         {
             // Arrange
