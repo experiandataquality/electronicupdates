@@ -36,7 +36,7 @@ py .\metadatawebapi.py
 Below is an example set of commands that could be run on Linux to download all the latest data files from QAS Electronic Updates onto the local machine into a ```QASData``` directory in the same directory as the script:
 
 ```sh
-EXPORT QAS_ElectronicUpdates_UserName=MyUserName
-EXPORT QAS_ElectronicUpdates_Password=MyPassword
+export QAS_ElectronicUpdates_UserName=MyUserName
+export QAS_ElectronicUpdates_Password=MyPassword
 ./metadatawebapi.py
 ```
