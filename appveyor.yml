@@ -3,6 +3,10 @@ version: 2.0.{build}
 environment:
   CoverallsRepoToken:
     secure: jQYlNHmw9dSnozkB1zahsVfkDLwSOqdR9dPZQ1tzNZKj4K9eqcu2xbn7mNbQhJk+
+  QAS_ElectronicUpdates_UserName:
+    secure: yLCUfo6eOtPC4SJCaGTkYA==
+  QAS_ElectronicUpdates_Password:
+    secure: eSFe4NADMMBby2Ee4Efgiw==
 
 assembly_info:
   patch: true
