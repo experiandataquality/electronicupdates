@@ -17,7 +17,13 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         public static void MetadataApiFactory_CreateMetadataApi_Creates_Instance()
         {
             // Arrange
-            MetadataApiFactory target = new MetadataApiFactory();
+            Mock<MetadataApiFactory> mock = new Mock<MetadataApiFactory>();
+
+            mock.CallBase = true;
+            mock.Setup((p) => p.GetConfigSetting("UserName")).Returns("MyUserName");
+            mock.Setup((p) => p.GetConfigSetting("Password")).Returns("MyPassword");
+
+            MetadataApiFactory target = mock.Object;
 
             // Act
             IMetadataApi result = target.CreateMetadataApi();
@@ -37,6 +43,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
 
             mock.CallBase = true;
             mock.Setup((p) => p.GetConfigSetting("ServiceUri")).Returns("https://localhost/metadata/V1/");
+            mock.Setup((p) => p.GetConfigSetting("UserName")).Returns("MyUserName");
 
             MetadataApiFactory target = mock.Object;
 
@@ -58,6 +65,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
 
             mock.CallBase = true;
             mock.Setup((p) => p.GetConfigSetting("ServiceUri")).Returns("NotAUri");
+            mock.Setup((p) => p.GetConfigSetting("UserName")).Returns("MyUserName");
 
             MetadataApiFactory target = mock.Object;
 
@@ -114,11 +122,10 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         }
 
         [Theory]
-        [InlineData("Password", "MyPassword")]
-        [InlineData("UserName", "MyUserName")]
         [InlineData(null, "")]
         [InlineData("", "")]
         [InlineData("Foobar", "")]
+        [InlineData("MySetting", "MyValue")]
         public static void MetadataApiFactory_GetAppSetting_Reads_Setting_Value_Correctly(string name, string value)
         {
             // Act and Assert
