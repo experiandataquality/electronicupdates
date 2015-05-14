@@ -30,7 +30,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         {
             try
             {
-                MainInternal();
+                MainAsync().Wait();
             }
             catch (Exception ex)
             {
@@ -42,9 +42,12 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         }
 
         /// <summary>
-        /// Downloads the available data files from the QAS Electronic Updates Metadata REST API.
+        /// Downloads the available data files from the QAS Electronic Updates Metadata REST API as an asynchronous operation.
         /// </summary>
-        internal static void MainInternal()
+        /// <returns>
+        /// A <see cref="Task"/> representing the asynchronous operation to download any data files.
+        /// </returns>
+        internal static async Task MainAsync()
         {
             PrintBanner();
 
@@ -76,7 +79,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
             Console.WriteLine();
 
             // Query the packages available to the account
-            AvailablePackagesReply response = service.GetAvailablePackagesAsync().Result;
+            AvailablePackagesReply response = await service.GetAvailablePackagesAsync();
 
             Console.WriteLine("Available Package Groups:");
             Console.WriteLine();
