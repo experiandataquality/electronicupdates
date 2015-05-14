@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CB89B19A-2982-408E-8EAC-6BAD0EFAE808}"
 	ProjectSection(SolutionItems) = preProject
 		..\..\..\.travis.yml = ..\..\..\.travis.yml
+		..\..\..\appveyor.yml = ..\..\..\appveyor.yml
 		Build.cmd = Build.cmd
 		build.sh = build.sh
 		Experian.ico = Experian.ico
