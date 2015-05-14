@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # metadatawebapi.py - Copyright (c) Experian. All rights reserved.
 # Python script to download data from the QAS Electronic Updates Web API.
 
@@ -7,9 +8,10 @@ import os       # Used to access the file system
 import hashlib  # Used to compute MD5 hashes of files
 import sys      # Used to get the installed version of Python
 
-# Declare credentials to communicate with the service
-username = ''
-password = ''
+# Declare credentials to communicate with the service.
+# Override any values hard-coded here by named environment variable.
+username = os.getenv('QAS_ElectronicUpdates_UserName', '')
+password = os.getenv('QAS_ElectronicUpdates_Password', '')
 
 # Declare User Agent string
 version = sys.version_info
