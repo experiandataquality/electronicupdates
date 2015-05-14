@@ -102,8 +102,6 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
 
                     try
                     {
-                        List<Task> downloadTasks = new List<Task>();
-
                         Stopwatch stopwatch = Stopwatch.StartNew();
 
                         // Create a file store in which to cache information about which files
