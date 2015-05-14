@@ -12,6 +12,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
     /// <summary>
     /// A test that requires service credentials to be configured as environment variables. This class cannot be inherited.
     /// </summary>
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     internal sealed class RequiresServiceCredentialsFactAttribute : FactAttribute
     {
         /// <summary>
@@ -20,12 +21,8 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         public RequiresServiceCredentialsFactAttribute()
             : base()
         {
-            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("CI")))
-            {
-                this.Skip = "Temporarily disabled as AppVeyor CI test run hangs.";
-            }
-            else if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("QAS_ElectronicUpdates_UserName")) ||
-                     string.IsNullOrEmpty(Environment.GetEnvironmentVariable("QAS_ElectronicUpdates_Password")))
+            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("QAS_ElectronicUpdates_UserName")) ||
+                string.IsNullOrEmpty(Environment.GetEnvironmentVariable("QAS_ElectronicUpdates_Password")))
             {
                 this.Skip = "No service credentials are configured.";
             }
