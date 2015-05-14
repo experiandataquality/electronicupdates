@@ -102,8 +102,6 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
 
                     try
                     {
-                        List<Task> downloadTasks = new List<Task>();
-
                         Stopwatch stopwatch = Stopwatch.StartNew();
 
                         // Create a file store in which to cache information about which files
@@ -130,12 +128,19 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
                                         {
                                             // We already have this file, download not required
                                             Console.WriteLine("File with hash '{0}' already downloaded.", file.MD5Hash);
-                                            continue;
                                         }
-
-                                        // Queue each file to download asynchronously
-                                        Task task = DownloadFileAsync(service, fileStore, group, file, downloadRootPath, verifyDownloads, tokenSource.Token);
-                                        downloadTasks.Add(task);
+                                        else
+                                        {
+                                            // Download the file
+                                            await DownloadFileAsync(
+                                                service,
+                                                fileStore,
+                                                group,
+                                                file,
+                                                downloadRootPath,
+                                                verifyDownloads,
+                                                tokenSource.Token);
+                                        }
                                     }
 
                                     Console.WriteLine();
@@ -143,9 +148,6 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
 
                                 Console.WriteLine();
                             }
-
-                            // Wait for all of the tasks to download files to complete
-                            Task.WaitAll(downloadTasks.ToArray(), tokenSource.Token);
                         }
 
                         stopwatch.Stop();
