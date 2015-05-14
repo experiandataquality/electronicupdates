@@ -17,7 +17,7 @@ Other approaches are possible but are considered outside the scope of this docum
 
 ## Usage
 
-To run the script, execute the following command:
+To run the script, execute the following command from the directory containing the script:
 
 ### Linux
 
