@@ -6,6 +6,11 @@ This directory contains a Python script that can be used to determine what data 
 
 Further documentation of the script is provided by the comments in the Python script itself.
 
+## Prerequisites
+
+ * Python 2.7.6 (or later);
+ * The [requests](http://docs.python-requests.org/en/latest/) Python module.
+
 ## Setup
 
 To set up the script for usage you could either:
@@ -40,3 +45,10 @@ export QAS_ElectronicUpdates_UserName=MyUserName
 export QAS_ElectronicUpdates_Password=MyPassword
 ./metadatawebapi.py
 ```
+
+## Compatibility
+
+This script was tested with the following Python versions and platforms:
+
+ * Python 2.7.6 on Ubuntu 14.04.2 LTS;
+ * Python 3.3.2 on Windows 8.1.
