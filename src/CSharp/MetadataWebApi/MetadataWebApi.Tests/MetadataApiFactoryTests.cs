@@ -44,6 +44,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
             mock.CallBase = true;
             mock.Setup((p) => p.GetConfigSetting("ServiceUri")).Returns("https://localhost/metadata/V1/");
             mock.Setup((p) => p.GetConfigSetting("UserName")).Returns("MyUserName");
+            mock.Setup((p) => p.GetConfigSetting("Password")).Returns("MyPassword");
 
             MetadataApiFactory target = mock.Object;
 
@@ -66,6 +67,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
             mock.CallBase = true;
             mock.Setup((p) => p.GetConfigSetting("ServiceUri")).Returns("NotAUri");
             mock.Setup((p) => p.GetConfigSetting("UserName")).Returns("MyUserName");
+            mock.Setup((p) => p.GetConfigSetting("Password")).Returns("MyPassword");
 
             MetadataApiFactory target = mock.Object;
 
