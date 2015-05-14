@@ -7,22 +7,23 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetadataWebApi", "MetadataW
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CB89B19A-2982-408E-8EAC-6BAD0EFAE808}"
 	ProjectSection(SolutionItems) = preProject
+		..\..\..\.travis.yml = ..\..\..\.travis.yml
 		Build.cmd = Build.cmd
+		build.sh = build.sh
 		Experian.ico = Experian.ico
 		FxCopDictionary.xml = FxCopDictionary.xml
-		..\..\LICENSE = ..\..\LICENSE
+		..\..\..\LICENSE = ..\..\..\LICENSE
 		MetadataWebApi.msbuild = MetadataWebApi.msbuild
 		MetadataWebApi.ruleset = MetadataWebApi.ruleset
 		MetadataWebApi.snk = MetadataWebApi.snk
 		MetadataWebApi.targets = MetadataWebApi.targets
-		..\..\README.md = ..\..\README.md
+		..\..\..\README.md = ..\..\..\README.md
 		Settings.StyleCop = Settings.StyleCop
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{E1292E0F-FAA1-4D92-B06C-92E1661F74A9}"
 	ProjectSection(SolutionItems) = preProject
-		Tools\NuGet\NuGet.config = Tools\NuGet\NuGet.config
-		Tools\NuGet\NuGet.exe = Tools\NuGet\NuGet.exe
+		..\..\..\LICENSE = ..\..\..\LICENSE
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StyleCop", "StyleCop", "{E2F00DAF-E66E-484E-BAF9-4353A4270F8F}"
