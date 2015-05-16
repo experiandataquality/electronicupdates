@@ -1,4 +1,8 @@
-package experian.qas.updates.metadata.webapi.v1;
+/**
+ * Copyright (c) Experian. All rights reserved.
+ */
+
+package com.experian.qas.updates.metadata.webapi.v1;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -33,17 +37,17 @@ public class Program {
     /**
      * The user name to use to authenticate with the web service.
      */
-    private static final String userName = "";
+    private static final String userName = System.getenv("QAS_ElectronicUpdates_UserName");
 
     /**
      * The password to use to authenticate with the web service.
      */
-    private static final String password = "";
+    private static final String password = System.getenv("QAS_ElectronicUpdates_Password");
 
     /**
      * The root folder to download data to.
      */
-    private static final String rootDownloadPath = ".\\QASData";
+    private static final String rootDownloadPath = "QASData";
 
     /**
      * Calculates the MD5 hash of the specified file.
@@ -332,6 +336,13 @@ public class Program {
     }
 
     public static void main(String[] args) throws Exception {
+    	
+    	if (userName == null || userName.isEmpty() || password == null || password.isEmpty()) {
+
+    		System.out.println("No QAS Electronic Updates service credentials are configured.");
+    		System.exit(-1);
+    		
+    	}
 
         List<PackageGroup> availablePackages = getAvailablePackages();
 
