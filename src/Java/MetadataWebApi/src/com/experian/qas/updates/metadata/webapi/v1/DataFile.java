@@ -1,4 +1,8 @@
-package experian.qas.updates.metadata.webapi.v1;
+/**
+ * Copyright (c) Experian. All rights reserved.
+ */
+
+package com.experian.qas.updates.metadata.webapi.v1;
 
 /**
  * A class representing a data file.

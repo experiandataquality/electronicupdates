@@ -8,6 +8,7 @@
 _ReSharper*
 bin
 Bin
+build
 BuildOutput
 NuGet.exe.old
 obj
