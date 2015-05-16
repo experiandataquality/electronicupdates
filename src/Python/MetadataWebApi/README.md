@@ -6,9 +6,11 @@ This directory contains a Python script that can be used to determine what data 
 
 Further documentation of the script is provided by the comments in the Python script itself.
 
+*This documentation describes the script as found in this [Git repository](https://github.com/experiandataquality/electronicupdates). It may no longer apply if you modify the sample code.*
+
 ## Prerequisites
 
- * Python 2.7.6 (or later);
+ * [Python](https://www.python.org/downloads/) 2.7.6 (or later);
  * The [requests](http://docs.python-requests.org/en/latest/) Python module.
 
 ## Setup
@@ -51,4 +53,4 @@ export QAS_ElectronicUpdates_Password=MyPassword
 This script was tested with the following Python versions and platforms:
 
  * Python 2.7.6 on Ubuntu 14.04.2 LTS;
- * Python 3.3.2 on Windows 8.1.
+ * Python 3.3.2 on Windows 8.1 (Build 9600).
