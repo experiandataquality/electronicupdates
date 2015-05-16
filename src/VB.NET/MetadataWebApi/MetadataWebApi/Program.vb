@@ -4,16 +4,13 @@
 '  </copyright>
 ' -----------------------------------------------------------------------
 
-Imports System
 Imports System.Configuration
-Imports System.Diagnostics
 Imports System.Globalization
 Imports System.IO
 Imports System.Net
 Imports System.Reflection
 Imports System.Security.Cryptography
 Imports System.Text
-Imports Experian.Qas.Updates.Metadata.WebApi.V1
 
 ''' <summary>
 ''' A class representing an example implementation of the QAS Electronic Updates
@@ -30,8 +27,8 @@ Friend Class Program
 
         Try
             ' Get the configuration settings to connect to the QAS Electronic Updates Metadata API
-            Dim userName As String = ConfigurationManager.AppSettings.Item("QAS:ElectronicUpdates:UserName")
-            Dim password As String = ConfigurationManager.AppSettings.Item("QAS:ElectronicUpdates:Password")
+            Dim userName As String = GetAppSetting("UserName")
+            Dim password As String = GetAppSetting("Password")
 
             Dim downloadRootPath As String = "QASData"
             Dim verifyDownloads As Boolean = True
@@ -62,7 +59,7 @@ Friend Class Program
             ' Enumerate the package groups and list their packages and files
             If (Not response.PackageGroups Is Nothing AndAlso response.PackageGroups.Count > 0) Then
 
-                Dim stopwatch As Stopwatch = stopwatch.StartNew()
+                Dim stopwatch As Stopwatch = Stopwatch.StartNew()
 
                 ' Create a file store in which to cache information about which files
                 ' have already been downloaded from the Metadata API service.
@@ -168,6 +165,33 @@ Friend Class Program
         Console.ReadKey()
 
     End Sub
+
+    ''' <summary>
+    ''' Gets the configuration setting with the specified name.
+    ''' </summary>
+    ''' <param name="name">The name of the setting to get the value of.</param>
+    ''' <returns>
+    ''' The value of the setting specified by <paramref name="name"/>, if found; otherwise <see langword="null"/>.
+    ''' </returns>
+    Private Shared Function GetAppSetting(ByVal name As String) As String
+
+        '' Build the full name of the setting
+        Dim settingName As String = String.Format(CultureInfo.InvariantCulture, "QAS:ElectronicUpdates:{0}", name)
+
+        '' Is the setting configured in the application configuration file?
+        Dim value As String = ConfigurationManager.AppSettings.Item(settingName)
+
+        '' If Not, try the environment variables
+        If (String.IsNullOrEmpty(value)) Then
+
+            settingName = String.Format(CultureInfo.InvariantCulture, "QAS_ElectronicUpdates_{0}", name)
+            value = Environment.GetEnvironmentVariable(settingName)
+
+        End If
+
+        Return value
+
+    End Function
 
     ''' <summary>
     ''' Validates that the specified file was downloaded correctly.
