@@ -12,6 +12,7 @@ BuildOutput
 NuGet.exe.old
 obj
 packages
+QASData
 StyleCop.Cache
 TestResults
 *~
