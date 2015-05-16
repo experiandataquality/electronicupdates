@@ -12,6 +12,7 @@ BuildOutput
 NuGet.exe.old
 obj
 packages
+QASData
 StyleCop.Cache
 TestResults
 *~
@@ -21,3 +22,4 @@ TestResults
 *.sln.ide
 *.suo
 *.user
+*.userprefs
