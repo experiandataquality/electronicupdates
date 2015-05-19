@@ -7,7 +7,9 @@
 .vs
 _ReSharper*
 bin
+!/src/Ruby/*/bin
 Bin
+!/src/Ruby/*/Bin
 build
 BuildOutput
 NuGet.exe.old
@@ -18,6 +20,7 @@ StyleCop.Cache
 TestResults
 *~
 *.DotSettings
+*.gem
 *.GhostDoc.xml
 *.sln.cache
 *.sln.ide
