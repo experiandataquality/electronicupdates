@@ -1,0 +1,19 @@
+# Copyright (c) Experian. All rights reserved.
+
+$LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
+require 'rake/testtask'
+
+task :build => [:clean] do  
+  system "gem build electronic_updates.gemspec"
+end
+
+task :clean do  
+  system "rm -rf *.gem"
+end
+
+Rake::TestTask.new do |t|
+  t.libs << 'test'
+end
+
+desc "Build gem and run tests"
+task :default => [:build, :test]

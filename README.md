@@ -17,6 +17,7 @@ Sample code is available for the following programming languages:
  * [C#](https://github.com/experiandataquality/electronicupdates/tree/master/src/CSharp)
  * [Java](https://github.com/experiandataquality/electronicupdates/tree/master/src/Java)
  * [Python](https://github.com/experiandataquality/electronicupdates/tree/master/src/Python)
+ * [Ruby](https://github.com/experiandataquality/electronicupdates/tree/master/src/Ruby)
  * [VB.NET](https://github.com/experiandataquality/electronicupdates/tree/master/src/VB.NET)
 
 ## About QAS Electronic Updates
