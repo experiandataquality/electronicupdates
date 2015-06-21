@@ -37,7 +37,7 @@ The following prerequisites are required to compile and debug the application:
 
 The following prerequisites are required to run the compiled application:
 
-### Linux
+### Linux/OS X
 
  * [Mono](http://www.mono-project.com/download/) 4.0.1 (or later).
 
@@ -50,7 +50,7 @@ The following prerequisites are required to run the compiled application:
 
 To compile the application, you can do any of the following:
 
-### Linux
+### Linux/OS X
 
  * Open ```MetadataWebApi.sln``` in MonoDevelop;
  * Run ```./build.sh``` from the terminal.
@@ -73,7 +73,7 @@ Other approaches are possible but are considered outside the scope of this docum
 
 To run the application, execute the following command from the directory containing the compiled executable:
 
-### Linux
+### Linux/OS X
 
 ```sh
 ./MetadataWebApi.exe
@@ -100,5 +100,6 @@ MetadataWebApi.exe
 This application has been compiled and tested on the following platforms:
 
  * MonoDevelop 5.9.0 on Ubuntu 14.04.2 LTS;
+ * Mono 4.0.1 on OS X Yosemite (10.10.2);
  * Visual Studio 2013 Premium with Update 4 on Windows 8.1 (Build 9600);
  * Visual Studio 2015 RC on Windows 10 (Build 10074).
