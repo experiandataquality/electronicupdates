@@ -2,6 +2,7 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
+.DS_Store
 .metadata
 .settings
 .vs
@@ -12,6 +13,7 @@ Bin
 !/src/Ruby/*/Bin
 build
 BuildOutput
+Gemfile.lock
 NuGet.exe.old
 obj
 packages

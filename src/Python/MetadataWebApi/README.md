@@ -22,11 +22,25 @@ To set up the script for usage you could either:
 
 Other approaches are possible but are considered outside the scope of this documentation.
 
+To install the ```requests``` dependency if it is not already installed, execute the following command:
+
+### Linux/OS X
+
+```sh
+pip install requests
+```
+
+or
+
+```sh
+sudo easy_install requests
+```
+
 ## Usage
 
 To run the script, execute the following command from the directory containing the script:
 
-### Linux
+### Linux/OS X
 
 ```sh
 ./metadatawebapi.py
@@ -53,4 +67,5 @@ export QAS_ElectronicUpdates_Password=MyPassword
 This script was tested with the following Python versions and platforms:
 
  * Python 2.7.6 on Ubuntu 14.04.2 LTS;
+ * Python 2.7.10 on OS X Yosemite (10.10.2);
  * Python 3.3.2 on Windows 8.1 (Build 9600).
