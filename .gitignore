@@ -12,6 +12,7 @@ Bin
 !/src/Ruby/*/Bin
 build
 BuildOutput
+Gemfile.lock
 NuGet.exe.old
 obj
 packages
