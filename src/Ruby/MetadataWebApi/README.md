@@ -28,6 +28,7 @@ Other approaches are possible but are considered outside the scope of this docum
 To build and test the gem, execute the following command from the directory containing the Ruby code:
 
 ```sh
+bundle
 rake
 ```
 
@@ -37,12 +38,21 @@ Below is an example Ruby script that could be used on a Linux machine to downloa
 
 First set the credentials to use:
 
+### Linux/OS X
+
 ```sh
+export QAS_ElectronicUpdates_UserName=MyUserName
+export QAS_ElectronicUpdates_Password=MyPassword
+```
+
+### Windows
+
+```batchfile
 set QAS_ElectronicUpdates_UserName=MyUserName
 set QAS_ElectronicUpdates_Password=MyPassword
 ```
 
-Then run a ruby script similar to this:
+Then you can run a ruby script similar to this:
 
 ```ruby
 #!/usr/bin/env ruby
@@ -84,4 +94,5 @@ end
 This script was tested with the following Ruby versions and platforms:
 
  * Ruby 1.9.3p484 on Ubuntu 14.04.2 LTS;
- * Python 2.2.2p95 on Windows 8.1 (Build 9600).
+ * Ruby 2.1.0p0 on OS X Yosemite (10.10.2);
+ * Ruby 2.2.2p95 on Windows 8.1 (Build 9600).
