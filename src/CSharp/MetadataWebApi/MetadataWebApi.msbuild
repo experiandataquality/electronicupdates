@@ -8,6 +8,7 @@
     <OutputPath>$(SolutionDir)\BuildOutput</OutputPath>
     <RunTests Condition="'$(RunTests)' == ''">true</RunTests>
     <BuildProperties>Platform=$(Platform);OutputPath=$(OutputPath)</BuildProperties>
+    <DotNetExecPrefix Condition="'$(OS)' == 'Unix'">mono </DotNetExecPrefix>
   </PropertyGroup>
   <Target Name="Clean">
     <MSBuild Targets="Clean" Projects="$(SolutionFile)" Properties="Configuration=$(Configuration);$(BuildProperties)" />
@@ -29,8 +30,7 @@
     </PropertyGroup>
     <Message Text="Restoring NuGet packages..." Importance="normal" />
     <Exec Condition="'$(OS)' == 'Unix'" Command="chmod +x %22$(NuGetExePath)%22" />
-    <Exec Condition="'$(OS)' == 'Unix'" Command="mono %22$(NuGetExePath)%22 restore %22$(SolutionFile)%22" LogStandardErrorAsError="true" />
-    <Exec Condition="'$(OS)' != 'Unix'" Command="%22$(NuGetExePath)%22 restore %22$(SolutionFile)%22" LogStandardErrorAsError="true" />
+    <Exec Command="$(DotNetExecPrefix)%22$(NuGetExePath)%22 restore %22$(SolutionFile)%22" LogStandardErrorAsError="true" />
   </Target>
   <Target Name="Test">
     <ItemGroup Condition="'$(TestTool)' == ''">
@@ -43,7 +43,6 @@
       <TestContainer Include="$(OutputPath)\MetadataWebApi.*Test*.dll" />
     </ItemGroup>
     <Exec Condition="'$(OS)' == 'Unix'" Command="chmod +x %22$(TestTool)%22" />
-    <Exec Condition="'$(OS)' == 'Unix'" Command="mono %22$(TestTool)%22 @(TestContainer->'%22%(fullpath)%22', ' ')" WorkingDirectory="$(OutputPath)" />
-    <Exec Condition="'$(OS)' != 'Unix'" Command="%22$(TestTool)%22 @(TestContainer->'%22%(fullpath)%22', ' ')" WorkingDirectory="$(OutputPath)" />
+    <Exec Command="$(DotNetExecPrefix)%22$(TestTool)%22 @(TestContainer->'%22%(fullpath)%22', ' ')" WorkingDirectory="$(OutputPath)" />
   </Target>
 </Project>
