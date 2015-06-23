@@ -1,6 +1,6 @@
 language: csharp
 mono:
-  - alpha
+  - nightly
 
 solution: ./src/CSharp/MetadataWebApi/MetadataWebApi.sln
 script:
