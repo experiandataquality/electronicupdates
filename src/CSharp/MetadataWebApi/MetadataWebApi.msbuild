@@ -42,7 +42,7 @@
     <ItemGroup>
       <TestContainer Include="$(OutputPath)\MetadataWebApi.*Test*.dll" />
     </ItemGroup>
-    <Exec Condition="'$(OS)' == 'Unix'" Command="chmod +x %22$(TestTool)%22" />
-    <Exec Command="$(DotNetExecPrefix)%22$(TestTool)%22 @(TestContainer->'%22%(fullpath)%22', ' ')" WorkingDirectory="$(OutputPath)" />
+    <Exec Condition="'$(OS)' == 'Unix'" Command="chmod +x $(TestTool)" />
+    <Exec Command="$(DotNetExecPrefix)$(TestTool) @(TestContainer->'%(fullpath)', ' ')" WorkingDirectory="$(OutputPath)" />
   </Target>
 </Project>
