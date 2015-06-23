@@ -1,4 +1,7 @@
 language: csharp
+mono:
+  - 4.0.2
+
 solution: ./src/CSharp/MetadataWebApi/MetadataWebApi.sln
 script:
   - ./src/CSharp/MetadataWebApi/build.sh
