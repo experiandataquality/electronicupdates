@@ -32,7 +32,7 @@
     <Exec Condition="'$(OS)' == 'Unix'" Command="mono %22$(NuGetExePath)%22 restore %22$(SolutionFile)%22" LogStandardErrorAsError="true" />
     <Exec Condition="'$(OS)' != 'Unix'" Command="%22$(NuGetExePath)%22 restore %22$(SolutionFile)%22" LogStandardErrorAsError="true" />
   </Target>
-  <Target Name="Test" Condition="'$(OS)' != 'Unix'">
+  <Target Name="Test">
     <ItemGroup Condition="'$(TestTool)' == ''">
       <TestTool Include="$(SolutionDir)packages\xunit.runner.console.*\tools\xunit.console.exe" />
     </ItemGroup>
