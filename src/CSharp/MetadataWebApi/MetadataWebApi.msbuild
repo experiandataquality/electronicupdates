@@ -32,7 +32,7 @@
     <Exec Condition="'$(OS)' == 'Unix'" Command="chmod +x %22$(NuGetExePath)%22" />
     <Exec Command="$(DotNetExecPrefix)%22$(NuGetExePath)%22 restore %22$(SolutionFile)%22" LogStandardErrorAsError="true" />
   </Target>
-  <Target Name="Test">
+  <Target Name="Test" Condition="'$(OS)' != 'Unix'">
     <ItemGroup Condition="'$(TestTool)' == ''">
       <TestTool Include="$(SolutionDir)packages\xunit.runner.console.*\tools\xunit.console.exe" />
     </ItemGroup>
