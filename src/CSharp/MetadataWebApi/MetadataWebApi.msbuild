@@ -26,6 +26,7 @@
   </Target>
   <Target Name="AfterBuild" AfterTargets="Build;Rebuild">
     <CallTarget Targets="Test" Condition="'$(RunTests)' == 'true'" />
+    <CallTarget Targets="AuthenticodeSign" Condition=" '$(TF_BUILD)' == 'True' " />
   </Target>
   <Target Name="RestorePackages" Condition="'$(TRAVIS)' == ''">
     <PropertyGroup>
@@ -70,6 +71,17 @@
       <GitCommit>$(TRAVIS_COMMIT)</GitCommit>
     </PropertyGroup>
     <UpdateAssemblyConfiguration Condition="$(GitBranch) != '' and $(GitCommit) != ''" AssemblyInfoPath="$(SolutionDir)CommonAssemblyInfo.cs" Branch="$(GitBranch)" CommitId="$(GitCommit)" />
+  </Target>
+  <Target Name="AuthenticodeSign">
+    <PropertyGroup>
+      <SignToolCompanyName>Experian Data Quality</SignToolCompanyName>
+      <SignToolCompanyUrl>https://www.edq.com/</SignToolCompanyUrl>
+      <SignToolDescription></SignToolDescription>
+      <SignToolTimestampUrl>http://timestamp.comodoca.com/rfc3161</SignToolTimestampUrl>
+      <SignToolPath>$(MSBuildProgramFiles32)\Windows Kits\8.1\Bin\x86\signtool.exe</SignToolPath>
+      <ThumbprintSHA1>BC4E31278405D45B5705E631A0BC683F7F983BF2</ThumbprintSHA1>
+    </PropertyGroup>
+    <Exec Command="%22$(SignToolPath)%22 sign /sha1 $(ThumbprintSHA1) /v /d %22$(SignToolDescription)%22 /du %22$(SignToolCompanyUrl)%22 /fd sha1 /tr %22$(SignToolTimestampUrl)%22 /td sha1 %22$(TF_BUILD_BINARIESDIRECTORY)\MetadataWebApi.exe%22" />
   </Target>
   <UsingTask
     TaskName="UpdateAssemblyConfiguration"
