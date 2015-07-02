@@ -22,7 +22,7 @@
     <MSBuild Targets="Rebuild" Projects="$(SolutionFile)" Properties="Configuration=$(Configuration);$(BuildProperties)" />
   </Target>
   <Target Name="BeforeBuild" BeforeTargets="Build;Rebuild">
-    <CallTarget Targets="UpdateAssemblyConfiguration" />
+    <CallTarget Targets="UpdateAssemblyConfiguration" Condition="'$(OS)' != 'Unix'" />
   </Target>
   <Target Name="AfterBuild" AfterTargets="Build;Rebuild">
     <CallTarget Targets="Test" Condition="'$(RunTests)' == 'true'" />
