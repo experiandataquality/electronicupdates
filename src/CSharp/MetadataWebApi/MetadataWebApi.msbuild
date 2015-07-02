@@ -5,10 +5,12 @@
     <Platform>Any CPU</Platform>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">$(MSBuildThisFileDirectory)</SolutionDir>
     <SolutionFile>$(SolutionDir)MetadataWebApi.sln</SolutionFile>
-    <OutputPath>$(SolutionDir)\BuildOutput</OutputPath>
-    <RunTests Condition="'$(RunTests)' == ''">true</RunTests>
-    <BuildProperties>Platform=$(Platform);OutputPath=$(OutputPath)</BuildProperties>
+    <OutputPath Condition=" '$(TF_BUILD)' != 'True' ">$(SolutionDir)\BuildOutput</OutputPath>
+    <RunTests Condition="'$(RunTests)' == '' and '$(TF_BUILD)' != 'True' ">true</RunTests>
+    <BuildProperties Condition=" '$(TF_BUILD)' != 'True' ">Platform=$(Platform);OutputPath=$(OutputPath)</BuildProperties>
     <DotNetExecPrefix Condition="'$(OS)' == 'Unix'">mono </DotNetExecPrefix>
+    <CodeTaskFactoryAssembly Condition="'$(MSBuildToolsVersion)' != '14.0'">$(MSBuildToolsPath)\Microsoft.Build.Tasks.v$(MSBuildToolsVersion).dll</CodeTaskFactoryAssembly>
+    <CodeTaskFactoryAssembly Condition="'$(MSBuildToolsVersion)' == '14.0'">$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll</CodeTaskFactoryAssembly>
   </PropertyGroup>
   <Target Name="Clean">
     <MSBuild Targets="Clean" Projects="$(SolutionFile)" Properties="Configuration=$(Configuration);$(BuildProperties)" />
@@ -18,6 +20,9 @@
   </Target>
   <Target Name="Rebuild" DependsOnTargets="RestorePackages">
     <MSBuild Targets="Rebuild" Projects="$(SolutionFile)" Properties="Configuration=$(Configuration);$(BuildProperties)" />
+  </Target>
+  <Target Name="BeforeBuild" BeforeTargets="Build;Rebuild">
+    <CallTarget Targets="UpdateAssemblyConfiguration" />
   </Target>
   <Target Name="AfterBuild" AfterTargets="Build;Rebuild">
     <CallTarget Targets="Test" Condition="'$(RunTests)' == 'true'" />
@@ -45,4 +50,45 @@
     <Exec Condition="'$(OS)' == 'Unix'" Command="chmod +x %22$(TestTool)%22" />
     <Exec Command="$(DotNetExecPrefix)%22$(TestTool)%22 @(TestContainer->'%22%(fullpath)%22', ' ')" WorkingDirectory="$(OutputPath)" />
   </Target>
+  <Target Name="UpdateAssemblyConfiguration">
+    <PropertyGroup Condition="'$(APPVEYOR)' != ''">
+      <GitBranch>$(APPVEYOR_REPO_BRANCH)</GitBranch>
+      <GitCommit>$(APPVEYOR_REPO_COMMIT)</GitCommit>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(TF_BUILD)' != '' ">
+      <GitBranch Condition=" '$(TF_BUILD_SOURCEGETVERSION)' != '' ">$(TF_BUILD_SOURCEGETVERSION.Split(':')[1])</GitBranch>
+      <GitCommit Condition=" '$(TF_BUILD_SOURCEGETVERSION)' != '' ">$(TF_BUILD_SOURCEGETVERSION.Split(':')[2])</GitCommit>
+    </PropertyGroup>
+    <Exec Condition=" '$(TF_BUILD)' != '' and $(GitBranch) == '' " Command="git rev-parse --abbrev-ref HEAD" ConsoleToMSBuild="true" StandardOutputImportance="low">
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitBranch" />
+    </Exec>
+    <Exec Condition=" '$(TF_BUILD)' != '' and $(GitCommit) == '' " Command="git rev-parse HEAD" ConsoleToMSBuild="true" StandardOutputImportance="low">
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitCommit" />
+    </Exec>
+    <PropertyGroup Condition="'$(TRAVIS)' != ''">
+      <GitBranch>$(TRAVIS_BRANCH)</GitBranch>
+      <GitCommit>$(TRAVIS_COMMIT)</GitCommit>
+    </PropertyGroup>
+    <UpdateAssemblyConfiguration Condition="$(GitBranch) != '' and $(GitCommit) != ''" AssemblyInfoPath="$(SolutionDir)CommonAssemblyInfo.cs" Branch="$(GitBranch)" CommitId="$(GitCommit)" />
+  </Target>
+  <UsingTask
+    TaskName="UpdateAssemblyConfiguration"
+    TaskFactory="CodeTaskFactory"
+    AssemblyFile="$(CodeTaskFactoryAssembly)" >
+    <ParameterGroup>
+      <AssemblyInfoPath Required="true" />
+      <CommitId Required="true" />
+      <Branch Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System.IO" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+          string content = File.ReadAllText(AssemblyInfoPath);
+          content = content.Replace("[assembly: AssemblyConfiguration(\"\")]", "[assembly: AssemblyConfiguration(\"" + CommitId + "|" + Branch + "\")]");
+          File.WriteAllText(AssemblyInfoPath, content);
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
 </Project>
