@@ -16,10 +16,8 @@ The following prerequisites are required to compile and debug the application:
 
  * Microsoft Windows 7 SP1 (or later);
  * One of the following editions of [Microsoft Visual Studio](https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx):
-   * Visual Studio Community 2013 with Update 4 (or later);
-   * Visual Studio Premium 2013 with Update 4 (or later);
-   * Visual Studio Ultimate 2013 with Update 4 (or later);
-   * Visual Studio 2015 (or later).
+   * Visual Studio (Community, Premium or Ultimate) 2013 with Update 4 (or later);
+   * Visual Studio (Community, Professional or Enterprise) 2015 (or later).
 
 ### Runtime
 
@@ -64,8 +62,7 @@ MetadataWebApi.exe
 
 ## Compatibility
 
-This application has been compiled and tested on the following platforms:
+This sample code has been compiled and tested on the following platforms:
 
- * Visual Studio 2013 Premium with Update 4 on Windows 8.1 (Build 9600);
- * Visual Studio 2013 Premium with Update 5 on Windows 8.1 (Build 9600);
- * Visual Studio 2015 Enterprise on Windows 8.1 (Build 9600).
+ * Visual Studio Premium 2013 with Update 4 on Windows 8.1 (Build 9600);
+ * Visual Studio Enterprise 2015 on Windows 10 (Build 10240).
