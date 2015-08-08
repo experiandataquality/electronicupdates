@@ -22,7 +22,7 @@ The following prerequisites are required to compile and debug the application:
 
 #### Linux
 
- * [Mono](http://www.mono-project.com/download/) 4.0.1 (or later);
+ * [Mono](http://www.mono-project.com/download/) 4.0.2 (or later);
  * [Mono Develop](http://www.monodevelop.com/download/) 5.9.0 (or later).
 
 #### Windows
@@ -38,7 +38,7 @@ The following prerequisites are required to run the compiled application:
 
 ### Linux/OS X
 
- * [Mono](http://www.mono-project.com/download/) 4.0.1 (or later).
+ * [Mono](http://www.mono-project.com/download/) 4.0.2 (or later).
 
 ### Windows
 
