@@ -1,10 +1,18 @@
 # QAS Electronic Updates Metadata REST API C# Sample Integration Code
 
-| | Build Status |
-|:-:|:-:|
-| **Linux** | [![Build status](https://img.shields.io/travis/experiandataquality/electronicupdates/master.svg)](https://travis-ci.org/experiandataquality/electronicupdates) |
-| **OS X** | [![Build status](https://img.shields.io/travis/experiandataquality/electronicupdates/master.svg)](https://travis-ci.org/experiandataquality/electronicupdates) |
-| **Windows** | [![Build status](https://img.shields.io/appveyor/ci/experiandataquality/electronicupdates/master.svg)](https://ci.appveyor.com/project/experiandataquality/electronicupdates) |
+## Build Status
+
+### Linux/OS X
+
+[![Build status](https://img.shields.io/travis/experiandataquality/electronicupdates/master.svg)](https://travis-ci.org/experiandataquality/electronicupdates)
+
+[![Build history](https://ci-buildstats.azurewebsites.net/travisci/chart/experiandataquality/electronicupdates?branch=master&includeBuildsFromPullRequest=false)](https://travis-ci.org/experiandataquality/electronicupdates)
+
+### Windows
+
+[![Build status](https://img.shields.io/appveyor/ci/experiandataquality/electronicupdates/master.svg)](https://ci.appveyor.com/project/experiandataquality/electronicupdates)
+
+[![Build history](https://ci-buildstats.azurewebsites.net/appveyor/chart/experiandataquality/electronicupdates?branch=master&includeBuildsFromPullRequest=false)](https://ci.appveyor.com/project/experiandataquality/electronicupdates)
 
 ## Overview
 
