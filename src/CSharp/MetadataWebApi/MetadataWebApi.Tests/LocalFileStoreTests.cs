@@ -22,6 +22,11 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
 
             try
             {
+                if (File.Exists(dataFileName))
+                {
+                    File.Delete(dataFileName);
+                }
+
                 using (LocalFileStore target = new LocalFileStore())
                 {
                     // Act

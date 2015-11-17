@@ -8,7 +8,8 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace Experian.Qas.Updates.Metadata.WebApi.V1
 {
@@ -51,19 +52,15 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
 
             if (File.Exists(_dataFileName))
             {
-                DataContractSerializer serializer = new DataContractSerializer(typeof(ConcurrentDictionary<string, string>));
-
                 // Deserialize the available files from the local file store data file
-                using (Stream stream = File.OpenRead(_dataFileName))
-                {
-                    IDictionary<string, string> data = serializer.ReadObject(stream) as IDictionary<string, string>;
+                string json = File.ReadAllText(_dataFileName, Encoding.UTF8);
+                IDictionary<string, string> data = JsonConvert.DeserializeObject<IDictionary<string, string>>(json);
 
-                    if (data != null)
+                if (data != null)
+                {
+                    foreach (var pair in data)
                     {
-                        foreach (var pair in data)
-                        {
-                            _fileStore[pair.Key] = pair.Value;
-                        }
+                        _fileStore[pair.Key] = pair.Value;
                     }
                 }
             }
@@ -94,10 +91,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         /// <see langword="true" /> if a file with the hash specified by <paramref name="hash" />
         /// exists in the file store; otherwise <see langword="false" />.
         /// </returns>
-        public bool ContainsFile(string hash)
-        {
-            return _fileStore.ContainsKey(hash);
-        }
+        public bool ContainsFile(string hash) => _fileStore.ContainsKey(hash);
 
         /// <summary>
         /// Registers the specified file with the file store.
@@ -120,10 +114,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         /// <see langword="true" /> if a file with the hash specified by <paramref name="hash" />
         /// was found in the file store; otherwise <see langword="false" />.
         /// </returns>
-        public bool TryGetFilePath(string hash, out string path)
-        {
-            return _fileStore.TryGetValue(hash, out path);
-        }
+        public bool TryGetFilePath(string hash, out string path) => _fileStore.TryGetValue(hash, out path);
 
         /// <summary>
         /// Releases unmanaged and, optionally, managed resources.
@@ -142,12 +133,8 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
                 }
 
                 // Serialize the data currently stored in memory to disk
-                DataContractSerializer serializer = new DataContractSerializer(typeof(ConcurrentDictionary<string, string>));
-
-                using (Stream stream = File.Create(_dataFileName))
-                {
-                    serializer.WriteObject(stream, _fileStore);
-                }
+                string json = JsonConvert.SerializeObject(_fileStore, Formatting.Indented);
+                File.WriteAllText(_dataFileName, json, Encoding.UTF8);
 
                 _disposed = true;
             }

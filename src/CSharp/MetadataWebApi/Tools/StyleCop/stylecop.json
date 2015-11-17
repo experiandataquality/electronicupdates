@@ -1,0 +1,33 @@
+{
+  "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+  "settings": {
+    "documentationRules": {
+      "companyName": "Experian Data Quality",
+      "copyrightText": "Copyright (c) {ownerName}. All rights reserved.",
+      "documentExposedElements": true,
+      "documentInterfaces": true,
+      "documentInternalElements": true,
+      "documentPrivateElements": true,
+      "documentPrivateFields": true,
+      "fileNamingConvention": "metadata",
+      "xmlHeader": true,
+      "variables": {
+        "ownerName": "Experian",
+        "year": "2015"
+      }
+    },
+    "maintainabilityRules": {
+    },
+    "namingRules": {
+      "allowCommonHungarianPrefixes": true,
+      "allowedHungarianPrefixes": [
+      ]
+    },
+    "orderingRules": {
+    },
+    "readabilityRules": {
+    },
+    "spacingRules": {
+    }
+  }
+}
