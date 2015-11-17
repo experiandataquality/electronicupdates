@@ -33,7 +33,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         {
             if (value == null)
             {
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(nameof(value));
             }
 
             return await value.GetDownloadUriAsync(fileName, fileHash, null, null);

@@ -29,13 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{E1292E0F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StyleCop", "StyleCop", "{E2F00DAF-E66E-484E-BAF9-4353A4270F8F}"
 	ProjectSection(SolutionItems) = preProject
-		Tools\StyleCop\CustomDictionary.en-US.xml = Tools\StyleCop\CustomDictionary.en-US.xml
-		Tools\StyleCop\CustomDictionary.xml = Tools\StyleCop\CustomDictionary.xml
-		Tools\StyleCop\mssp7en.dll = Tools\StyleCop\mssp7en.dll
-		Tools\StyleCop\mssp7en.lex = Tools\StyleCop\mssp7en.lex
-		Tools\StyleCop\StyleCop.CSharp.dll = Tools\StyleCop\StyleCop.CSharp.dll
-		Tools\StyleCop\StyleCop.CSharp.Rules.dll = Tools\StyleCop\StyleCop.CSharp.Rules.dll
-		Tools\StyleCop\StyleCop.dll = Tools\StyleCop\StyleCop.dll
+		Tools\StyleCop\stylecop.json = Tools\StyleCop\stylecop.json
 		Tools\StyleCop\StyleCop.Targets = Tools\StyleCop\StyleCop.Targets
 	EndProjectSection
 EndProject

@@ -21,11 +21,6 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
     public class MetadataApi : IMetadataApi
     {
         /// <summary>
-        /// The QAS Electronic Updates Metadata API URI. This field is read-only.
-        /// </summary>
-        private readonly Uri _serviceUri;
-
-        /// <summary>
         /// The credentials to use to communicate with the QAS Electronic Updates Metadata API. This field is read-only.
         /// </summary>
         private readonly UserNamePassword _credentials = new UserNamePassword();
@@ -41,35 +36,26 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         {
             if (serviceUri == null)
             {
-                throw new ArgumentNullException("serviceUri");
+                throw new ArgumentNullException(nameof(serviceUri));
             }
 
-            _serviceUri = serviceUri;
+            ServiceUri = serviceUri;
         }
 
         /// <summary>
         /// Gets the URI of the QAS Electronic Updates Metadata API.
         /// </summary>
-        public Uri ServiceUri
-        {
-            get { return _serviceUri; }
-        }
+        public Uri ServiceUri { get; }
 
         /// <summary>
         /// Gets the user name to use to authenticate with the service.
         /// </summary>
-        public string UserName
-        {
-            get { return _credentials.UserName; }
-        }
+        public string UserName => _credentials.UserName;
 
         /// <summary>
         /// Gets the HTTP request content type.
         /// </summary>
-        protected virtual string ContentType
-        {
-            get { return "application/json"; }
-        }
+        protected virtual string ContentType => "application/json";
 
         /// <summary>
         /// Returns the available updates packages as an asynchronous operation.
@@ -135,7 +121,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
                 {
                     return null;
                 }
-                
+
                 return new Uri(downloadResponse.DownloadUri);
             }
             catch (Exception ex)
@@ -167,14 +153,14 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
             var assembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
             var assemblyName = assembly.GetName();
 
-            var contentTypeHeader = new MediaTypeWithQualityHeaderValue(this.ContentType);
+            var contentTypeHeader = new MediaTypeWithQualityHeaderValue(ContentType);
             var userAgentHeader = new ProductInfoHeaderValue(assemblyName.Name, assemblyName.Version.ToString());
 
             HttpClient client = new HttpClient();
 
             try
             {
-                client.BaseAddress = _serviceUri;
+                client.BaseAddress = ServiceUri;
 
                 // Add any other default and/or custom HTTP request headers here
                 client.DefaultRequestHeaders.Accept.Add(contentTypeHeader);
@@ -219,9 +205,6 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         /// <returns>
         /// The created instance of <see cref="MediaTypeFormatter"/>.
         /// </returns>
-        protected virtual MediaTypeFormatter CreateMediaTypeFormatter()
-        {
-            return new JsonMediaTypeFormatter();
-        }
+        protected virtual MediaTypeFormatter CreateMediaTypeFormatter() => new JsonMediaTypeFormatter();
     }
 }

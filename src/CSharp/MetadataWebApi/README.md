@@ -22,14 +22,13 @@ The following prerequisites are required to compile and debug the application:
 
 #### Linux
 
- * [Mono](http://www.mono-project.com/download/) 4.0.1 (or later);
+ * [Mono](http://www.mono-project.com/download/) 4.0.4 (or later);
  * [Mono Develop](http://www.monodevelop.com/download/) 5.9.0 (or later).
 
 #### Windows
 
  * Microsoft Windows 7 SP1 (or later);
  * One of the following editions of [Microsoft Visual Studio](https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx):
-   * Visual Studio (Community, Premium or Ultimate) 2013 with Update 4 (or later);
    * Visual Studio (Community, Professional or Enterprise) 2015 (or later).
 
 ### Runtime
@@ -38,12 +37,12 @@ The following prerequisites are required to run the compiled application:
 
 ### Linux/OS X
 
- * [Mono](http://www.mono-project.com/download/) 4.0.1 (or later).
+ * [Mono](http://www.mono-project.com/download/) 4.0.4 (or later).
 
 ### Windows
 
  * Microsoft Windows 7 SP1 (or later);
- * Microsoft .NET Framework 4.5 (or later).
+ * Microsoft .NET Framework 4.6 (or later).
 
 ## Compliation
 
@@ -99,6 +98,4 @@ MetadataWebApi.exe
 This sample code has been compiled and tested on the following platforms:
 
  * MonoDevelop 5.9.0 on Ubuntu 14.04.2 LTS;
-
- * Visual Studio Premium 2013 with Update 4 on Windows 8.1 (Build 9600);
- * Visual Studio Enterprise 2015 on Windows 10 (Build 10240).
+ * Visual Studio Enterprise 2015 on Windows 10 (OS Build 10586.3).
