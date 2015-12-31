@@ -78,12 +78,15 @@
     <PropertyGroup>
       <SignToolCompanyName>Experian Data Quality</SignToolCompanyName>
       <SignToolCompanyUrl>https://www.edq.com/</SignToolCompanyUrl>
-      <SignToolDescription></SignToolDescription>
-      <SignToolTimestampUrl>http://timestamp.comodoca.com/rfc3161</SignToolTimestampUrl>
+      <SignToolDescription>QAS Electronic Updates C# Sample Code</SignToolDescription>
+      <SignToolTimestampUrlSHA1>http://timestamp.comodoca.com/authenticode</SignToolTimestampUrlSHA1>
+      <SignToolTimestampUrlSHA256>http://timestamp.comodoca.com/rfc3161</SignToolTimestampUrlSHA256>
       <SignToolPath>$(MSBuildProgramFiles32)\Windows Kits\8.1\Bin\x86\signtool.exe</SignToolPath>
       <ThumbprintSHA1>BC4E31278405D45B5705E631A0BC683F7F983BF2</ThumbprintSHA1>
+      <ThumbprintSHA256>EA14BB645F887F15B07FF07E3F7F62ABA2F0E667</ThumbprintSHA256>
     </PropertyGroup>
-    <Exec Command="%22$(SignToolPath)%22 sign /sha1 $(ThumbprintSHA1) /v /d %22$(SignToolDescription)%22 /du %22$(SignToolCompanyUrl)%22 /fd sha1 /tr %22$(SignToolTimestampUrl)%22 /td sha1 %22$(TF_BUILD_BINARIESDIRECTORY)\MetadataWebApi.exe%22" />
+    <Exec Command="%22$(SignToolPath)%22 sign /sha1 $(ThumbprintSHA1) /v /d %22$(SignToolDescription)%22 /du %22$(SignToolCompanyUrl)%22 /t %22$(SignToolTimestampUrlSHA1)%22 %22$(TF_BUILD_BINARIESDIRECTORY)\MetadataWebApi.exe%22" />
+    <Exec Command="%22$(SignToolPath)%22 sign /sha1 $(ThumbprintSHA256) /as /v /d %22$(SignToolDescription)%22 /du %22$(SignToolCompanyUrl)%22 /fd sha256 /tr %22$(SignToolTimestampUrlSHA256)%22 /td sha256 %22$(TF_BUILD_BINARIESDIRECTORY)\MetadataWebApi.exe%22" />
   </Target>
   <UsingTask
     TaskName="UpdateAssemblyConfiguration"
