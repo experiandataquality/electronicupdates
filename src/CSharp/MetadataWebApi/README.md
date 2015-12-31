@@ -22,7 +22,7 @@ The following prerequisites are required to compile and debug the application:
 
 #### Linux
 
- * [Mono](http://www.mono-project.com/download/) 4.0.2 (or later);
+ * [Mono](http://www.mono-project.com/download/) 4.2.1 (or later);
  * [Mono Develop](http://www.monodevelop.com/download/) 5.9.0 (or later).
 
 #### Windows
@@ -38,7 +38,7 @@ The following prerequisites are required to run the compiled application:
 
 ### Linux/OS X
 
- * [Mono](http://www.mono-project.com/download/) 4.0.2 (or later).
+ * [Mono](http://www.mono-project.com/download/) 4.2.1 (or later).
 
 ### Windows
 
@@ -64,7 +64,7 @@ To compile the application, you can do any of the following:
 To set up the application for usage you could either:
 
  1. Set your credentials in the ```QAS_ElectronicUpdates_UserName``` and ```QAS_ElectronicUpdates_Password``` environment variables just before running the application (**recommended**);
- 1. Configure the credentials in the ```MetadataWebApi.exe.config``` configuration file. If you place your credentials in this file ensure that you have adequate security controls in place to protect your account credentials as they are sensitive. 
+ 1. Configure the credentials in the ```MetadataWebApi.exe.config``` configuration file. If you place your credentials in this file ensure that you have adequate security controls in place to protect your account credentials as they are sensitive.
 
 Other approaches are possible but are considered outside the scope of this documentation.
 
