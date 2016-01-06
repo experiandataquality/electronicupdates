@@ -23,6 +23,17 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
             mock.Setup((p) => p.GetConfigSetting("UserName")).Returns("MyUserName");
             mock.Setup((p) => p.GetConfigSetting("Password")).Returns("MyPassword");
 
+            Uri expectedUri;
+
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("QAS_ElectronicUpdates_ServiceUri")))
+            {
+                expectedUri = new Uri(Environment.GetEnvironmentVariable("QAS_ElectronicUpdates_ServiceUri"));
+            }
+            else
+            {
+                expectedUri = new Uri("https://ws.updates.qas.com/metadata/V1/");
+            }
+
             MetadataApiFactory target = mock.Object;
 
             // Act
@@ -31,7 +42,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
             // Assert
             Assert.NotNull(result);
             Assert.IsType(typeof(MetadataApi), result);
-            Assert.Equal(new Uri("https://ws.updates.qas.com/metadata/V1/"), result.ServiceUri);
+            Assert.Equal(expectedUri, result.ServiceUri);
             Assert.Equal("MyUserName", result.UserName);
         }
 
