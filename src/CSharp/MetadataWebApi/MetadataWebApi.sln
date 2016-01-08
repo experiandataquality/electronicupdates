@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetadataWebApi", "MetadataWebApi\MetadataWebApi.csproj", "{B3A7B441-933E-49CF-B567-EF9D6C8333E5}"
 EndProject
@@ -19,7 +19,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		MetadataWebApi.snk = MetadataWebApi.snk
 		MetadataWebApi.targets = MetadataWebApi.targets
 		..\..\..\README.md = ..\..\..\README.md
-		Settings.StyleCop = Settings.StyleCop
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{E1292E0F-FAA1-4D92-B06C-92E1661F74A9}"
@@ -29,14 +28,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{E1292E0F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StyleCop", "StyleCop", "{E2F00DAF-E66E-484E-BAF9-4353A4270F8F}"
 	ProjectSection(SolutionItems) = preProject
-		Tools\StyleCop\CustomDictionary.en-US.xml = Tools\StyleCop\CustomDictionary.en-US.xml
-		Tools\StyleCop\CustomDictionary.xml = Tools\StyleCop\CustomDictionary.xml
-		Tools\StyleCop\mssp7en.dll = Tools\StyleCop\mssp7en.dll
-		Tools\StyleCop\mssp7en.lex = Tools\StyleCop\mssp7en.lex
-		Tools\StyleCop\StyleCop.CSharp.dll = Tools\StyleCop\StyleCop.CSharp.dll
-		Tools\StyleCop\StyleCop.CSharp.Rules.dll = Tools\StyleCop\StyleCop.CSharp.Rules.dll
-		Tools\StyleCop\StyleCop.dll = Tools\StyleCop\StyleCop.dll
 		Tools\StyleCop\StyleCop.Targets = Tools\StyleCop\StyleCop.Targets
+		Tools\StyleCop\stylecop.json = Tools\StyleCop\stylecop.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{137CD29F-91BE-4E16-A229-7B9321281179}"

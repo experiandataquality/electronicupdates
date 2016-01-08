@@ -1,10 +1,9 @@
-﻿//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 // <copyright file="CommonAssemblyInfo.cs" company="Experian Data Quality">
 //   Copyright (c) Experian. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System;
 using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
@@ -14,7 +13,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright © Experian. All rights reserved.")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyProduct("QAS Electronic Updates")]
-[assembly: AssemblyTrademark("")]
 
 [assembly: ComVisible(false)]
 

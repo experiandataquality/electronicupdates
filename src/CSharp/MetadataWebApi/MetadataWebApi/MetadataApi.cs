@@ -135,7 +135,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
                 {
                     return null;
                 }
-                
+
                 return new Uri(downloadResponse.DownloadUri);
             }
             catch (Exception ex)
