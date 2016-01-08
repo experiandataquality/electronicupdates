@@ -19,10 +19,10 @@ build:
   project: src\CSharp\MetadataWebApi\MetadataWebApi.msbuild
   verbosity: minimal
 
-after_build: 
+after_build:
     - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
     - pip install codecov
-    - codecov -f "src\BuildOutput\MetadataWebApi_coverage.xml"
+    - codecov -f "src\CSharp\MetadataWebApi\BuildOutput\MetadataWebApi_coverage.xml"
 
 nuget:
   disable_publish_on_pr: true
