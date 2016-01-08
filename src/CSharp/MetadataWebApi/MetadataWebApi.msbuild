@@ -64,10 +64,12 @@
   </Target>
   <Target Name="UpdateAssemblyConfiguration">
     <PropertyGroup Condition="'$(APPVEYOR)' != ''">
+      <BuildSystem>AppVeyor</BuildSystem>
       <GitBranch>$(APPVEYOR_REPO_BRANCH)</GitBranch>
       <GitCommit>$(APPVEYOR_REPO_COMMIT)</GitCommit>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(TF_BUILD)' != '' ">
+      <BuildSystem>TFS</BuildSystem>
       <GitBranch Condition=" '$(TF_BUILD_SOURCEGETVERSION)' != '' ">$(TF_BUILD_SOURCEGETVERSION.Split(':')[1])</GitBranch>
       <GitCommit Condition=" '$(TF_BUILD_SOURCEGETVERSION)' != '' ">$(TF_BUILD_SOURCEGETVERSION.Split(':')[2])</GitCommit>
     </PropertyGroup>
@@ -81,7 +83,7 @@
       <GitBranch>$(TRAVIS_BRANCH)</GitBranch>
       <GitCommit>$(TRAVIS_COMMIT)</GitCommit>
     </PropertyGroup>
-    <UpdateAssemblyConfiguration Condition="$(GitBranch) != '' and $(GitCommit) != ''" AssemblyInfoPath="$(SolutionDir)CommonAssemblyInfo.cs" Branch="$(GitBranch)" CommitId="$(GitCommit)" />
+    <UpdateAssemblyConfiguration Condition="$(BuildSystem) != '' and $(GitBranch) != '' and $(GitCommit) != ''" AssemblyInfoPath="$(SolutionDir)CommonAssemblyInfo.cs" BuildSystem="$(BuildSystem)" Branch="$(GitBranch)" CommitId="$(GitCommit)" />
   </Target>
   <Target Name="AuthenticodeSign">
     <PropertyGroup>
@@ -105,6 +107,7 @@
       <AssemblyInfoPath Required="true" />
       <CommitId Required="true" />
       <Branch Required="true" />
+      <BuildSystem Required="true" />
     </ParameterGroup>
     <Task>
       <Using Namespace="System.IO" />
@@ -112,6 +115,10 @@
         <![CDATA[
           string content = File.ReadAllText(AssemblyInfoPath);
           content = content.Replace("[assembly: AssemblyConfiguration(\"\")]", "[assembly: AssemblyConfiguration(\"" + CommitId + "|" + Branch + "\")]");
+          content += Environment.NewLine + "[assembly: AssemblyMetadata(\"BuildSystem\", \"" + BuildSystem + "\")]";
+          content += Environment.NewLine + "[assembly: AssemblyMetadata(\"GitBranch\", \"" + Branch + "\")]";
+          content += Environment.NewLine + "[assembly: AssemblyMetadata(\"GitCommit\", \"" + CommitId + "\")]";
+          content += Environment.NewLine;
           File.WriteAllText(AssemblyInfoPath, content);
         ]]>
       </Code>

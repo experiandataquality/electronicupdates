@@ -26,7 +26,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         /// </exception>
         public virtual IMetadataApi CreateMetadataApi()
         {
-            // Get the credentials to use to connect to the QAS Electronic Updates Metadata REST API            
+            // Get the credentials to use to connect to the QAS Electronic Updates Metadata REST API
             string userName = GetConfigSetting("UserName");
             string password = GetConfigSetting("Password");
 
@@ -59,7 +59,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         /// </summary>
         /// <param name="name">The name of the application configuration setting to obtain.</param>
         /// <returns>
-        /// The value of the specified application configuration setting, if found; otherwise <see cref="String.Empty"/>.
+        /// The value of the specified application configuration setting, if found; otherwise <see cref="string.Empty"/>.
         /// </returns>
         internal static string GetAppSetting(string name)
         {
@@ -84,7 +84,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         /// </summary>
         /// <param name="name">The name of the configuration setting to obtain.</param>
         /// <returns>
-        /// The value of the specified configuration setting, if found; otherwise <see cref="String.Empty"/>.
+        /// The value of the specified configuration setting, if found; otherwise <see cref="string.Empty"/>.
         /// </returns>
         protected internal virtual string GetConfigSetting(string name)
         {
