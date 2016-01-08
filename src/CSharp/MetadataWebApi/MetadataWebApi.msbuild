@@ -9,6 +9,7 @@
     <RunTests Condition="'$(RunTests)' == '' and '$(TF_BUILD)' != 'True' ">true</RunTests>
     <BuildProperties Condition=" '$(TF_BUILD)' != 'True' ">Platform=$(Platform);OutputPath=$(OutputPath)</BuildProperties>
     <DotNetExecPrefix Condition="'$(OS)' == 'Unix'">mono </DotNetExecPrefix>
+    <EnableCodeCoverage Condition="'$(EnableCodeCoverage)' == '' and '$(OS)' != 'Unix'">true</EnableCodeCoverage>
     <CodeTaskFactoryAssembly Condition="'$(MSBuildToolsVersion)' != '14.0'">$(MSBuildToolsPath)\Microsoft.Build.Tasks.v$(MSBuildToolsVersion).dll</CodeTaskFactoryAssembly>
     <CodeTaskFactoryAssembly Condition="'$(MSBuildToolsVersion)' == '14.0'">$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll</CodeTaskFactoryAssembly>
   </PropertyGroup>
@@ -48,9 +49,17 @@
     <ItemGroup>
       <TestContainer Include="$(OutputPath)\MetadataWebApi.*Test*.dll" />
     </ItemGroup>
+    <PropertyGroup>
+      <_TestCommand>@(TestContainer->'%22%(fullpath)%22', ' ')</_TestCommand>
+      <_CodeCoverageXml>$(OutputPath)\MetadataWebApi_coverage.xml</_CodeCoverageXml>
+      <_OpenCoverVersion>4.6.166</_OpenCoverVersion>
+      <_OpenCoverTool>%22$(SolutionDir)packages\OpenCover.$(_OpenCoverVersion)\Tools\OpenCover.Console.exe%22</_OpenCoverTool>
+      <_OpenCoverOptions>-register:user -hideskipped:All -mergebyhash -skipautoprops -filter:%22+[*]* -[xunit*]* -[*Tests]*%22 -returntargetcode -output:%22$(_CodeCoverageXml)%22</_OpenCoverOptions>
+    </PropertyGroup>
     <Message Text="Running tests..." Importance="high" />
     <Exec Condition="'$(OS)' == 'Unix'" Command="chmod +x %22$(TestTool)%22" />
-    <Exec Command="$(DotNetExecPrefix)%22$(TestTool)%22 @(TestContainer->'%22%(fullpath)%22', ' ')" WorkingDirectory="$(OutputPath)" />
+    <Exec Condition="'$(EnableCodeCoverage)' != 'true'" Command="$(DotNetExecPrefix)%22$(TestTool)%22 $(_TestCommand)" WorkingDirectory="$(OutputPath)" />
+    <Exec Condition="'$(EnableCodeCoverage)' == 'true'" Command="$(_OpenCoverTool) $(_OpenCoverOptions) -target:$(TestTool) -targetargs:$(_TestCommand)" WorkingDirectory="$(OutputPath)" />
     <Message Text="Tests complete." Importance="high" />
   </Target>
   <Target Name="UpdateAssemblyConfiguration">
