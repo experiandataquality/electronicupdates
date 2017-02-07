@@ -18,8 +18,8 @@ Further documentation of the script is provided by the comments in the Ruby code
 
 To set up the gem for usage you could either:
 
- 1. Set your credentials in the ```QAS_ElectronicUpdates_UserName``` and ```QAS_ElectronicUpdates_Password``` environment variables just before running the script (**recommended**);
- 1. Hard-code the credentials into the code that uses the gem. This approach is **not** recommended as the credentials are stored in plaintext and could represent a security risk.
+ 1. Set your authentication token in the ```QAS_ElectronicUpdates_Token``` environment variable just before running the script (**recommended**);
+ 1. Hard-code the token into the code that uses the gem. This approach is **not** recommended as the token is stored in plaintext and could represent a security risk.
 
 Other approaches are possible but are considered outside the scope of this documentation.
 
@@ -36,20 +36,18 @@ rake
 
 Below is an example Ruby script that could be used on a Linux machine to download all the latest data files from QAS Electronic Updates onto the local machine.
 
-First set the credentials to use:
+First set the token to use:
 
 ### Linux/OS X
 
 ```sh
-export QAS_ElectronicUpdates_UserName=MyUserName
-export QAS_ElectronicUpdates_Password=MyPassword
+export QAS_ElectronicUpdates_Token=MyToken
 ```
 
 ### Windows
 
 ```batchfile
-set QAS_ElectronicUpdates_UserName=MyUserName
-set QAS_ElectronicUpdates_Password=MyPassword
+set QAS_ElectronicUpdates_Token=MyToken
 ```
 
 Then you can run a ruby script similar to this:

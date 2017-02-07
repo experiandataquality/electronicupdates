@@ -6,20 +6,13 @@
 module ElectronicUpdates
 
   # Base URI of REST API
-  @@serviceUri = "https://ws.updates.qas.com/metadata/v1/"
+  @@serviceUri = "https://ws.updates.qas.com/metadata/v2/"
 
   # Get credentials from environment variables
-  @@userName = ENV["QAS_ElectronicUpdates_UserName"]
-  @@password = ENV["QAS_ElectronicUpdates_Password"]
+  @@authToken = ENV["QAS_ElectronicUpdates_Token"]
 
   # Construct User-Agent HTTP header
   @@userAgent = "MetadataWebApi-Ruby-%s/%s" % [RUBY_PLATFORM, RUBY_VERSION]
-
-  @@headers = {
-    :"accept" => "json",
-    :"content-type" => "application/json; charset=UTF-8",
-    :"User-Agent" => @userAgent
-  }
 
   ##
   # Gets the available packages that can be downloaded.
@@ -35,14 +28,14 @@ module ElectronicUpdates
 
     self.ensureCredentials()
 
-    @packagesPayload = {
-      "usernamePassword" => {
-        "UserName" => @@userName,
-        "Password" => @@password
-      }
-    }.to_json
+    @@headers = {
+      :"accept" => "json",
+      :"content-type" => "application/json; charset=UTF-8",
+      :"User-Agent" => @userAgent,
+      :"UserToken" => @@authToken
+    }
 
-    @packageResponse = RestClient.post "%s%s" % [@@serviceUri, "packages"], @packagesPayload, @@headers
+	  @packageResponse = RestClient::Request.execute(:method => :post, :url => "%s%s" % [@@serviceUri, "packages"], :payload => nil, :headers => @@headers, :verify_ssl => true)
     return JSON.parse(@packageResponse)
 
   end
@@ -74,19 +67,22 @@ module ElectronicUpdates
     self.ensureCredentials()
 
     @downloadPayload = {
-      "usernamePassword" => {
-        "UserName" => @@userName,
-        "Password" => @@password
-      },
       "fileDownloadRequest" => {
         "FileName" => fileName,
         "FileMd5Hash" => fileHash
       }
     }.to_json
-    
-    @downloadResponse = RestClient.post "%s%s" % [@@serviceUri, "filedownload"], @downloadPayload, @@headers
+
+    @@headers = {
+      :"accept" => "json",
+      :"content-type" => "application/json; charset=UTF-8",
+      :"User-Agent" => @userAgent,
+      :"UserToken" => @@authToken
+    }
+
+	  @downloadResponse = RestClient::Request.execute(:method => :post, :url => "%s%s" % [@@serviceUri, "filedownload"], :payload => @downloadPayload, :headers => @@headers, :verify_ssl => true)
     @downloadJson = JSON.parse(@downloadResponse)
-    
+
     return @downloadJson["DownloadUri"]
 
   end
@@ -95,25 +91,23 @@ module ElectronicUpdates
   # Sets the specified credentials to use with the QAS Electronic Updates Metadata REST API.
   #
   # Arguments:
-  #   userName: The user name to use. (String)
-  #   password: The password to use. (String)
+  #   token: The authentication token to use. (String)
   #
   # Example:
-  #   >> ElectronicUpdates::setCredentials("MyUserName", "MyPassword")
+  #   >> ElectronicUpdates::setCredentials("MyToken")
   #
-  def self.setCredentials(userName, password)
-    @@userName = userName
-    @@password = password
+  def self.setToken(token)
+    @@authToken = token
   end
 
   ##
   # Gets the current user name configured for use with the QAS Electronic Updates Metadata REST API.
   #
   # Example:
-  #   >> ElectronicUpdates:getUserName()
+  #   >> ElectronicUpdates:getToken()
   #
-  def self.getUserName()
-      return @@userName;
+  def self.getToken()
+      return @@authToken;
   end
 
   private
@@ -122,9 +116,9 @@ module ElectronicUpdates
   # Ensures that credentials are configured.
   def self.ensureCredentials()
 
-    if @@userName === nil or @@userName.empty? or @@password === nil or @@password.empty? then
-    
-      raise "No QAS Electronic Updates credentials are configured."
+    if @@authToken === nil or @@authToken.empty? then
+
+      raise "Electronic Updates authentication token has not been configured."
 
     end
 
