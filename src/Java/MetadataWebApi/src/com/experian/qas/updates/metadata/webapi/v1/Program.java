@@ -46,7 +46,7 @@ public class Program {
     /**
      * The root folder to download data to.
      */
-    private static final String rootDownloadPath = "C:\\QASData";
+    private static final String rootDownloadPath = "QASData";
 
     /**
      * Calculates the MD5 hash of the specified file.
