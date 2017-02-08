@@ -31,13 +31,8 @@ Public Interface IMetadataApi
     Function GetDownloadUri(ByVal fileName As String, ByVal fileHash As String, ByVal startAtByte As Long?, ByVal endAtByte As Long?) As Uri
 
     ''' <summary>
-    ''' Gets or sets the password to use to authenticate with the service.
+    ''' Gets or sets the token used to authenticate with the service.
     ''' </summary>
-    Property Password As String
-
-    ''' <summary>
-    ''' Gets or sets the user name to use to authenticate with the service.
-    ''' </summary>
-    Property UserName As String
+    Property Token As String
 
 End Interface
