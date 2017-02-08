@@ -6,7 +6,7 @@
 
 using System.Runtime.Serialization;
 
-namespace Experian.Qas.Updates.Metadata.WebApi.V1
+namespace Experian.Qas.Updates.Metadata.WebApi.V2
 {
     /// <summary>
     /// A class representing details of a request to download a file.

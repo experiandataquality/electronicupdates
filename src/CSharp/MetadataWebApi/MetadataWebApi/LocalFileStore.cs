@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 
-namespace Experian.Qas.Updates.Metadata.WebApi.V1
+namespace Experian.Qas.Updates.Metadata.WebApi.V2
 {
     /// <summary>
     /// A class representing a file store that stores the available data files in a

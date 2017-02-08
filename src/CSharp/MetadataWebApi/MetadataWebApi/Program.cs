@@ -16,7 +16,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Experian.Qas.Updates.Metadata.WebApi.V1
+namespace Experian.Qas.Updates.Metadata.WebApi.V2
 {
     /// <summary>
     /// A class representing an example implementation of the QAS Electronic Updates Metadata API.  This class cannot be inherited.
@@ -74,8 +74,6 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
             IMetadataApi service = factory.CreateMetadataApi();
 
             Console.WriteLine("QAS Electronic Updates Metadata REST API: {0}", service.ServiceUri);
-            Console.WriteLine();
-            Console.WriteLine("User Name: {0}", service.UserName);
             Console.WriteLine();
 
             // Query the packages available to the account

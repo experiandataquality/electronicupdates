@@ -9,7 +9,7 @@ using System.Configuration;
 using Moq;
 using Xunit;
 
-namespace Experian.Qas.Updates.Metadata.WebApi.V1
+namespace Experian.Qas.Updates.Metadata.WebApi.V2
 {
     public static class MetadataApiFactoryTests
     {
@@ -20,8 +20,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
             Mock<MetadataApiFactory> mock = new Mock<MetadataApiFactory>();
 
             mock.CallBase = true;
-            mock.Setup((p) => p.GetConfigSetting("UserName")).Returns("MyUserName");
-            mock.Setup((p) => p.GetConfigSetting("Password")).Returns("MyPassword");
+            mock.Setup((p) => p.GetConfigSetting("Token")).Returns("AuthToken");
 
             Uri expectedUri;
 
@@ -31,7 +30,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
             }
             else
             {
-                expectedUri = new Uri("https://ws.updates.qas.com/metadata/V1/");
+                expectedUri = new Uri("https://ws.updates.qas.com/metadata/V2/");
             }
 
             MetadataApiFactory target = mock.Object;
@@ -43,7 +42,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
             Assert.NotNull(result);
             Assert.IsType(typeof(MetadataApi), result);
             Assert.Equal(expectedUri, result.ServiceUri);
-            Assert.Equal("MyUserName", result.UserName);
+            Assert.Equal("AuthToken", result.Token);
         }
 
         [Fact]
@@ -53,9 +52,8 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
             Mock<MetadataApiFactory> mock = new Mock<MetadataApiFactory>();
 
             mock.CallBase = true;
-            mock.Setup((p) => p.GetConfigSetting("ServiceUri")).Returns("https://localhost/metadata/V1/");
-            mock.Setup((p) => p.GetConfigSetting("UserName")).Returns("MyUserName");
-            mock.Setup((p) => p.GetConfigSetting("Password")).Returns("MyPassword");
+            mock.Setup((p) => p.GetConfigSetting("ServiceUri")).Returns("https://localhost/metadata/V2/");
+            mock.Setup((p) => p.GetConfigSetting("Token")).Returns("AuthToken");
 
             MetadataApiFactory target = mock.Object;
 
@@ -65,8 +63,8 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
             // Assert
             Assert.NotNull(result);
             Assert.IsType(typeof(MetadataApi), result);
-            Assert.Equal(new Uri("https://localhost/metadata/V1/"), result.ServiceUri);
-            Assert.Equal("MyUserName", result.UserName);
+            Assert.Equal(new Uri("https://localhost/metadata/V2/"), result.ServiceUri);
+            Assert.Equal("AuthToken", result.Token);
         }
 
         [Fact]
@@ -77,8 +75,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
 
             mock.CallBase = true;
             mock.Setup((p) => p.GetConfigSetting("ServiceUri")).Returns("NotAUri");
-            mock.Setup((p) => p.GetConfigSetting("UserName")).Returns("MyUserName");
-            mock.Setup((p) => p.GetConfigSetting("Password")).Returns("MyPassword");
+            mock.Setup((p) => p.GetConfigSetting("Token")).Returns("AuthToken");
 
             MetadataApiFactory target = mock.Object;
 
@@ -88,35 +85,18 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
             // Assert
             Assert.NotNull(result);
             Assert.IsType(typeof(MetadataApi), result);
-            Assert.Equal(new Uri("https://ws.updates.qas.com/metadata/V1/"), result.ServiceUri);
-            Assert.Equal("MyUserName", result.UserName);
+            Assert.Equal(new Uri("https://ws.updates.qas.com/metadata/V2/"), result.ServiceUri);
+            Assert.Equal("AuthToken", result.Token);
         }
 
         [Fact]
-        public static void MetadataApiFactory_CreateMetadataApi_Throws_If_No_User_Name_Configured()
+        public static void MetadataApiFactory_CreateMetadataApi_Throws_If_No_Token_Configured()
         {
             // Arrange
             Mock<MetadataApiFactory> mock = new Mock<MetadataApiFactory>();
 
             mock.CallBase = true;
-            mock.Setup((p) => p.GetConfigSetting("UserName")).Returns(string.Empty);
-            mock.Setup((p) => p.GetConfigSetting("Password")).Returns("MyPassword");
-
-            MetadataApiFactory target = mock.Object;
-
-            // Act and Assert
-            Assert.Throws<ConfigurationErrorsException>(() => target.CreateMetadataApi());
-        }
-
-        [Fact]
-        public static void MetadataApiFactory_CreateMetadataApi_Throws_If_No_Password_Configured()
-        {
-            // Arrange
-            Mock<MetadataApiFactory> mock = new Mock<MetadataApiFactory>();
-
-            mock.CallBase = true;
-            mock.Setup((p) => p.GetConfigSetting("UserName")).Returns("MyUserName");
-            mock.Setup((p) => p.GetConfigSetting("Password")).Returns(string.Empty);
+            mock.Setup((p) => p.GetConfigSetting("Token")).Returns(string.Empty);
 
             MetadataApiFactory target = mock.Object;
 

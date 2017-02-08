@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Experian.Qas.Updates.Metadata.WebApi.V1
+namespace Experian.Qas.Updates.Metadata.WebApi.V2
 {
     public class IntegrationTests
     {

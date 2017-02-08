@@ -7,10 +7,10 @@
 using System;
 using Xunit;
 
-namespace Experian.Qas.Updates.Metadata.WebApi.V1
+namespace Experian.Qas.Updates.Metadata.WebApi.V2
 {
     /// <summary>
-    /// A test that requires service credentials to be configured as environment variables. This class cannot be inherited.
+    /// A test that requires the authentication token to be configured as an environment variable. This class cannot be inherited.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     internal sealed class RequiresServiceCredentialsFactAttribute : FactAttribute
@@ -21,10 +21,9 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         public RequiresServiceCredentialsFactAttribute()
             : base()
         {
-            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("QAS_ElectronicUpdates_UserName")) ||
-                string.IsNullOrEmpty(Environment.GetEnvironmentVariable("QAS_ElectronicUpdates_Password")))
+            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("QAS_ElectronicUpdates_Token")))
             {
-                this.Skip = "No service credentials are configured.";
+                this.Skip = "Authentication token has not been configured.";
             }
         }
     }

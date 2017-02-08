@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Moq;
 using Xunit;
 
-namespace Experian.Qas.Updates.Metadata.WebApi.V1
+namespace Experian.Qas.Updates.Metadata.WebApi.V2
 {
     public static class IMetadataApiExtensionsTests
     {

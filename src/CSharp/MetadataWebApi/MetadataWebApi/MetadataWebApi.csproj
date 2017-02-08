@@ -70,7 +70,6 @@
     <Compile Include="DataFile.cs" />
     <Compile Include="FileDownloadReply.cs" />
     <Compile Include="FileDownloadRequest.cs" />
-    <Compile Include="GetAvailablePackagesRequest.cs" />
     <Compile Include="GetDownloadUriRequest.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IFileStore.cs" />
@@ -85,7 +84,6 @@
     <Compile Include="PackageGroup.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserNamePassword.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\MetadataWebApi.snk">
@@ -94,7 +92,9 @@
     <None Include="..\MetadataWebApi.targets">
       <Link>MetadataWebApi.targets</Link>
     </None>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="app.manifest" />
     <None Include="packages.config" />
   </ItemGroup>

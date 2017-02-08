@@ -7,7 +7,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Experian.Qas.Updates.Metadata.WebApi.V1
+namespace Experian.Qas.Updates.Metadata.WebApi.V2
 {
     /// <summary>
     /// Defines the interface to the QAS Electronic Updates Metadata API.
@@ -20,9 +20,9 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         Uri ServiceUri { get; }
 
         /// <summary>
-        /// Gets the user name to use to authenticate with the service.
+        /// Gets the authentication token used to communicate with the service.
         /// </summary>
-        string UserName { get; }
+        string Token { get; }
 
         /// <summary>
         /// Returns the available updates packages as an asynchronous operation.
@@ -46,10 +46,9 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         Task<Uri> GetDownloadUriAsync(string fileName, string fileHash, long? startAtByte, long? endAtByte);
 
         /// <summary>
-        /// Sets the credentials to use to authenticate with the service.
+        /// Sets the token used to authenticate with the service.
         /// </summary>
-        /// <param name="userName">The web service user name.</param>
-        /// <param name="password">The web service password.</param>
-        void SetCredentials(string userName, string password);
+        /// <param name="token">The authentication token.</param>
+        void SetToken(string token);
     }
 }

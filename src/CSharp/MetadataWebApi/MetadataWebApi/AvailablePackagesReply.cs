@@ -7,7 +7,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace Experian.Qas.Updates.Metadata.WebApi.V1
+namespace Experian.Qas.Updates.Metadata.WebApi.V2
 {
     /// <summary>
     /// A class representing the data required by the client to download files.

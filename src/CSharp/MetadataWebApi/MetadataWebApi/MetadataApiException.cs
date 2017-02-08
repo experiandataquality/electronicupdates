@@ -7,7 +7,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Experian.Qas.Updates.Metadata.WebApi.V1
+namespace Experian.Qas.Updates.Metadata.WebApi.V2
 {
     /// <summary>
     /// Represents error data when an error is returned by the QAS Electronic Updates Metadata API.

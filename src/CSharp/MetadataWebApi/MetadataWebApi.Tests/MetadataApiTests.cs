@@ -8,7 +8,7 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Experian.Qas.Updates.Metadata.WebApi.V1
+namespace Experian.Qas.Updates.Metadata.WebApi.V2
 {
     public static class MetadataApiTests
     {
@@ -26,7 +26,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         public static async Task MetadataApi_GetAvailablePackagesAsync_Throws_MetadataApiException_If_Error_Occurs()
         {
             // Arrange
-            Uri serviceUri = new Uri("https://ws.updates.qas.com/metadata/V1/");
+            Uri serviceUri = new Uri("https://ws.updates.qas.com/metadata/V2/");
             MetadataApi target = new MetadataApi(serviceUri);
 
             // Act and Assert - Should throw as no credentials configured
@@ -37,7 +37,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         public static async Task MetadataApi_GetDownloadUriAsync_Throws_MetadataApiException_If_Error_Occurs()
         {
             // Arrange
-            Uri serviceUri = new Uri("https://ws.updates.qas.com/metadata/V1/");
+            Uri serviceUri = new Uri("https://ws.updates.qas.com/metadata/V2/");
             MetadataApi target = new MetadataApi(serviceUri);
 
             string fileName = "MyFile.txt";

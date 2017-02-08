@@ -9,7 +9,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Xunit;
 
-namespace Experian.Qas.Updates.Metadata.WebApi.V1
+namespace Experian.Qas.Updates.Metadata.WebApi.V2
 {
     public static class MetadataApiExceptionTests
     {
