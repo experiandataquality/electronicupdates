@@ -17,8 +17,8 @@ Further documentation of the script is provided by the comments in the Python sc
 
 To set up the script for usage you could either:
 
- 1. Set your credentials in the ```QAS_ElectronicUpdates_UserName``` and ```QAS_ElectronicUpdates_Password``` environment variables just before running the script (**recommended**);
- 1. Hard-code the credentials into the script. This approach is **not** recommended as the credentials are stored in plaintext and could represent a security risk.
+ 1. Set your token in the ```QAS_ElectronicUpdates_Token``` environment variable just before running the script (**recommended**);
+ 1. Hard-code the token into the script. This approach is **not** recommended as the token is stored in plaintext and could represent a security risk.
 
 Other approaches are possible but are considered outside the scope of this documentation.
 
@@ -57,8 +57,7 @@ py .\metadatawebapi.py
 Below is an example set of commands that could be run on Linux to download all the latest data files from QAS Electronic Updates onto the local machine into a ```QASData``` directory in the same directory as the script:
 
 ```sh
-export QAS_ElectronicUpdates_UserName=MyUserName
-export QAS_ElectronicUpdates_Password=MyPassword
+export QAS_ElectronicUpdates_Token=MyToken
 ./metadatawebapi.py
 ```
 
