@@ -10,22 +10,23 @@ import sys      # Used to get the installed version of Python
 
 # Declare credentials to communicate with the service.
 # Override any values hard-coded here by named environment variable.
-username = os.getenv('QAS_ElectronicUpdates_UserName', '')
-password = os.getenv('QAS_ElectronicUpdates_Password', '')
+token = os.getenv('EDQ_ElectronicUpdates_Token', '')
+
+# Service endpoint
+endpoint = 'https://ws.updates.qas.com/metadata/v2/';
 
 # Declare User Agent string
 version = sys.version_info
 userAgent = 'Python/{0}.{1}.{2}'.format(version.major, version.minor, version.micro)
 
 # Declare HTTP request headers
-headers = {'accept': 'application/json', 'content-type': 'application/json; charset=UTF-8', 'UserAgent': userAgent}
+headers = {'accept': 'application/json', 'content-type': 'application/json; charset=UTF-8', 'UserAgent': userAgent, 'UserToken' : token}
 
 # Declare directory to download data to
 root_download_path = os.path.join('.', 'QASData')
 
 # Get the available package groups from the Web API
-request = {'usernamePassword': {'UserName': username, 'Password': password}}
-packages_request = requests.post('https://ws.updates.qas.com/metadata/v1/packages', data = json.dumps(request), headers = headers)
+packages_request = requests.post(endpoint + 'packages', headers = headers)
 
 if (packages_request.status_code != requests.codes.ok):
     print('Available packages request failed with HTTP Status Code {0}.'.format(packages_request.status_code))
@@ -62,7 +63,7 @@ for i in range(0, len(package_groups)):
         for k in range(0, len(data_files)):
             
             data_file = data_files[k]
-            file_name = data_file["FileName"]
+            file_name = data_file["Filename"]
             file_hash = data_file["Md5Hash"]
             file_size = data_file["Size"]
             file_path = os.path.join(directory_path, file_name)
@@ -102,8 +103,8 @@ for i in range(0, len(package_groups)):
                 print('Requesting download URI for file ''{0}''.'.format(file_path))
 
                 # Request the download URI for this file from the Web API
-                request = {'usernamePassword': {'UserName': username, 'Password': password }, 'fileDownloadRequest': {'FileName': file_name, 'FileMd5Hash': file_hash}}
-                download_uri_request = requests.post('https://ws.updates.qas.com/metadata/v1/filedownload', data = json.dumps(request), headers = headers)
+                request = {'fileDownloadRequest': {'FileName': file_name, 'FileMd5Hash': file_hash}}
+                download_uri_request = requests.post(endpoint + 'filedownload', data = json.dumps(request), headers = headers)
 
                 if (download_uri_request.status_code != requests.codes.ok):
                     print('Download URI request failed with HTTP Status Code {0}.'.format(download_uri_request.status_code))
