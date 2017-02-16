@@ -16,6 +16,8 @@ Imports System.Reflection
 Public Class MetadataApi
     Implements IMetadataApi
 
+    Private _token As String
+
     ''' <summary>
     ''' Initializes a new instance of the <see cref="MetadataApi"/> class.
     ''' </summary>
@@ -44,12 +46,8 @@ Public Class MetadataApi
     ''' </exception>
     Public Function GetAvailablePackages() As AvailablePackagesReply Implements IMetadataApi.GetAvailablePackages
 
-        Dim request As New GetAvailablePackagesRequest With { _
-            .Credentials = Me._credentials _
-        }
-
         Try
-            Return Me.Post(Of GetAvailablePackagesRequest, AvailablePackagesReply)("packages", request)
+            Return Me.Post(Of Object, AvailablePackagesReply)("packages", vbNull, Token)
         Catch ex As Exception
             Throw New MetadataApiException(ex.Message, ex)
         End Try
@@ -79,13 +77,12 @@ Public Class MetadataApi
             .StartAtByte = startAtByte _
         }
 
-        Dim request As New GetDownloadUriRequest With { _
-            .Credentials = Me._credentials, _
-            .RequestData = fileData _
+        Dim request As New GetDownloadUriRequest With {
+            .RequestData = fileData
         }
 
         Try
-            Dim downloadResponse As FileDownloadReply = Me.Post(Of GetDownloadUriRequest, FileDownloadReply)("filedownload", request)
+            Dim downloadResponse As FileDownloadReply = Me.Post(Of GetDownloadUriRequest, FileDownloadReply)("filedownload", request, Token)
 
             If (downloadResponse Is Nothing Or downloadResponse.DownloadUri Is Nothing) Then
                 Return Nothing
@@ -142,13 +139,16 @@ Public Class MetadataApi
     ''' <typeparam name="TResult">The type of the response.</typeparam>
     ''' <param name="requestUri">The relative URI the request is sent to.</param>
     ''' <param name="value">The value to write into the entity body of the request.</param>
+    ''' <param name="token">The authentication token.</param>
     ''' <returns>
     ''' An instance of <typeparamref name="TResult"/> read from the response.
     ''' </returns>
-    Protected Overridable Function Post(Of TRequest, TResult)(ByVal requestUri As String, ByVal value As TRequest) As TResult
+    Protected Overridable Function Post(Of TRequest, TResult)(ByVal requestUri As String, ByVal value As TRequest, ByVal token As String) As TResult
         Using client As HttpClient = Me.CreateHttpClient
 
             Dim formatter As MediaTypeFormatter = Me.CreateMediaTypeFormatter
+
+            client.DefaultRequestHeaders.Add("UserToken", token)
 
             Using response As HttpResponseMessage = client.PostAsync(requestUri, value, formatter).Result
                 response.EnsureSuccessStatusCode()
@@ -168,18 +168,6 @@ Public Class MetadataApi
     End Function
 
     ''' <summary>
-    ''' Gets or sets the password to use to authenticate with the service.
-    ''' </summary>
-    Public Property Password As String Implements IMetadataApi.Password
-        Get
-            Return _credentials.Password
-        End Get
-        Set(ByVal value As String)
-            _credentials.Password = value
-        End Set
-    End Property
-
-    ''' <summary>
     ''' Gets the URI of the QAS Electronic Updates Metadata API.
     ''' </summary>
     Public ReadOnly Property ServiceUri As Uri
@@ -191,12 +179,12 @@ Public Class MetadataApi
     ''' <summary>
     ''' Gets or sets the user name to use to authenticate with the service.
     ''' </summary>
-    Public Property UserName As String Implements IMetadataApi.UserName
+    Public Property Token As String Implements IMetadataApi.Token
         Get
-            Return _credentials.UserName
+            Return _token
         End Get
         Set(ByVal value As String)
-            _credentials.UserName = value
+            _token = value
         End Set
     End Property
 
@@ -208,11 +196,6 @@ Public Class MetadataApi
             Return "application/json"
         End Get
     End Property
-
-    ''' <summary>
-    ''' The credentials to use to communicate with the QAS Electronic Updates Metadata API.
-    ''' </summary>
-    Private ReadOnly _credentials As UserNamePassword = New UserNamePassword
 
     ''' <summary>
     ''' The QAS Electronic Updates Metadata API URI.

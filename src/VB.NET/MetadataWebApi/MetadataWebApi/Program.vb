@@ -27,28 +27,24 @@ Friend Class Program
 
         Try
             ' Get the configuration settings to connect to the QAS Electronic Updates Metadata API
-            Dim userName As String = GetAppSetting("UserName")
-            Dim password As String = GetAppSetting("Password")
+            Dim token As String = GetAppSetting("Token")
 
             Dim downloadRootPath As String = "QASData"
             Dim verifyDownloads As Boolean = True
 
-            If (String.IsNullOrEmpty(userName) Or String.IsNullOrEmpty(password)) Then
-                Throw New ConfigurationErrorsException("No service credentials are configured.")
+            If (String.IsNullOrEmpty(token)) Then
+                Throw New ConfigurationErrorsException("Authentication token has not been configured.")
             End If
 
-            Dim serviceUri As Uri = New Uri("https://ws.updates.qas.com/metadata/V1/")
+            Dim serviceUri As Uri = New Uri("https://ws.updates.qas.com/metadata/V2/")
 
             Console.WriteLine("QAS Electronic Updates Metadata REST API: {0}", serviceUri)
-            Console.WriteLine()
-            Console.WriteLine("User Name: {0}", userName)
             Console.WriteLine()
 
             Dim service As IMetadataApi = New MetadataApi(serviceUri)
 
-            ' Set the credentials to use to authenticate with the service
-            service.UserName = userName
-            service.Password = password
+            ' Set the token used to authenticate with the service
+            service.Token = token
 
             ' Query the packages available to the account
             Dim response As AvailablePackagesReply = service.GetAvailablePackages()
