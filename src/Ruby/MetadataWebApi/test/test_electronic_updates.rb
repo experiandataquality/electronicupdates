@@ -2,18 +2,17 @@
 
 gem "minitest"
 require "minitest/autorun"
-require "electronic_updates"
+require File.join(File.dirname(__FILE__), '../lib', 'electronic_updates')
 
 class ElectronicUpdatesTest < Minitest::Test
 
-  def test_getUserName_returns_the_user_name_that_was_set_with_setCredentials()
-    @userName = "MyUserName"
-    @password = "MyPassword"
+  def test_getToken_returns_the_token_that_was_set_with_setToken()
+    @token = "MyToken"
 
-    ElectronicUpdates::setCredentials(@userName, @password)
-    @actual = ElectronicUpdates::getUserName()
+    ElectronicUpdates::setToken(@token)
+    @actual = ElectronicUpdates::getToken()
 
-    assert_equal @userName, @actual
+    assert_equal @token, @actual
   end
 
 end
