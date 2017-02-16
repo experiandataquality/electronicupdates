@@ -6,6 +6,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
@@ -198,7 +199,8 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
             {
                 MediaTypeFormatter formatter = CreateMediaTypeFormatter();
 
-                client.DefaultRequestHeaders.Add("UserToken", token);
+                var tokenHeader = string.Format(CultureInfo.InvariantCulture, "x-api-key {0}", token);
+                client.DefaultRequestHeaders.Add("Authorization", tokenHeader);
 
                 using (HttpResponseMessage response = await client.PostAsync(requestUri, value, formatter))
                 {
