@@ -59,7 +59,7 @@ require 'electronic_updates'
 puts "Getting available packages..."
 @packages = ElectronicUpdates.getPackages()
 
-@packages["PackageGroups"].each do |packageGroup|
+@packages.each do |packageGroup|
 
   @packageGroupCode = packageGroup["PackageGroupCode"]
   @vintage = packageGroup["Vintage"]
