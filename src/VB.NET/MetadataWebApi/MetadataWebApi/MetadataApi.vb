@@ -4,6 +4,7 @@
 '  </copyright>
 ' -----------------------------------------------------------------------
 
+Imports System.Globalization
 Imports System.Net.Http
 Imports System.Net.Http.Formatting
 Imports System.Net.Http.Headers
@@ -12,7 +13,7 @@ Imports System.Reflection
 ''' <summary>
 ''' A class representing the default implementation of <see cref="IMetadataApi"/> to access the QAS Electronic Updates Metadata API.
 ''' </summary>
-<DebuggerDisplay("{ServiceUri}")> _
+<DebuggerDisplay("{ServiceUri}")>
 Public Class MetadataApi
     Implements IMetadataApi
 
@@ -70,11 +71,11 @@ Public Class MetadataApi
     ''' </exception>
     Public Function GetDownloadUri(fileName As String, fileHash As String, startAtByte As Long?, endAtByte As Long?) As Uri Implements IMetadataApi.GetDownloadUri
 
-        Dim fileData As New FileDownloadRequest With { _
-            .EndAtByte = endAtByte, _
-            .FileMD5Hash = fileHash, _
-            .FileName = fileName, _
-            .StartAtByte = startAtByte _
+        Dim fileData As New FileDownloadRequest With {
+            .EndAtByte = endAtByte,
+            .FileMD5Hash = fileHash,
+            .FileName = fileName,
+            .StartAtByte = startAtByte
         }
 
         Dim request As New GetDownloadUriRequest With {
@@ -104,10 +105,10 @@ Public Class MetadataApi
     ''' </returns>
     Protected Overridable Function CreateHttpClient() As HttpClient
 
-        Dim assembly As Assembly = assembly.GetEntryAssembly
+        Dim assembly As Assembly = Assembly.GetEntryAssembly
 
         If (assembly Is Nothing) Then
-            assembly = assembly.GetExecutingAssembly
+            assembly = Assembly.GetExecutingAssembly
         End If
 
         Dim assemblyName As AssemblyName = assembly.GetName
@@ -148,7 +149,9 @@ Public Class MetadataApi
 
             Dim formatter As MediaTypeFormatter = Me.CreateMediaTypeFormatter
 
-            client.DefaultRequestHeaders.Add("UserToken", token)
+            Dim tokenHeader As String = String.Format(CultureInfo.InvariantCulture, "x-api-key {0}", token)
+
+            client.DefaultRequestHeaders.Add("Authorization", tokenHeader)
 
             Using response As HttpResponseMessage = client.PostAsync(requestUri, value, formatter).Result
                 response.EnsureSuccessStatusCode()

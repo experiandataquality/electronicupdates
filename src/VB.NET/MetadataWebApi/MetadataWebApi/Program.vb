@@ -172,7 +172,7 @@ Friend Class Program
     Private Shared Function GetAppSetting(ByVal name As String) As String
 
         '' Build the full name of the setting
-        Dim settingName As String = String.Format(CultureInfo.InvariantCulture, "QAS:ElectronicUpdates:{0}", name)
+        Dim settingName As String = String.Format(CultureInfo.InvariantCulture, "EDQ:ElectronicUpdates:{0}", name)
 
         '' Is the setting configured in the application configuration file?
         Dim value As String = ConfigurationManager.AppSettings.Item(settingName)
@@ -180,7 +180,7 @@ Friend Class Program
         '' If Not, try the environment variables
         If (String.IsNullOrEmpty(value)) Then
 
-            settingName = String.Format(CultureInfo.InvariantCulture, "QAS_ElectronicUpdates_{0}", name)
+            settingName = String.Format(CultureInfo.InvariantCulture, "EDQ_ElectronicUpdates_{0}", name)
             value = Environment.GetEnvironmentVariable(settingName)
 
         End If
