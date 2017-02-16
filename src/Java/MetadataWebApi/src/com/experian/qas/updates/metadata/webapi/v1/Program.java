@@ -18,8 +18,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
+import org.apache.http.*;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -37,12 +36,12 @@ public class Program {
     /**
      * The user name to use to authenticate with the web service.
      */
-    private static final String userName = System.getenv("QAS_ElectronicUpdates_UserName");
+    private static String token = System.getenv("EDQ_ElectronicUpdates_Token");
 
-    /**
-     * The password to use to authenticate with the web service.
+    /*
+     * The endpoint for the REST service.
      */
-    private static final String password = System.getenv("QAS_ElectronicUpdates_Password");
+    private static final String endpoint = "https://ws.updates.qas.com/metadata/v2/";
 
     /**
      * The root folder to download data to.
@@ -93,21 +92,6 @@ public class Program {
     }
 
     /**
-     * Creates the credentials JSON to use to authenticate with the web service.
-     * @return A JSON object containing the user's credentials.
-     */
-    @SuppressWarnings("unchecked")
-    private static JSONObject createCredentials() {
-
-        JSONObject result = new JSONObject();
-
-        result.put("UserName", userName);
-        result.put("Password", password);
-
-        return result;
-    }
-
-    /**
      * Creates a String containing the JSON request to download the specified data file.
      * @param dataFile The data file to get the download request for.
      * @return A String containing the JSON to download the specified data file.
@@ -115,15 +99,13 @@ public class Program {
     @SuppressWarnings("unchecked")
     private static String createFileDownloadRequest(DataFile dataFile) {
 
-        JSONObject credentials = createCredentials();
-
         JSONObject fileDownloadRequest = new JSONObject();
+
         fileDownloadRequest.put("FileName", dataFile.getFileName());
         fileDownloadRequest.put("FileMd5Hash", dataFile.getMD5Hash());
 
         JSONObject result = new JSONObject();
 
-        result.put("usernamePassword", credentials);
         result.put("fileDownloadRequest", fileDownloadRequest);
 
         return result.toJSONString();
@@ -159,10 +141,7 @@ public class Program {
     @SuppressWarnings("unchecked")
     private static String createPackagesRequest() {
 
-        JSONObject credentials = createCredentials();
-
         JSONObject request = new JSONObject();
-        request.put("usernamePassword", credentials);
 
         return request.toJSONString();
     }
@@ -184,8 +163,10 @@ public class Program {
 
             // Create the HTTP POST to request the available packages
             HttpPost request = createHttpPostRequest(
-                "https://ws.updates.qas.com/metadata/V1/packages",
-                body);
+                    endpoint + "packages",
+                    body);
+
+            request.addHeader("UserToken", token);
 
             HttpResponse response = httpClient.execute(request);
 
@@ -255,7 +236,7 @@ public class Program {
 
                             JSONObject fileJson = (JSONObject)fileIterator.next();
 
-                            String fileName = (String)fileJson.get("FileName");
+                            String fileName = (String)fileJson.get("Filename");
                             String md5Hash = (String)fileJson.get("Md5Hash");
                             Long size = (Long)fileJson.get("Size");
 
@@ -300,8 +281,10 @@ public class Program {
 
             // Create the HTTP POST to request a download URI for the specified file
             HttpPost request = createHttpPostRequest(
-                "https://ws.updates.qas.com/metadata/V1/filedownload",
+                    endpoint + "filedownload",
                 body);
+
+            request.addHeader("UserToken", token);
 
             HttpResponse response = httpClient.execute(request);
 
@@ -337,11 +320,10 @@ public class Program {
 
     public static void main(String[] args) throws Exception {
     	
-    	if (userName == null || userName.isEmpty() || password == null || password.isEmpty()) {
+    	if (token == null || token.isEmpty()) {
 
-    		System.out.println("No QAS Electronic Updates service credentials are configured.");
+    		System.out.println("No Experian Data Quality Electronic Updates service token is configured.");
     		System.exit(-1);
-    		
     	}
 
         List<PackageGroup> availablePackages = getAvailablePackages();

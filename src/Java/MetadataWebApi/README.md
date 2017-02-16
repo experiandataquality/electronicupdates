@@ -40,7 +40,7 @@ To compile the application, you can do any of the following:
 
 ## Setup
 
-To set up the application, set your credentials in the ```QAS_ElectronicUpdates_UserName``` and ```QAS_ElectronicUpdates_Password``` environment variables just before running the application.
+To set up the application, set your token in the ```QAS_ElectronicUpdates_Token``` environment variable just before running the application.
 
 Other approaches for loading the credentials are possible but are considered outside the scope of this documentation.
 
@@ -65,8 +65,7 @@ java -jar MetadataWebApi.jar
 Below is an example set of commands that could be run on Linux to download all the latest data files from QAS Electronic Updates onto the local machine into a ```QASData``` directory in the same directory as the application
 
 ```sh
-export QAS_ElectronicUpdates_UserName=MyUserName
-export QAS_ElectronicUpdates_Password=MyPassword
+export QAS_ElectronicUpdates_Token=MyToken
 java -jar MetadataWebApi.jar
 ```
 
