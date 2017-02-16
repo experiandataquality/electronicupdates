@@ -26,14 +26,13 @@ headers = {'accept': 'application/json', 'content-type': 'application/json; char
 root_download_path = os.path.join('.', 'QASData')
 
 # Get the available package groups from the Web API
-packages_request = requests.post(endpoint + 'packages', headers = headers)
+packages_request = requests.get(endpoint + 'packages', headers = headers)
 
 if (packages_request.status_code != requests.codes.ok):
     print('Available packages request failed with HTTP Status Code {0}.'.format(packages_request.status_code))
     packages_request.raise_for_status()
 
-packages_json = packages_request.json()
-package_groups = packages_json["PackageGroups"]
+package_groups = packages_request.json()
 
 # Iterate through the package groups
 for i in range(0, len(package_groups)):
@@ -103,8 +102,8 @@ for i in range(0, len(package_groups)):
                 print('Requesting download URI for file ''{0}''.'.format(file_path))
 
                 # Request the download URI for this file from the Web API
-                request = {'fileDownloadRequest': {'FileName': file_name, 'FileMd5Hash': file_hash}}
-                download_uri_request = requests.post(endpoint + 'filedownload', data = json.dumps(request), headers = headers)
+                request = {'FileName': file_name, 'FileMd5Hash': file_hash}
+                download_uri_request = requests.post(endpoint + 'filelink', data = json.dumps(request), headers = headers)
 
                 if (download_uri_request.status_code != requests.codes.ok):
                     print('Download URI request failed with HTTP Status Code {0}.'.format(download_uri_request.status_code))
