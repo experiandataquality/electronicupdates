@@ -24,9 +24,9 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
 
             Uri expectedUri;
 
-            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("QAS_ElectronicUpdates_ServiceUri")))
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("EDQ_ElectronicUpdates_ServiceUri")))
             {
-                expectedUri = new Uri(Environment.GetEnvironmentVariable("QAS_ElectronicUpdates_ServiceUri"));
+                expectedUri = new Uri(Environment.GetEnvironmentVariable("EDQ_ElectronicUpdates_ServiceUri"));
             }
             else
             {
@@ -108,7 +108,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
         public static void MetadataApiFactory_GetAppSetting_Reads_Settings_Correctly_From_Environment_Variable()
         {
             // Arrange
-            Environment.SetEnvironmentVariable("QAS_ElectronicUpdates_foo", "bar");
+            Environment.SetEnvironmentVariable("EDQ_ElectronicUpdates_foo", "bar");
 
             // Act and Assert
             Assert.Equal("bar", MetadataApiFactory.GetAppSetting("foo"));

@@ -21,7 +21,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
         public RequiresServiceCredentialsFactAttribute()
             : base()
         {
-            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("QAS_ElectronicUpdates_Token")))
+            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("EDQ_ElectronicUpdates_Token")))
             {
                 this.Skip = "Authentication token has not been configured.";
             }

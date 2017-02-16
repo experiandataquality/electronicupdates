@@ -64,7 +64,7 @@ To compile the application, you can do any of the following:
 
 To set up the application for usage you could either:
 
- 1. Set your authentication token in the ```QAS_ElectronicUpdates_Token``` environment variable just before running the application (**recommended**);
+ 1. Set your authentication token in the ```EDQ_ElectronicUpdates_Token``` environment variable just before running the application (**recommended**);
  1. Configure the token in the ```MetadataWebApi.exe.config``` configuration file. If you place your token in this file ensure that you have adequate security controls in place to protect your token.
 
 Other approaches are possible but are considered outside the scope of this documentation.
@@ -90,7 +90,7 @@ MetadataWebApi.exe
 Below is an example set of commands that could be run on Windows to download all the latest data files from QAS Electronic Updates onto the local machine into a ```QASData``` directory in the same directory as the application
 
 ```batchfile
-set QAS_ElectronicUpdates_Token=MyToken
+set EDQ_ElectronicUpdates_Token=MyToken
 MetadataWebApi.exe
 ```
 
