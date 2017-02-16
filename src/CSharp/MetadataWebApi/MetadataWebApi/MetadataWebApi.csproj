@@ -66,10 +66,8 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AvailablePackagesReply.cs" />
     <Compile Include="DataFile.cs" />
     <Compile Include="FileDownloadReply.cs" />
-    <Compile Include="FileDownloadRequest.cs" />
     <Compile Include="GetDownloadUriRequest.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IFileStore.cs" />
