@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.apache.http.*;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -99,14 +100,10 @@ public class Program {
     @SuppressWarnings("unchecked")
     private static String createFileDownloadRequest(DataFile dataFile) {
 
-        JSONObject fileDownloadRequest = new JSONObject();
-
-        fileDownloadRequest.put("FileName", dataFile.getFileName());
-        fileDownloadRequest.put("FileMd5Hash", dataFile.getMD5Hash());
-
         JSONObject result = new JSONObject();
-
-        result.put("fileDownloadRequest", fileDownloadRequest);
+        
+        result.put("FileName", dataFile.getFileName());
+        result.put("FileMd5Hash", dataFile.getMD5Hash());
 
         return result.toJSONString();
     }
@@ -135,18 +132,6 @@ public class Program {
     }
 
     /**
-     * Creates a String containing the JSON request to get the available package groups.
-     * @return A String containing the JSON to request the available package groups.
-     */
-    @SuppressWarnings("unchecked")
-    private static String createPackagesRequest() {
-
-        JSONObject request = new JSONObject();
-
-        return request.toJSONString();
-    }
-
-    /**
      * Returns the available package groups.
      * @return The available package groups.
      * @throws Exception
@@ -157,15 +142,14 @@ public class Program {
         List<PackageGroup> result = new ArrayList<PackageGroup>();
 
         try {
-
-            // Create the request JSON
-            String body = createPackagesRequest();
-
-            // Create the HTTP POST to request the available packages
-            HttpPost request = createHttpPostRequest(
-                    endpoint + "packages",
-                    body);
-
+            
+            // Create the HTTP GET to request the available packages
+            HttpGet request = new HttpGet(endpoint + "packages");
+            
+            // Add the required headers
+            request.addHeader("Accept", "application/json");
+            request.addHeader("Content-Type", "application/json; charset=utf-8");
+            request.addHeader("User-Agent", String.format("MetadataWebApi-Java/%1$s", System.getProperty("java.version")));
             request.addHeader("Authorization", token);
 
             HttpResponse response = httpClient.execute(request);
@@ -186,9 +170,8 @@ public class Program {
                     new InputStreamReader(entity.getContent()));
 
                 JSONParser parser = new JSONParser();
-                JSONObject packagesJson = (JSONObject)parser.parse(reader);
-
-                JSONArray packageGroups = (JSONArray)packagesJson.get("PackageGroups");
+                JSONArray packageGroups = (JSONArray)parser.parse(reader);
+                
                 Iterator<?> packageGroupIterator = packageGroups.iterator();
 
                 System.out.println("Available packages:");
@@ -281,7 +264,7 @@ public class Program {
 
             // Create the HTTP POST to request a download URI for the specified file
             HttpPost request = createHttpPostRequest(
-                    endpoint + "filedownload",
+                    endpoint + "filelink",
                 body);
 
             request.addHeader("Authorization", token);
