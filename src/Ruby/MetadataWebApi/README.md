@@ -18,7 +18,7 @@ Further documentation of the script is provided by the comments in the Ruby code
 
 To set up the gem for usage you could either:
 
- 1. Set your authentication token in the ```QAS_ElectronicUpdates_Token``` environment variable just before running the script (**recommended**);
+ 1. Set your authentication token in the ```EDQ_ElectronicUpdates_Token``` environment variable just before running the script (**recommended**);
  1. Hard-code the token into the code that uses the gem. This approach is **not** recommended as the token is stored in plaintext and could represent a security risk.
 
 Other approaches are possible but are considered outside the scope of this documentation.
@@ -41,13 +41,13 @@ First set the token to use:
 ### Linux/OS X
 
 ```sh
-export QAS_ElectronicUpdates_Token=MyToken
+export EDQ_ElectronicUpdates_Token=MyToken
 ```
 
 ### Windows
 
 ```batchfile
-set QAS_ElectronicUpdates_Token=MyToken
+set EDQ_ElectronicUpdates_Token=MyToken
 ```
 
 Then you can run a ruby script similar to this:
@@ -60,26 +60,26 @@ puts "Getting available packages..."
 @packages = ElectronicUpdates.getPackages()
 
 @packages["PackageGroups"].each do |packageGroup|
-  
+
   @packageGroupCode = packageGroup["PackageGroupCode"]
   @vintage = packageGroup["Vintage"]
-  
+
   packageGroup["Packages"].each do |package|
-  
+
     @packageCode = package["PackageCode"]
-    
+
     package["Files"].each do |file|
-    
+
       @fileName = file["FileName"]
       @fileHash = file["Md5Hash"]
       @fileLength = file["Size"]
 
       # Get download URI for file
       @downloadUri = ElectronicUpdates.getDownloadUri(@fileName, @fileHash)
-    
+
       # Download the file to the file system
       # RestClient.get @downloadUri
-    
+
     end
 
   end

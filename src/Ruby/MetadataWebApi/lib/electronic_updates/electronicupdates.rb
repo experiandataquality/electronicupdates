@@ -9,7 +9,7 @@ module ElectronicUpdates
   @@serviceUri = "https://ws.updates.qas.com/metadata/v2/"
 
   # Get credentials from environment variables
-  @@authToken = ENV["QAS_ElectronicUpdates_Token"]
+  @@authToken = "x-api-key " + ENV["EDQ_ElectronicUpdates_Token"]
 
   # Construct User-Agent HTTP header
   @@userAgent = "MetadataWebApi-Ruby-%s/%s" % [RUBY_PLATFORM, RUBY_VERSION]
@@ -32,7 +32,7 @@ module ElectronicUpdates
       :"accept" => "json",
       :"content-type" => "application/json; charset=UTF-8",
       :"User-Agent" => @userAgent,
-      :"UserToken" => @@authToken
+      :"Authorization" => @@authToken
     }
 
 	  @packageResponse = RestClient::Request.execute(:method => :post, :url => "%s%s" % [@@serviceUri, "packages"], :payload => nil, :headers => @@headers, :verify_ssl => true)
@@ -97,7 +97,7 @@ module ElectronicUpdates
   #   >> ElectronicUpdates::setCredentials("MyToken")
   #
   def self.setToken(token)
-    @@authToken = token
+    @@authToken = "x-api-key " + token
   end
 
   ##

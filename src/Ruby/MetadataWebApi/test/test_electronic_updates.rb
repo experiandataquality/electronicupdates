@@ -8,11 +8,12 @@ class ElectronicUpdatesTest < Minitest::Test
 
   def test_getToken_returns_the_token_that_was_set_with_setToken()
     @token = "MyToken"
+    @expected = "x-api-key " + @token
 
     ElectronicUpdates::setToken(@token)
     @actual = ElectronicUpdates::getToken()
 
-    assert_equal @token, @actual
+    assert_equal @expected, @actual
   end
 
 end
