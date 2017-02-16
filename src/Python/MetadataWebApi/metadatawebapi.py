@@ -10,7 +10,7 @@ import sys      # Used to get the installed version of Python
 
 # Declare credentials to communicate with the service.
 # Override any values hard-coded here by named environment variable.
-token = os.getenv('EDQ_ElectronicUpdates_Token', '')
+token = "x-api-key" + os.getenv('EDQ_ElectronicUpdates_Token', '')
 
 # Service endpoint
 endpoint = 'https://ws.updates.qas.com/metadata/v2/';
@@ -20,7 +20,7 @@ version = sys.version_info
 userAgent = 'Python/{0}.{1}.{2}'.format(version.major, version.minor, version.micro)
 
 # Declare HTTP request headers
-headers = {'accept': 'application/json', 'content-type': 'application/json; charset=UTF-8', 'UserAgent': userAgent, 'UserToken' : token}
+headers = {'accept': 'application/json', 'content-type': 'application/json; charset=UTF-8', 'UserAgent': userAgent, 'Authorization' : token}
 
 # Declare directory to download data to
 root_download_path = os.path.join('.', 'QASData')
@@ -61,7 +61,7 @@ for i in range(0, len(package_groups)):
 
         # Iterate through the files
         for k in range(0, len(data_files)):
-            
+
             data_file = data_files[k]
             file_name = data_file["Filename"]
             file_hash = data_file["Md5Hash"]
@@ -71,8 +71,8 @@ for i in range(0, len(package_groups)):
             download_file = True
 
             # Has the file already been downloaded?
-            if os.path.exists(file_path):                
-                
+            if os.path.exists(file_path):
+
                 size_on_disk = os.path.getsize(file_path)
 
                 # Does the size of the file match that already on disk?
@@ -85,21 +85,21 @@ for i in range(0, len(package_groups)):
                     # that have been downloaded would be cached to disk
                     # and corruption would not be tested every time.
                     md5 = hashlib.md5()
-                    with open(file_path,'rb') as existing_file: 
-                        for chunk in iter(lambda: existing_file.read(8192), b''): 
+                    with open(file_path,'rb') as existing_file:
+                        for chunk in iter(lambda: existing_file.read(8192), b''):
                              md5.update(chunk)
                     hash_on_disk = md5.hexdigest()
-                    
+
                     # If the hash does not match, the file needs to be downloaded again
-                    if (file_hash == hash_on_disk):                
+                    if (file_hash == hash_on_disk):
                         print('File ''{0}'' has already been downloaded.'.format(file_path))
                         download_file = False
                     else:
                         print('File ''{0}'' has already been downloaded, but is corrupt.'.format(file_path))
-                        os.remove(file_path)                    
+                        os.remove(file_path)
 
             if (download_file):
-                
+
                 print('Requesting download URI for file ''{0}''.'.format(file_path))
 
                 # Request the download URI for this file from the Web API
@@ -109,7 +109,7 @@ for i in range(0, len(package_groups)):
                 if (download_uri_request.status_code != requests.codes.ok):
                     print('Download URI request failed with HTTP Status Code {0}.'.format(download_uri_request.status_code))
                     download_uri_request.raise_for_status()
-                
+
                 filedownload_json = download_uri_request.json()
                 download_uri = filedownload_json["DownloadUri"]
 
