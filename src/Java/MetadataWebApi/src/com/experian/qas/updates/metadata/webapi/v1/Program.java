@@ -36,7 +36,7 @@ public class Program {
     /**
      * The user name to use to authenticate with the web service.
      */
-    private static String token = System.getenv("EDQ_ElectronicUpdates_Token");
+    private static String token = "x-api-key" + System.getenv("EDQ_ElectronicUpdates_Token");
 
     /*
      * The endpoint for the REST service.
@@ -113,7 +113,7 @@ public class Program {
 
     /**
      * Creates a HttpPost request object for the specified URI and body.
-     * 
+     *
      * @param uri The URI of the POST request.
      * @param body The body of the POST request.
      * @return The created HttpPost instance.
@@ -166,7 +166,7 @@ public class Program {
                     endpoint + "packages",
                     body);
 
-            request.addHeader("UserToken", token);
+            request.addHeader("Authorization", token);
 
             HttpResponse response = httpClient.execute(request);
 
@@ -284,7 +284,7 @@ public class Program {
                     endpoint + "filedownload",
                 body);
 
-            request.addHeader("UserToken", token);
+            request.addHeader("Authorization", token);
 
             HttpResponse response = httpClient.execute(request);
 
@@ -319,7 +319,7 @@ public class Program {
     }
 
     public static void main(String[] args) throws Exception {
-    	
+
     	if (token == null || token.isEmpty()) {
 
     		System.out.println("No Experian Data Quality Electronic Updates service token is configured.");
@@ -355,7 +355,7 @@ public class Program {
                         File fileName = new File(vintageDirectory, dataFile.getFileName());
 
                         URL url = new URL(downloadUri);
-                        
+
                         System.out.println(String.format("Downloading %1$s to '%2$s'...", dataFile.getFileName(), fileName.getPath()));
 
                         // Download the file
@@ -380,7 +380,7 @@ public class Program {
                 }
             }
         }
-        
+
         System.out.println("All file(s) downloaded.");
     }
 }
