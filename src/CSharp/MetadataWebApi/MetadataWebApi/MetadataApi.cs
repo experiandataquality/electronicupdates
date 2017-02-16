@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Net.Http;
@@ -81,11 +82,21 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
         /// <exception cref="MetadataApiException">
         /// The available packages could not be retrieved.
         /// </exception>
-        public virtual async Task<AvailablePackagesReply> GetAvailablePackagesAsync()
+        public virtual async Task<List<PackageGroup>> GetAvailablePackagesAsync()
         {
             try
             {
-                return await Post<object, AvailablePackagesReply>("packages", null, _token);
+                using (HttpClient client = CreateHttpClient())
+                {
+                    var tokenHeader = string.Format(CultureInfo.InvariantCulture, "x-api-key {0}", _token);
+                    client.DefaultRequestHeaders.Add("Authorization", tokenHeader);
+
+                    using (HttpResponseMessage response = await client.GetAsync("packages"))
+                    {
+                        response.EnsureSuccessStatusCode();
+                        return await response.Content.ReadAsAsync<List<PackageGroup>>();
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -109,7 +120,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
         /// </exception>
         public virtual async Task<Uri> GetDownloadUriAsync(string fileName, string fileHash, long? startAtByte, long? endAtByte)
         {
-            FileDownloadRequest fileData = new FileDownloadRequest()
+            GetDownloadUriRequest request = new GetDownloadUriRequest()
             {
                 FileMD5Hash = fileHash,
                 FileName = fileName,
@@ -117,14 +128,9 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
                 EndAtByte = endAtByte,
             };
 
-            GetDownloadUriRequest request = new GetDownloadUriRequest()
-            {
-                RequestData = fileData,
-            };
-
             try
             {
-                FileDownloadReply downloadResponse = await Post<GetDownloadUriRequest, FileDownloadReply>("filedownload", request, _token);
+                FileDownloadReply downloadResponse = await Post<GetDownloadUriRequest, FileDownloadReply>("filelink", request, _token);
 
                 if (downloadResponse == null || downloadResponse.DownloadUri == null)
                 {

@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Experian.Qas.Updates.Metadata.WebApi.V2
@@ -30,7 +31,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
         /// <returns>
         /// A <see cref="Task{T}"/> representing the available updates packages as an asynchronous operation.
         /// </returns>
-        Task<AvailablePackagesReply> GetAvailablePackagesAsync();
+        Task<List<PackageGroup>> GetAvailablePackagesAsync();
 
         /// <summary>
         /// Gets the download <see cref="Uri"/> for the specified file as an asynchronous operation.

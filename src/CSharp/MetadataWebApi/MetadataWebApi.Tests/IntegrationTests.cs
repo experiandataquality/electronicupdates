@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -32,16 +33,15 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
             MetadataApi target = CreateAuthorizedService();
 
             // Act
-            AvailablePackagesReply result = await target.GetAvailablePackagesAsync();
+            List<PackageGroup> result = await target.GetAvailablePackagesAsync();
 
             // Assert
             Assert.NotNull(result);
-            Assert.NotNull(result.PackageGroups);
-            Assert.NotEqual(0, result.PackageGroups.Count);
-            Assert.DoesNotContain(null, result.PackageGroups);
+            Assert.NotEqual(0, result.Count);
+            Assert.DoesNotContain(null, result);
 
             Assert.All(
-                result.PackageGroups,
+                result,
                 (group) =>
                 {
                     Assert.False(string.IsNullOrEmpty(group.PackageGroupCode));
@@ -79,9 +79,9 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
             // Arrange
             MetadataApi target = CreateAuthorizedService();
 
-            AvailablePackagesReply packages = await target.GetAvailablePackagesAsync();
+            List<PackageGroup> packages = await target.GetAvailablePackagesAsync();
 
-            DataFile dataFile = packages.PackageGroups
+            DataFile dataFile = packages
                 .SelectMany((p) => p.Packages)
                 .First()
                 .Files

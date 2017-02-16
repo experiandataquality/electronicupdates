@@ -77,13 +77,13 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
             Console.WriteLine();
 
             // Query the packages available to the account
-            AvailablePackagesReply response = await service.GetAvailablePackagesAsync();
+            List<PackageGroup> response = await service.GetAvailablePackagesAsync();
 
             Console.WriteLine("Available Package Groups:");
             Console.WriteLine();
 
             // Enumerate the package groups and list their packages and files
-            if (response.PackageGroups != null && response.PackageGroups.Count > 0)
+            if (response != null && response.Count > 0)
             {
                 using (CancellationTokenSource tokenSource = new CancellationTokenSource())
                 {
@@ -106,7 +106,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
                         // have already been downloaded from the Metadata API service.
                         using (IFileStore fileStore = new LocalFileStore())
                         {
-                            foreach (PackageGroup group in response.PackageGroups)
+                            foreach (PackageGroup group in response)
                             {
                                 Console.WriteLine("Group Name: {0} ({1})", group.PackageGroupCode, group.Vintage);
                                 Console.WriteLine();
