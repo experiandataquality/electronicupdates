@@ -15,7 +15,7 @@ Public Interface IMetadataApi
     ''' <returns>
     ''' The available updates packages.
     ''' </returns>
-    Function GetAvailablePackages() As AvailablePackagesReply
+    Function GetAvailablePackages() As List(Of PackageGroup)
 
     ''' <summary>
     ''' Gets the download <see cref="Uri"/> for the specified file.

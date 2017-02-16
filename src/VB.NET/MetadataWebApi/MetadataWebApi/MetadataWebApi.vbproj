@@ -86,12 +86,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.vb" />
-    <Compile Include="AvailablePackagesReply.vb" />
     <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="Package.vb" />
     <Compile Include="DataFile.vb" />
     <Compile Include="FileDownloadReply.vb" />
-    <Compile Include="FileDownloadRequest.vb" />
     <Compile Include="GetDownloadUriRequest.vb" />
     <Compile Include="IFileStore.vb" />
     <Compile Include="IMetadataApi.vb" />

@@ -47,13 +47,13 @@ Friend Class Program
             service.Token = token
 
             ' Query the packages available to the account
-            Dim response As AvailablePackagesReply = service.GetAvailablePackages()
+            Dim response As List(Of PackageGroup) = service.GetAvailablePackages()
 
             Console.WriteLine("Available Package Groups:")
             Console.WriteLine()
 
             ' Enumerate the package groups and list their packages and files
-            If (Not response.PackageGroups Is Nothing AndAlso response.PackageGroups.Count > 0) Then
+            If (Not response Is Nothing AndAlso response.Count > 0) Then
 
                 Dim stopwatch As Stopwatch = Stopwatch.StartNew()
 
@@ -61,7 +61,7 @@ Friend Class Program
                 ' have already been downloaded from the Metadata API service.
                 Using fileStore As IFileStore = New LocalFileStore()
 
-                    For Each group As PackageGroup In response.PackageGroups
+                    For Each group As PackageGroup In response
 
                         Console.WriteLine("Group Name: {0} ({1})", group.PackageGroupCode, group.Vintage)
                         Console.WriteLine()

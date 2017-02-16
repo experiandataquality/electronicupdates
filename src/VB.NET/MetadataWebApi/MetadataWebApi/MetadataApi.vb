@@ -45,10 +45,22 @@ Public Class MetadataApi
     ''' <exception cref="MetadataApiException">
     ''' The available packages could not be retrieved.
     ''' </exception>
-    Public Function GetAvailablePackages() As AvailablePackagesReply Implements IMetadataApi.GetAvailablePackages
+    Public Function GetAvailablePackages() As List(Of PackageGroup) Implements IMetadataApi.GetAvailablePackages
 
         Try
-            Return Me.Post(Of Object, AvailablePackagesReply)("packages", vbNull, Token)
+            Using client As HttpClient = Me.CreateHttpClient
+
+                Dim formatter As MediaTypeFormatter = Me.CreateMediaTypeFormatter
+
+                Dim tokenHeader As String = String.Format(CultureInfo.InvariantCulture, "x-api-key {0}", Token)
+
+                client.DefaultRequestHeaders.Add("Authorization", tokenHeader)
+
+                Using response As HttpResponseMessage = client.GetAsync("packages").Result
+                    response.EnsureSuccessStatusCode()
+                    Return response.Content.ReadAsAsync(Of List(Of PackageGroup))().Result
+                End Using
+            End Using
         Catch ex As Exception
             Throw New MetadataApiException(ex.Message, ex)
         End Try
@@ -71,19 +83,15 @@ Public Class MetadataApi
     ''' </exception>
     Public Function GetDownloadUri(fileName As String, fileHash As String, startAtByte As Long?, endAtByte As Long?) As Uri Implements IMetadataApi.GetDownloadUri
 
-        Dim fileData As New FileDownloadRequest With {
+        Dim request As New GetDownloadUriRequest With {
             .EndAtByte = endAtByte,
             .FileMD5Hash = fileHash,
             .FileName = fileName,
             .StartAtByte = startAtByte
         }
 
-        Dim request As New GetDownloadUriRequest With {
-            .RequestData = fileData
-        }
-
         Try
-            Dim downloadResponse As FileDownloadReply = Me.Post(Of GetDownloadUriRequest, FileDownloadReply)("filedownload", request, Token)
+            Dim downloadResponse As FileDownloadReply = Me.Post(Of GetDownloadUriRequest, FileDownloadReply)("filelink", request, Token)
 
             If (downloadResponse Is Nothing Or downloadResponse.DownloadUri Is Nothing) Then
                 Return Nothing
