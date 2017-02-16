@@ -35,7 +35,7 @@ module ElectronicUpdates
       :"Authorization" => @@authToken
     }
 
-	  @packageResponse = RestClient::Request.execute(:method => :post, :url => "%s%s" % [@@serviceUri, "packages"], :payload => nil, :headers => @@headers, :verify_ssl => true)
+	  @packageResponse = RestClient::Request.execute(:method => :get, :url => "%s%s" % [@@serviceUri, "packages"], :headers => @@headers, :verify_ssl => true)
     return JSON.parse(@packageResponse)
 
   end
@@ -67,10 +67,8 @@ module ElectronicUpdates
     self.ensureCredentials()
 
     @downloadPayload = {
-      "fileDownloadRequest" => {
         "FileName" => fileName,
         "FileMd5Hash" => fileHash
-      }
     }.to_json
 
     @@headers = {
@@ -80,7 +78,7 @@ module ElectronicUpdates
       :"UserToken" => @@authToken
     }
 
-	  @downloadResponse = RestClient::Request.execute(:method => :post, :url => "%s%s" % [@@serviceUri, "filedownload"], :payload => @downloadPayload, :headers => @@headers, :verify_ssl => true)
+	  @downloadResponse = RestClient::Request.execute(:method => :post, :url => "%s%s" % [@@serviceUri, "filelink"], :payload => @downloadPayload, :headers => @@headers, :verify_ssl => true)
     @downloadJson = JSON.parse(@downloadResponse)
 
     return @downloadJson["DownloadUri"]
