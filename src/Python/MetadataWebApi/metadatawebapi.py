@@ -10,7 +10,7 @@ import sys      # Used to get the installed version of Python
 
 # Declare credentials to communicate with the service.
 # Override any values hard-coded here by named environment variable.
-token = "x-api-key" + os.getenv('EDQ_ElectronicUpdates_Token', '')
+token = "x-api-key " + os.getenv('EDQ_ElectronicUpdates_Token', '')
 
 # Service endpoint
 endpoint = 'https://ws.updates.qas.com/metadata/v2/';
