@@ -54,7 +54,7 @@ Then you can run a ruby script similar to this:
 
 ```ruby
 #!/usr/bin/env ruby
-require 'electronic_updates'
+require File.join(File.dirname(__FILE__), 'electronic_updates')
 
 puts "Getting available packages..."
 @packages = ElectronicUpdates.getPackages()
@@ -70,7 +70,7 @@ puts "Getting available packages..."
 
     package["Files"].each do |file|
 
-      @fileName = file["FileName"]
+      @fileName = file["Filename"]
       @fileHash = file["Md5Hash"]
       @fileLength = file["Size"]
 
