@@ -75,7 +75,7 @@ module ElectronicUpdates
       :"accept" => "json",
       :"content-type" => "application/json; charset=UTF-8",
       :"User-Agent" => @userAgent,
-      :"UserToken" => @@authToken
+      :"Authorization" => @@authToken
     }
 
 	  @downloadResponse = RestClient::Request.execute(:method => :post, :url => "%s%s" % [@@serviceUri, "filelink"], :payload => @downloadPayload, :headers => @@headers, :verify_ssl => true)
