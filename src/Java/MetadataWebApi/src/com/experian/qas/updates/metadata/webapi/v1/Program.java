@@ -37,7 +37,7 @@ public class Program {
     /**
      * The user name to use to authenticate with the web service.
      */
-    private static String token = "x-api-key" + System.getenv("EDQ_ElectronicUpdates_Token");
+    private static String token = "x-api-key " + System.getenv("EDQ_ElectronicUpdates_Token");
 
     /*
      * The endpoint for the REST service.
