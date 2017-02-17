@@ -1,4 +1,4 @@
-# QAS Electronic Updates Metadata REST API C# Sample Integration Code
+# Experian Data Quality Electronic Updates Metadata REST API C# Sample Integration Code
 
 ## Build Status
 
@@ -87,7 +87,7 @@ MetadataWebApi.exe
 
 ## Example Usage
 
-Below is an example set of commands that could be run on Windows to download all the latest data files from QAS Electronic Updates onto the local machine into a ```QASData``` directory in the same directory as the application
+Below is an example set of commands that could be run on Windows to download all the latest data files from Electronic Updates onto the local machine into a ```ExperianData``` directory in the same directory as the application
 
 ```batchfile
 set EDQ_ElectronicUpdates_Token=MyToken

@@ -1,4 +1,4 @@
-# QAS Electronic Updates Metadata REST API Java Sample Integration Code
+# Experian Data Quality Electronic Updates Metadata REST API Java Sample Integration Code
 
 ## Overview
 
@@ -62,7 +62,7 @@ java -jar MetadataWebApi.jar
 
 ## Example Usage
 
-Below is an example set of commands that could be run on Linux to download all the latest data files from QAS Electronic Updates onto the local machine into a ```QASData``` directory in the same directory as the application
+Below is an example set of commands that could be run on Linux to download all the latest data files from Electronic Updates onto the local machine into a ```ExperianData``` directory in the same directory as the application
 
 ```sh
 export EDQ_ElectronicUpdates_Token=MyToken

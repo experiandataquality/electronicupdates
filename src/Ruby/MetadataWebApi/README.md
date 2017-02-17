@@ -1,4 +1,4 @@
-# QAS Electronic Updates Metadata REST API Ruby Gem
+# Experian Data Quality Electronic Updates Metadata REST API Ruby Gem
 
 ## Overview
 
@@ -34,7 +34,7 @@ rake
 
 ## Example Usage
 
-Below is an example Ruby script that could be used on a Linux machine to download all the latest data files from QAS Electronic Updates onto the local machine.
+Below is an example Ruby script that could be used on a Linux machine to download all the latest data files from Electronic Updates onto the local machine.
 
 First set the token to use:
 
