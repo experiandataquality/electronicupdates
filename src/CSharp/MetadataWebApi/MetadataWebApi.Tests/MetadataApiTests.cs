@@ -40,13 +40,12 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
             Uri serviceUri = new Uri("https://ws.updates.qas.com/metadata/V2/");
             MetadataApi target = new MetadataApi(serviceUri);
 
-            string fileName = "MyFile.txt";
             string fileHash = "7039d49e15fd4e164e2c07fe76fd61a2";
             long? startAtByte = null;
             long? endAtByte = null;
 
             // Act and Assert - Should throw as no credentials configured
-            await Assert.ThrowsAsync<MetadataApiException>(() => target.GetDownloadUriAsync(fileName, fileHash, startAtByte, endAtByte));
+            await Assert.ThrowsAsync<MetadataApiException>(() => target.GetDownloadUriAsync(fileHash, startAtByte, endAtByte));
         }
     }
 }

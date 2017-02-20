@@ -88,7 +88,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
                 .First();
 
             // Act
-            Uri result = await target.GetDownloadUriAsync(dataFile.FileName, dataFile.MD5Hash);
+            Uri result = await target.GetDownloadUriAsync(dataFile.MD5Hash);
 
             // Assert
             Assert.NotNull(result);

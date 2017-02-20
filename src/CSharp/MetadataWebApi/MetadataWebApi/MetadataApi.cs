@@ -107,7 +107,6 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
         /// <summary>
         /// Gets the download <see cref="Uri"/> for the specified file as an asynchronous operation.
         /// </summary>
-        /// <param name="fileName">The name of the file to download.</param>
         /// <param name="fileHash">The hash of the file to download.</param>
         /// <param name="startAtByte">The optional byte to start downloading the file from.</param>
         /// <param name="endAtByte">The optional byte to end downloading the file from.</param>
@@ -118,12 +117,11 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
         /// <exception cref="MetadataApiException">
         /// The download URI could not be obtained.
         /// </exception>
-        public virtual async Task<Uri> GetDownloadUriAsync(string fileName, string fileHash, long? startAtByte, long? endAtByte)
+        public virtual async Task<Uri> GetDownloadUriAsync(string fileHash, long? startAtByte, long? endAtByte)
         {
             GetDownloadUriRequest request = new GetDownloadUriRequest()
             {
                 FileMD5Hash = fileHash,
-                FileName = fileName,
                 StartAtByte = startAtByte,
                 EndAtByte = endAtByte,
             };

@@ -20,23 +20,22 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
         /// Gets the download <see cref="Uri"/> for the specified file as an asynchronous operation.
         /// </summary>
         /// <param name="value">The <see cref="IMetadataApi"/> to get the download URI.</param>
-        /// <param name="fileName">The name of the file to download.</param>
         /// <param name="fileHash">The hash of the file to download.</param>
         /// <returns>
         /// A <see cref="Task{T}"/> containing the <see cref="Uri"/> to download the file specified by
-        /// <paramref name="fileName"/> and <paramref name="fileHash"/> from as an asynchronous operation.
+        /// <paramref name="fileHash"/> as an asynchronous operation.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="value"/> is <see langword="null"/>.
         /// </exception>
-        public static async Task<Uri> GetDownloadUriAsync(this IMetadataApi value, string fileName, string fileHash)
+        public static async Task<Uri> GetDownloadUriAsync(this IMetadataApi value, string fileHash)
         {
             if (value == null)
             {
                 throw new ArgumentNullException("value");
             }
 
-            return await value.GetDownloadUriAsync(fileName, fileHash, null, null);
+            return await value.GetDownloadUriAsync(fileHash, null, null);
         }
     }
 }
