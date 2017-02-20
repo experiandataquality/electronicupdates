@@ -89,7 +89,7 @@
     <PropertyGroup>
       <SignToolCompanyName>Experian Data Quality</SignToolCompanyName>
       <SignToolCompanyUrl>https://www.edq.com/</SignToolCompanyUrl>
-      <SignToolDescription>QAS Electronic Updates C# Sample Code</SignToolDescription>
+      <SignToolDescription>Electronic Updates C# Sample Code</SignToolDescription>
       <SignToolTimestampUrlSHA1>http://timestamp.comodoca.com/authenticode</SignToolTimestampUrlSHA1>
       <SignToolTimestampUrlSHA256>http://timestamp.comodoca.com/rfc3161</SignToolTimestampUrlSHA256>
       <SignToolPath>$(MSBuildProgramFiles32)\Windows Kits\8.1\Bin\x86\signtool.exe</SignToolPath>

@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyDescription("QAS Electronic Updates Metadata REST API sample application.")]
+[assembly: AssemblyDescription("Electronic Updates Metadata REST API sample application.")]
 [assembly: AssemblyTitle("MetadataWebApi")]
 
 [assembly: CLSCompliant(true)]

@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 namespace Experian.Qas.Updates.Metadata.WebApi.V2
 {
     /// <summary>
-    /// A class representing an example implementation of the QAS Electronic Updates Metadata API.  This class cannot be inherited.
+    /// A class representing an example implementation of the Experian Data Quality Electronic Updates Metadata API.  This class cannot be inherited.
     /// </summary>
     internal static class Program
     {
@@ -42,7 +42,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
         }
 
         /// <summary>
-        /// Downloads the available data files from the QAS Electronic Updates Metadata REST API as an asynchronous operation.
+        /// Downloads the available data files from the Electronic Updates Metadata REST API as an asynchronous operation.
         /// </summary>
         /// <returns>
         /// A <see cref="Task"/> representing the asynchronous operation to download any data files.
@@ -64,7 +64,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
 
             if (string.IsNullOrEmpty(downloadRootPath))
             {
-                downloadRootPath = "QASData";
+                downloadRootPath = "EDQData";
             }
 
             downloadRootPath = Path.GetFullPath(downloadRootPath);
@@ -73,7 +73,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
             IMetadataApiFactory factory = new MetadataApiFactory();
             IMetadataApi service = factory.CreateMetadataApi();
 
-            Console.WriteLine("QAS Electronic Updates Metadata REST API: {0}", service.ServiceUri);
+            Console.WriteLine("Electronic Updates Metadata REST API: {0}", service.ServiceUri);
             Console.WriteLine();
 
             // Query the packages available to the account

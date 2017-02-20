@@ -5,7 +5,7 @@
 ' -----------------------------------------------------------------------
 
 ''' <summary>
-''' Defines the interface to the QAS Electronic Updates Metadata API.
+''' Defines the interface to the Experian Data Quality Electronic Updates Metadata API.
 ''' </summary>
 Public Interface IMetadataApi
 

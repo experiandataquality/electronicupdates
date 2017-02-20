@@ -17,13 +17,13 @@ using System.Threading.Tasks;
 namespace Experian.Qas.Updates.Metadata.WebApi.V2
 {
     /// <summary>
-    /// A class representing the default of implementation of <see cref="IMetadataApi"/> to access the QAS Electronic Updates Metadata API.
+    /// A class representing the default of implementation of <see cref="IMetadataApi"/> to access the Experian Data Quality Electronic Updates Metadata API.
     /// </summary>
     [DebuggerDisplay("{ServiceUri}")]
     public class MetadataApi : IMetadataApi
     {
         /// <summary>
-        /// The QAS Electronic Updates Metadata API URI. This field is read-only.
+        /// The Electronic Updates Metadata API URI. This field is read-only.
         /// </summary>
         private readonly Uri _serviceUri;
 
@@ -35,7 +35,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
         /// <summary>
         /// Initializes a new instance of the <see cref="MetadataApi"/> class.
         /// </summary>
-        /// <param name="serviceUri">The QAS Electronic Updates Metadata API service URI.</param>
+        /// <param name="serviceUri">The Electronic Updates Metadata API service URI.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="serviceUri"/> is <see langword="null"/>.
         /// </exception>
@@ -50,7 +50,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
         }
 
         /// <summary>
-        /// Gets the URI of the QAS Electronic Updates Metadata API.
+        /// Gets the URI of the Electronic Updates Metadata API.
         /// </summary>
         public Uri ServiceUri
         {
@@ -154,7 +154,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpClient"/> that can be used to consume
-        /// the QAS Electronic Updates Metadata Web API.
+        /// the Electronic Updates Metadata Web API.
         /// </summary>
         /// <returns>
         /// The created instance of <see cref="HttpClient"/>.

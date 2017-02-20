@@ -29,8 +29,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 /**
- * Java sample code for the QAS Electronic Updates Metadata Web API.
- * @author Experian QAS
+ * Java sample code for the Experian Data Quality Electronic Updates Metadata Web API.
+ * @author Experian 
  */
 public class Program {
 
@@ -47,7 +47,7 @@ public class Program {
     /**
      * The root folder to download data to.
      */
-    private static final String rootDownloadPath = "QASData";
+    private static final String rootDownloadPath = "EDQData";
 
     /**
      * Calculates the MD5 hash of the specified file.

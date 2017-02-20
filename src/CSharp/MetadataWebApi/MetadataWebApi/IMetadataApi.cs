@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 namespace Experian.Qas.Updates.Metadata.WebApi.V2
 {
     /// <summary>
-    /// Defines the interface to the QAS Electronic Updates Metadata API.
+    /// Defines the interface to the Experian Data Quality Electronic Updates Metadata API.
     /// </summary>
     public interface IMetadataApi
     {
         /// <summary>
-        /// Gets the URI of the QAS Electronic Updates Metadata API.
+        /// Gets the URI of the Electronic Updates Metadata API.
         /// </summary>
         Uri ServiceUri { get; }
 

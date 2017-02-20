@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # metadatawebapi.py - Copyright (c) Experian. All rights reserved.
-# Python script to download data from the QAS Electronic Updates Web API.
+# Python script to download data from the Experian Data Quality Electronic Updates Web API.
 
 import requests # Used to call the Metadata Web API (See: http://docs.python-requests.org/en/latest/index.html)
 import json     # Used to parse JSON
@@ -23,7 +23,7 @@ userAgent = 'Python/{0}.{1}.{2}'.format(version.major, version.minor, version.mi
 headers = {'accept': 'application/json', 'content-type': 'application/json; charset=UTF-8', 'UserAgent': userAgent, 'Authorization' : token}
 
 # Declare directory to download data to
-root_download_path = os.path.join('.', 'QASData')
+root_download_path = os.path.join('.', 'EDQData')
 
 # Get the available package groups from the Web API
 packages_request = requests.get(endpoint + 'packages', headers = headers)

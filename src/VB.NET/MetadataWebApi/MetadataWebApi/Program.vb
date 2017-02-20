@@ -13,7 +13,7 @@ Imports System.Security.Cryptography
 Imports System.Text
 
 ''' <summary>
-''' A class representing an example implementation of the QAS Electronic Updates
+''' A class representing an example implementation of the Experian Data Quality Electronic Updates
 ''' Metadata API.  This class cannot be inherited.
 ''' </summary>
 Friend Class Program
@@ -26,10 +26,10 @@ Friend Class Program
         PrintBanner()
 
         Try
-            ' Get the configuration settings to connect to the QAS Electronic Updates Metadata API
+            ' Get the configuration settings to connect to the Electronic Updates Metadata API
             Dim token As String = GetAppSetting("Token")
 
-            Dim downloadRootPath As String = "QASData"
+            Dim downloadRootPath As String = "EDQData"
             Dim verifyDownloads As Boolean = True
 
             If (String.IsNullOrEmpty(token)) Then
@@ -38,7 +38,7 @@ Friend Class Program
 
             Dim serviceUri As Uri = New Uri("https://ws.updates.qas.com/metadata/V2/")
 
-            Console.WriteLine("QAS Electronic Updates Metadata REST API: {0}", serviceUri)
+            Console.WriteLine("Electronic Updates Metadata REST API: {0}", serviceUri)
             Console.WriteLine()
 
             Dim service As IMetadataApi = New MetadataApi(serviceUri)

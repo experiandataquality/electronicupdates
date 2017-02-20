@@ -21,7 +21,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
 
             // Assert
             Assert.Null(target.InnerException);
-            Assert.Equal("An error was returned by the QAS Electronic Updates Metadata REST API.", target.Message);
+            Assert.Equal("An error was returned by the Electronic Updates Metadata REST API.", target.Message);
         }
 
         [Fact]

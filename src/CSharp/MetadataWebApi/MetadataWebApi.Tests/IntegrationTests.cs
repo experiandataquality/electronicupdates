@@ -151,9 +151,9 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
                     await Program.MainAsync();
 
                     // Assert
-                    Assert.True(Directory.Exists("QASData"));
+                    Assert.True(Directory.Exists("EDQData"));
 
-                    string[] filePaths = Directory.GetFiles("QASData", "*", SearchOption.AllDirectories);
+                    string[] filePaths = Directory.GetFiles("EDQData", "*", SearchOption.AllDirectories);
 
                     // Verify at least one non-empty file was downloaded
                     Assert.NotEmpty(filePaths);

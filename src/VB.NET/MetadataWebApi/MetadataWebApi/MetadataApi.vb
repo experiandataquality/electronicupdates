@@ -11,7 +11,7 @@ Imports System.Net.Http.Headers
 Imports System.Reflection
 
 ''' <summary>
-''' A class representing the default implementation of <see cref="IMetadataApi"/> to access the QAS Electronic Updates Metadata API.
+''' A class representing the default implementation of <see cref="IMetadataApi"/> to access the Experian Data Quality Electronic Updates Metadata API.
 ''' </summary>
 <DebuggerDisplay("{ServiceUri}")>
 Public Class MetadataApi
@@ -22,7 +22,7 @@ Public Class MetadataApi
     ''' <summary>
     ''' Initializes a new instance of the <see cref="MetadataApi"/> class.
     ''' </summary>
-    ''' <param name="serviceUri">The QAS Electronic Updates Metadata API service URI.</param>
+    ''' <param name="serviceUri">The Electronic Updates Metadata API service URI.</param>
     ''' <exception cref="ArgumentNullException">
     ''' <paramref name="serviceUri"/> is <see langword="Nothing"/>.
     ''' </exception>
@@ -103,7 +103,7 @@ Public Class MetadataApi
 
     ''' <summary>
     ''' Creates a new instance of <see cref="HttpClient"/> that can be used to consume
-    ''' the QAS Electronic Updates Metadata Web API.
+    ''' the Electronic Updates Metadata Web API.
     ''' </summary>
     ''' <returns>
     ''' The created instance of <see cref="HttpClient"/>.
@@ -176,7 +176,7 @@ Public Class MetadataApi
     End Function
 
     ''' <summary>
-    ''' Gets the URI of the QAS Electronic Updates Metadata API.
+    ''' Gets the URI of the Electronic Updates Metadata API.
     ''' </summary>
     Public ReadOnly Property ServiceUri As Uri
         Get
@@ -206,7 +206,7 @@ Public Class MetadataApi
     End Property
 
     ''' <summary>
-    ''' The QAS Electronic Updates Metadata API URI.
+    ''' The Electronic Updates Metadata API URI.
     ''' </summary>
     Private ReadOnly _serviceUri As Uri
 
