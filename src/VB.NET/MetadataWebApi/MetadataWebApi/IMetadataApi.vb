@@ -20,15 +20,14 @@ Public Interface IMetadataApi
     ''' <summary>
     ''' Gets the download <see cref="Uri"/> for the specified file.
     ''' </summary>
-    ''' <param name="fileName">The name of the file to download.</param>
     ''' <param name="fileHash">The hash of the file to download.</param>
     ''' <param name="startAtByte">The byte to start downloading the file from.</param>
     ''' <param name="endAtByte">The byte to end downloading the file from.</param>
     ''' <returns>
     ''' The <see cref="Uri"/> to download the file specified by
-    ''' <paramref name="fileName"/> and <paramref name="fileHash"/> from.
+    ''' <paramref name="fileHash"/>.
     ''' </returns>
-    Function GetDownloadUri(ByVal fileName As String, ByVal fileHash As String, ByVal startAtByte As Long?, ByVal endAtByte As Long?) As Uri
+    Function GetDownloadUri(ByVal fileHash As String, ByVal startAtByte As Long?, ByVal endAtByte As Long?) As Uri
 
     ''' <summary>
     ''' Gets or sets the token used to authenticate with the service.

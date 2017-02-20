@@ -84,7 +84,6 @@ Friend Class Program
 
                                     ' Query the URIs to download the file from
                                     Dim uri As Uri = service.GetDownloadUri(
-                                        file.FileName,
                                         file.MD5Hash,
                                         Nothing,
                                         Nothing)
