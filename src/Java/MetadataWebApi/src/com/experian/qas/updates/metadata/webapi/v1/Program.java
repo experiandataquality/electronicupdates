@@ -102,7 +102,6 @@ public class Program {
 
         JSONObject result = new JSONObject();
         
-        result.put("FileName", dataFile.getFileName());
         result.put("FileMd5Hash", dataFile.getMD5Hash());
 
         return result.toJSONString();
