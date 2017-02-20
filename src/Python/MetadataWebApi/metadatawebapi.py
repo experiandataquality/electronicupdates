@@ -102,7 +102,7 @@ for i in range(0, len(package_groups)):
                 print('Requesting download URI for file ''{0}''.'.format(file_path))
 
                 # Request the download URI for this file from the Web API
-                request = {'FileName': file_name, 'FileMd5Hash': file_hash}
+                request = {'FileMd5Hash': file_hash}
                 download_uri_request = requests.post(endpoint + 'filelink', data = json.dumps(request), headers = headers)
 
                 if (download_uri_request.status_code != requests.codes.ok):
