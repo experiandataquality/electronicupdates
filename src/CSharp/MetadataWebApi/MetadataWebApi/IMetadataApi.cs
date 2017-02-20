@@ -41,7 +41,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
         /// <param name="endAtByte">The optional byte to end downloading the file from.</param>
         /// <returns>
         /// A <see cref="Task{T}"/> containing the <see cref="Uri"/> to download the file specified by
-        /// <paramref name="fileName"/> and <paramref name="fileHash"/> from as an asynchronous operation.
+        /// <paramref name="fileHash"/> as an asynchronous operation.
         /// </returns>
         Task<Uri> GetDownloadUriAsync(string fileHash, long? startAtByte, long? endAtByte);
 
