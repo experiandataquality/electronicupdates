@@ -44,21 +44,16 @@ module ElectronicUpdates
   # Gets a URI to download the file with the specified name and hash.
   #
   # Arguments:
-  #   fileName: The name of the file to download. (String)
   #   fileHash: The hash of the file to download. (String)
   #
   # Example:
-  #   >> ElectronicUpdates::getDownloadUri("MyFile.txt", "7039d49e15fd4e164e2c07fe76fd61a2")
+  #   >> ElectronicUpdates::getDownloadUri("7039d49e15fd4e164e2c07fe76fd61a2")
   #   => "https://..."
   #
   # Returns:
   #   A URI for downloading the specified file, if available; otherwise nil.
   #
-  def self.getDownloadUri(fileName, fileHash)
-
-    if fileName === nil or fileName.empty? then
-      raise ArgumentError.new("No file name specified.")
-    end
+  def self.getDownloadUri(fileHash)
 
     if fileHash === nil or fileHash.empty? then
       raise ArgumentError.new("No file hash specified.")
@@ -67,7 +62,6 @@ module ElectronicUpdates
     self.ensureCredentials()
 
     @downloadPayload = {
-        "FileName" => fileName,
         "FileMd5Hash" => fileHash
     }.to_json
 
