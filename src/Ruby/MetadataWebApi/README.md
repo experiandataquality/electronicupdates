@@ -10,8 +10,9 @@ Further documentation of the script is provided by the comments in the Ruby code
 
 ## Prerequisites
 
- * [Ruby](https://www.ruby-lang.org/en/downloads/) 1.9.3 (or later);
+ * [Ruby](https://www.ruby-lang.org/en/downloads/) 2.2.6 (or later);
  * The [rest-client](https://rubygems.org/gems/rest-client/) Ruby gem (or later);
+ * The [bundler) (https://rubygems.org/gems/bundler) Ruby gem (or later);
  * The [minitest](https://rubygems.org/gems/minitest/) Ruby gem (or later, for testing).
 
 ## Setup
@@ -90,6 +91,4 @@ end
 
 This script was tested with the following Ruby versions and platforms:
 
- * Ruby 1.9.3p484 on Ubuntu 14.04.2 LTS;
- * Ruby 2.1.0p0 on OS X Yosemite (10.10.2);
- * Ruby 2.2.2p95 on Windows 8.1 (Build 9600).
+ * Ruby 2.2.6 on Windows 7 Enterprise (Build 7601).

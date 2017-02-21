@@ -14,7 +14,7 @@ Further documentation of the application is provided by the comments in the sour
 
 The following prerequisites are required to compile and debug the application:
 
- * [Java](https://java.com/en/download/) 1.7.0 (or later);
+ * [Java](https://java.com/en/download/) 1.8.0 (or later);
  * [Apache Ant](http://ant.apache.org/bindownload.cgi) 1.9.3 (or later);
  * [Eclipse](https://eclipse.org/downloads/) 3.8.1 (or later).
 
@@ -35,8 +35,7 @@ To compile the application, you can do any of the following:
 
 ### Windows
 
- * Import the project into Eclipse;
- * Run ```Build.cmd``` from the command prompt.
+ * Import the project into Eclipse.
 
 ## Setup
 
@@ -73,5 +72,4 @@ java -jar MetadataWebApi.jar
 
 This application has been compiled and tested on the following platforms:
 
- * Java 1.7.0_79 (x64), Eclipse 3.8.1 and Apache Ant 1.9.3 on Ubuntu 14.04.2 LTS;
- * Java 1.8.0_45 (x64), Eclipse Luna SR2 (4.4.2) and Apache Ant 1.9.4 on Windows 8.1 (Build 9600).
+ * Java 1.8.0_121 (x64), Eclipse Java Neon x64 and Apache Ant 1.10.1 on Windows 7 Enterprise (Build 7601).

@@ -10,7 +10,7 @@ Further documentation of the script is provided by the comments in the Python sc
 
 ## Prerequisites
 
- * [Python](https://www.python.org/downloads/) 2.7.6 (or later);
+ * [Python](https://www.python.org/downloads/) 3.6.0 (or later);
  * The [requests](http://docs.python-requests.org/en/latest/) Python module.
 
 ## Setup
@@ -65,6 +65,4 @@ export EDQ_ElectronicUpdates_Token=MyToken
 
 This script was tested with the following Python versions and platforms:
 
- * Python 2.7.6 on Ubuntu 14.04.2 LTS;
- * Python 2.7.10 on OS X Yosemite (10.10.2);
- * Python 3.3.2 on Windows 8.1 (Build 9600).
+ * Python 3.6.0 on Windows 7 Enterprise (Build 7601).

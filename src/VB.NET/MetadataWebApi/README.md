@@ -63,5 +63,4 @@ MetadataWebApi.exe
 
 This sample code has been compiled and tested on the following platforms:
 
- * Visual Studio Premium 2013 with Update 4 on Windows 8.1 (Build 9600);
- * Visual Studio Enterprise 2015 on Windows 10 (Build 10240).
+ * Visual Studio Enterprise 2015 on Windows 7 Enterprise (Build 7601).
