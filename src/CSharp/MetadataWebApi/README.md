@@ -23,8 +23,8 @@ The following prerequisites are required to compile and debug the application:
 
 #### Linux
 
- * [Mono](http://www.mono-project.com/download/) 4.2.1 (or later);
- * [Mono Develop](http://www.monodevelop.com/download/) 5.9.0 (or later).
+ * [Mono](http://www.mono-project.com/download/) 4.8.0 (or later);
+ * [Mono Develop](http://www.monodevelop.com/download/) 5.10 (or later).
 
 #### Windows
 
@@ -39,7 +39,7 @@ The following prerequisites are required to run the compiled application:
 
 ### Linux/OS X
 
- * [Mono](http://www.mono-project.com/download/) 4.2.1 (or later).
+ * [Mono](http://www.mono-project.com/download/) 4.8.0 (or later).
 
 ### Windows
 
@@ -87,7 +87,7 @@ MetadataWebApi.exe
 
 ## Example Usage
 
-Below is an example set of commands that could be run on Windows to download all the latest data files from Electronic Updates onto the local machine into a ```ExperianData``` directory in the same directory as the application
+Below is an example set of commands that could be run on Windows to download all the latest data files from Electronic Updates onto the local machine into a ```EDQData``` directory in the same directory as the application
 
 ```batchfile
 set EDQ_ElectronicUpdates_Token=MyToken
@@ -98,4 +98,5 @@ MetadataWebApi.exe
 
 This sample code has been compiled and tested on the following platforms:
 
- * Visual Studio Enterprise 2015 on Windows 7 Enterprise (Build 7601).
+ * Visual Studio Enterprise 2015 on Windows 7 Enterprise (Build 7601);
+ * MonoDevelop 5.10 on Ubuntu 16.04 LTS.

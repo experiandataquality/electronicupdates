@@ -12,7 +12,7 @@ Further documentation of the script is provided by the comments in the Ruby code
 
  * [Ruby](https://www.ruby-lang.org/en/downloads/) 2.2.6 (or later);
  * The [rest-client](https://rubygems.org/gems/rest-client/) Ruby gem (or later);
- * The [bundler) (https://rubygems.org/gems/bundler) Ruby gem (or later);
+ * The [bundler](https://rubygems.org/gems/bundler) Ruby gem (or later);
  * The [minitest](https://rubygems.org/gems/minitest/) Ruby gem (or later, for testing).
 
 ## Setup
@@ -91,4 +91,5 @@ end
 
 This script was tested with the following Ruby versions and platforms:
 
- * Ruby 2.2.6 on Windows 7 Enterprise (Build 7601).
+ * Ruby 2.2.6 on Windows 7 Enterprise (Build 7601);
+ * Ruby 2.3.1p112 on Ubuntu 16.04 LTS.

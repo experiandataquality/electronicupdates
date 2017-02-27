@@ -10,7 +10,7 @@ Further documentation of the script is provided by the comments in the Python sc
 
 ## Prerequisites
 
- * [Python](https://www.python.org/downloads/) 3.6.0 (or later);
+ * [Python](https://www.python.org/downloads/) 3.5.2 (or later);
  * The [requests](http://docs.python-requests.org/en/latest/) Python module.
 
 ## Setup
@@ -54,7 +54,7 @@ py .\metadatawebapi.py
 
 ## Example Usage
 
-Below is an example set of commands that could be run on Linux to download all the latest data files from Electronic Updates onto the local machine into a ```ExperianData``` directory in the same directory as the script:
+Below is an example set of commands that could be run on Linux to download all the latest data files from Electronic Updates onto the local machine into a ```EDQData``` directory in the same directory as the script:
 
 ```sh
 export EDQ_ElectronicUpdates_Token=MyToken
@@ -65,4 +65,5 @@ export EDQ_ElectronicUpdates_Token=MyToken
 
 This script was tested with the following Python versions and platforms:
 
- * Python 3.6.0 on Windows 7 Enterprise (Build 7601).
+ * Python 3.6.0 on Windows 7 Enterprise (Build 7601);
+ * Python 3.5.2 on Ubuntu 16.04 LTS.

@@ -31,7 +31,6 @@ To compile the application, you can do any of the following:
 ### Linux
 
  * Import the project into Eclipse;
- * Run ```./build.sh``` from the terminal.
 
 ### Windows
 
@@ -61,7 +60,7 @@ java -jar MetadataWebApi.jar
 
 ## Example Usage
 
-Below is an example set of commands that could be run on Linux to download all the latest data files from Electronic Updates onto the local machine into a ```ExperianData``` directory in the same directory as the application
+Below is an example set of commands that could be run on Linux to download all the latest data files from Electronic Updates onto the local machine into a ```EDQData``` directory in the same directory as the application
 
 ```sh
 export EDQ_ElectronicUpdates_Token=MyToken
@@ -72,4 +71,5 @@ java -jar MetadataWebApi.jar
 
 This application has been compiled and tested on the following platforms:
 
- * Java 1.8.0_121 (x64), Eclipse Java Neon x64 and Apache Ant 1.10.1 on Windows 7 Enterprise (Build 7601).
+ * Java 1.8.0_121 (x64), Eclipse Java Neon x64 and Apache Ant 1.10.1 on Windows 7 Enterprise (Build 7601);
+ * Java 1.8.0_121 (x64), Eclipse Java Neon x64 and Apache Ant 1.10.1 on Ubuntu 16.04 LTS.
