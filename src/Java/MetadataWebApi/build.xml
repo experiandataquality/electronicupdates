@@ -6,7 +6,7 @@
   <property name="src.dir" value="src" />
   <property name="classes.dir" value="${build.dir}/classes" />
   <property name="jar.dir" value="${build.dir}/jar" />
-  <property name="main-class" value="com.experian.qas.updates.metadata.webapi.v1.Program" />
+  <property name="main-class" value="com.experian.qas.updates.metadata.webapi.v2.Program" />
 
   <path id="application" location="${jar.dir}/${ant.project.name}.jar" />
   <path id="classpath">

@@ -2,7 +2,7 @@
  * Copyright (c) Experian. All rights reserved.
  */
 
-package com.experian.qas.updates.metadata.webapi.v1;
+package com.experian.qas.updates.metadata.webapi.v2;
 
 import java.io.BufferedReader;
 import java.io.File;
