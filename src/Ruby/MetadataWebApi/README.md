@@ -11,9 +11,9 @@ Further documentation of the script is provided by the comments in the Ruby code
 ## Prerequisites
 
  * [Ruby](https://www.ruby-lang.org/en/downloads/) 2.2.6 (or later);
- * The [rest-client](https://rubygems.org/gems/rest-client/) Ruby gem (or later);
- * The [bundler](https://rubygems.org/gems/bundler) Ruby gem (or later);
- * The [minitest](https://rubygems.org/gems/minitest/) Ruby gem (or later, for testing).
+ * The [rest-client](https://rubygems.org/gems/rest-client/) Ruby gem;
+ * The [bundler](https://rubygems.org/gems/bundler) Ruby gem;
+ * The [minitest](https://rubygems.org/gems/minitest/) Ruby gem.
 
 ## Setup
 
