@@ -71,11 +71,12 @@ puts "Getting available packages..."
 
     package["Files"].each do |file|
       
+      @fileName = file["Filename"]
       @fileHash = file["Md5Hash"]
       @fileLength = file["Size"]
 
       # Get download URI for file
-      @downloadUri = ElectronicUpdates.getDownloadUri(@fileHash)
+      @downloadUri = ElectronicUpdates.getDownloadUri(@fileName, @fileHash)
 
       # Download the file to the file system
       # RestClient.get @downloadUri
