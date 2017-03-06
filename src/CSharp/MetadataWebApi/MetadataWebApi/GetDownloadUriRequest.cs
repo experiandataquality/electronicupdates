@@ -15,6 +15,16 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
     public class GetDownloadUriRequest
     {
         /// <summary>
+        /// Gets or sets the name of the file requested to be downloaded.
+        /// </summary>
+        [DataMember(Name = "FileName", IsRequired = true)]
+        public string FileName
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets the MD5 of the file requested to be downloaded.
         /// </summary>
         [DataMember(Name = "FileMd5Hash", IsRequired = true)]

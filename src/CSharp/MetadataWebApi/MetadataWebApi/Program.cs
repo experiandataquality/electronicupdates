@@ -199,7 +199,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
             Console.WriteLine("File size: {0:N0}", file.Size);
 
             // Query the URIs to download the file from
-            Uri uri = await service.GetDownloadUriAsync(file.MD5Hash);
+            Uri uri = await service.GetDownloadUriAsync(file.FileName, file.MD5Hash);
 
             if (uri == null)
             {

@@ -41,7 +41,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
 
             if (!Uri.TryCreate(serviceUrl, UriKind.Absolute, out serviceUri))
             {
-                serviceUri = new Uri("https://ws.updates.qas.com/metadata/V2/");
+                serviceUri = new Uri("https://ws.stg.updates.qas.com/metadata/V2/");
             }
 
             // Create the service implementation
