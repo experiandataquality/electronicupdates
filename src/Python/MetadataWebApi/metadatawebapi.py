@@ -62,7 +62,7 @@ for i in range(0, len(package_groups)):
         for k in range(0, len(data_files)):
             
             data_file = data_files[k]
-            file_name = data_file["FileName"]
+            file_name = data_file["Filename"]
             file_hash = data_file["Md5Hash"]
             file_size = data_file["Size"]
             file_path = os.path.join(directory_path, file_name)
