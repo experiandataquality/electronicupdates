@@ -1,4 +1,4 @@
-# QAS Electronic Updates Metadata REST API C# Sample Integration Code
+# Experian Data Quality Electronic Updates Metadata REST API C# Sample Integration Code
 
 ## Build Status
 
@@ -23,8 +23,8 @@ The following prerequisites are required to compile and debug the application:
 
 #### Linux
 
- * [Mono](http://www.mono-project.com/download/) 4.2.1 (or later);
- * [Mono Develop](http://www.monodevelop.com/download/) 5.9.0 (or later).
+ * [Mono](http://www.mono-project.com/download/) 4.8.0 (or later);
+ * [Mono Develop](http://www.monodevelop.com/download/) 5.10 (or later).
 
 #### Windows
 
@@ -39,7 +39,7 @@ The following prerequisites are required to run the compiled application:
 
 ### Linux/OS X
 
- * [Mono](http://www.mono-project.com/download/) 4.2.1 (or later).
+ * [Mono](http://www.mono-project.com/download/) 4.8.0 (or later).
 
 ### Windows
 
@@ -64,8 +64,8 @@ To compile the application, you can do any of the following:
 
 To set up the application for usage you could either:
 
- 1. Set your credentials in the ```QAS_ElectronicUpdates_UserName``` and ```QAS_ElectronicUpdates_Password``` environment variables just before running the application (**recommended**);
- 1. Configure the credentials in the ```MetadataWebApi.exe.config``` configuration file. If you place your credentials in this file ensure that you have adequate security controls in place to protect your account credentials as they are sensitive.
+ 1. Set your authentication token in the ```EDQ_ElectronicUpdates_Token``` environment variable just before running the application (**recommended**);
+ 1. Configure the token in the ```MetadataWebApi.exe.config``` configuration file. If you place your token in this file ensure that you have adequate security controls in place to protect your token.
 
 Other approaches are possible but are considered outside the scope of this documentation.
 
@@ -87,11 +87,10 @@ MetadataWebApi.exe
 
 ## Example Usage
 
-Below is an example set of commands that could be run on Windows to download all the latest data files from QAS Electronic Updates onto the local machine into a ```QASData``` directory in the same directory as the application
+Below is an example set of commands that could be run on Windows to download all the latest data files from Electronic Updates onto the local machine into a ```EDQData``` directory in the same directory as the application
 
 ```batchfile
-set QAS_ElectronicUpdates_UserName=MyUserName
-set QAS_ElectronicUpdates_Password=MyPassword
+set EDQ_ElectronicUpdates_Token=MyToken
 MetadataWebApi.exe
 ```
 
@@ -99,7 +98,5 @@ MetadataWebApi.exe
 
 This sample code has been compiled and tested on the following platforms:
 
- * MonoDevelop 5.9.0 on Ubuntu 14.04.2 LTS;
-
- * Visual Studio Premium 2013 with Update 4 on Windows 8.1 (Build 9600);
- * Visual Studio Enterprise 2015 on Windows 10 (Build 10240).
+ * Visual Studio Enterprise 2015 on Windows 7 Enterprise (Build 7601);
+ * MonoDevelop 5.10 on Ubuntu 16.04 LTS.

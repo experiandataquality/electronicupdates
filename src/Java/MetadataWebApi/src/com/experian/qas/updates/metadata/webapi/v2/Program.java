@@ -2,7 +2,7 @@
  * Copyright (c) Experian. All rights reserved.
  */
 
-package com.experian.qas.updates.metadata.webapi.v1;
+package com.experian.qas.updates.metadata.webapi.v2;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
+import org.apache.http.*;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -29,25 +29,25 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 /**
- * Java sample code for the QAS Electronic Updates Metadata Web API.
- * @author Experian QAS
+ * Java sample code for the Experian Data Quality Electronic Updates Metadata Web API.
+ * @author Experian 
  */
 public class Program {
 
     /**
      * The user name to use to authenticate with the web service.
      */
-    private static final String userName = System.getenv("QAS_ElectronicUpdates_UserName");
+    private static String token = "x-api-key " + System.getenv("EDQ_ElectronicUpdates_Token");
 
-    /**
-     * The password to use to authenticate with the web service.
+    /*
+     * The endpoint for the REST service.
      */
-    private static final String password = System.getenv("QAS_ElectronicUpdates_Password");
+    private static final String endpoint = "https://ws.updates.qas.com/metadata/v2/";
 
     /**
      * The root folder to download data to.
      */
-    private static final String rootDownloadPath = "QASData";
+    private static final String rootDownloadPath = "EDQData";
 
     /**
      * Calculates the MD5 hash of the specified file.
@@ -93,21 +93,6 @@ public class Program {
     }
 
     /**
-     * Creates the credentials JSON to use to authenticate with the web service.
-     * @return A JSON object containing the user's credentials.
-     */
-    @SuppressWarnings("unchecked")
-    private static JSONObject createCredentials() {
-
-        JSONObject result = new JSONObject();
-
-        result.put("UserName", userName);
-        result.put("Password", password);
-
-        return result;
-    }
-
-    /**
      * Creates a String containing the JSON request to download the specified data file.
      * @param dataFile The data file to get the download request for.
      * @return A String containing the JSON to download the specified data file.
@@ -115,23 +100,17 @@ public class Program {
     @SuppressWarnings("unchecked")
     private static String createFileDownloadRequest(DataFile dataFile) {
 
-        JSONObject credentials = createCredentials();
-
-        JSONObject fileDownloadRequest = new JSONObject();
-        fileDownloadRequest.put("FileName", dataFile.getFileName());
-        fileDownloadRequest.put("FileMd5Hash", dataFile.getMD5Hash());
-
         JSONObject result = new JSONObject();
-
-        result.put("usernamePassword", credentials);
-        result.put("fileDownloadRequest", fileDownloadRequest);
+        
+        result.put("FileName", dataFile.getFileName());
+        result.put("FileMd5Hash", dataFile.getMD5Hash());
 
         return result.toJSONString();
     }
 
     /**
      * Creates a HttpPost request object for the specified URI and body.
-     * 
+     *
      * @param uri The URI of the POST request.
      * @param body The body of the POST request.
      * @return The created HttpPost instance.
@@ -153,21 +132,6 @@ public class Program {
     }
 
     /**
-     * Creates a String containing the JSON request to get the available package groups.
-     * @return A String containing the JSON to request the available package groups.
-     */
-    @SuppressWarnings("unchecked")
-    private static String createPackagesRequest() {
-
-        JSONObject credentials = createCredentials();
-
-        JSONObject request = new JSONObject();
-        request.put("usernamePassword", credentials);
-
-        return request.toJSONString();
-    }
-
-    /**
      * Returns the available package groups.
      * @return The available package groups.
      * @throws Exception
@@ -178,14 +142,15 @@ public class Program {
         List<PackageGroup> result = new ArrayList<PackageGroup>();
 
         try {
-
-            // Create the request JSON
-            String body = createPackagesRequest();
-
-            // Create the HTTP POST to request the available packages
-            HttpPost request = createHttpPostRequest(
-                "https://ws.updates.qas.com/metadata/V1/packages",
-                body);
+            
+            // Create the HTTP GET to request the available packages
+            HttpGet request = new HttpGet(endpoint + "packages");
+            
+            // Add the required headers
+            request.addHeader("Accept", "application/json");
+            request.addHeader("Content-Type", "application/json; charset=utf-8");
+            request.addHeader("User-Agent", String.format("MetadataWebApi-Java/%1$s", System.getProperty("java.version")));
+            request.addHeader("Authorization", token);
 
             HttpResponse response = httpClient.execute(request);
 
@@ -205,9 +170,8 @@ public class Program {
                     new InputStreamReader(entity.getContent()));
 
                 JSONParser parser = new JSONParser();
-                JSONObject packagesJson = (JSONObject)parser.parse(reader);
-
-                JSONArray packageGroups = (JSONArray)packagesJson.get("PackageGroups");
+                JSONArray packageGroups = (JSONArray)parser.parse(reader);
+                
                 Iterator<?> packageGroupIterator = packageGroups.iterator();
 
                 System.out.println("Available packages:");
@@ -255,7 +219,7 @@ public class Program {
 
                             JSONObject fileJson = (JSONObject)fileIterator.next();
 
-                            String fileName = (String)fileJson.get("FileName");
+                            String fileName = (String)fileJson.get("Filename");
                             String md5Hash = (String)fileJson.get("Md5Hash");
                             Long size = (Long)fileJson.get("Size");
 
@@ -300,8 +264,10 @@ public class Program {
 
             // Create the HTTP POST to request a download URI for the specified file
             HttpPost request = createHttpPostRequest(
-                "https://ws.updates.qas.com/metadata/V1/filedownload",
+                    endpoint + "filelink",
                 body);
+
+            request.addHeader("Authorization", token);
 
             HttpResponse response = httpClient.execute(request);
 
@@ -336,12 +302,11 @@ public class Program {
     }
 
     public static void main(String[] args) throws Exception {
-    	
-    	if (userName == null || userName.isEmpty() || password == null || password.isEmpty()) {
 
-    		System.out.println("No QAS Electronic Updates service credentials are configured.");
+    	if (token == null || token.isEmpty()) {
+
+    		System.out.println("No Experian Data Quality Electronic Updates service token is configured.");
     		System.exit(-1);
-    		
     	}
 
         List<PackageGroup> availablePackages = getAvailablePackages();
@@ -373,7 +338,7 @@ public class Program {
                         File fileName = new File(vintageDirectory, dataFile.getFileName());
 
                         URL url = new URL(downloadUri);
-                        
+
                         System.out.println(String.format("Downloading %1$s to '%2$s'...", dataFile.getFileName(), fileName.getPath()));
 
                         // Download the file
@@ -398,7 +363,7 @@ public class Program {
                 }
             }
         }
-        
+
         System.out.println("All file(s) downloaded.");
     }
 }

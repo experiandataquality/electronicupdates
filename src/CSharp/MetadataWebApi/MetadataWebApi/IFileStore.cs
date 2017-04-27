@@ -6,7 +6,7 @@
 
 using System;
 
-namespace Experian.Qas.Updates.Metadata.WebApi.V1
+namespace Experian.Qas.Updates.Metadata.WebApi.V2
 {
     /// <summary>
     /// Defines a file store of data files.

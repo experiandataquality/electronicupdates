@@ -1,4 +1,4 @@
-# QAS Electronic Updates Metadata REST API Ruby Gem
+# Experian Data Quality Electronic Updates Metadata REST API Ruby Gem
 
 ## Overview
 
@@ -10,16 +10,17 @@ Further documentation of the script is provided by the comments in the Ruby code
 
 ## Prerequisites
 
- * [Ruby](https://www.ruby-lang.org/en/downloads/) 1.9.3 (or later);
- * The [rest-client](https://rubygems.org/gems/rest-client/) Ruby gem (or later);
- * The [minitest](https://rubygems.org/gems/minitest/) Ruby gem (or later, for testing).
+ * [Ruby](https://www.ruby-lang.org/en/downloads/) 2.2.6 (or later);
+ * The [rest-client](https://rubygems.org/gems/rest-client/) Ruby gem;
+ * The [bundler](https://rubygems.org/gems/bundler) Ruby gem;
+ * The [minitest](https://rubygems.org/gems/minitest/) Ruby gem.
 
 ## Setup
 
 To set up the gem for usage you could either:
 
- 1. Set your credentials in the ```QAS_ElectronicUpdates_UserName``` and ```QAS_ElectronicUpdates_Password``` environment variables just before running the script (**recommended**);
- 1. Hard-code the credentials into the code that uses the gem. This approach is **not** recommended as the credentials are stored in plaintext and could represent a security risk.
+ 1. Set your authentication token in the ```EDQ_ElectronicUpdates_Token``` environment variable just before running the script (**recommended**);
+ 1. Hard-code the token into the code that uses the gem. This approach is **not** recommended as the token is stored in plaintext and could represent a security risk.
 
 Other approaches are possible but are considered outside the scope of this documentation.
 
@@ -34,54 +35,52 @@ rake
 
 ## Example Usage
 
-Below is an example Ruby script that could be used on a Linux machine to download all the latest data files from QAS Electronic Updates onto the local machine.
+Below is an example Ruby script that could be used on a Linux machine to download all the latest data files from Electronic Updates onto the local machine.
 
-First set the credentials to use:
+First set the token to use:
 
 ### Linux/OS X
 
 ```sh
-export QAS_ElectronicUpdates_UserName=MyUserName
-export QAS_ElectronicUpdates_Password=MyPassword
+export EDQ_ElectronicUpdates_Token=MyToken
 ```
 
 ### Windows
 
 ```batchfile
-set QAS_ElectronicUpdates_UserName=MyUserName
-set QAS_ElectronicUpdates_Password=MyPassword
+set EDQ_ElectronicUpdates_Token=MyToken
 ```
 
 Then you can run a ruby script similar to this:
 
 ```ruby
 #!/usr/bin/env ruby
-require 'electronic_updates'
+require File.join(File.dirname(__FILE__), 'electronic_updates')
 
 puts "Getting available packages..."
 @packages = ElectronicUpdates.getPackages()
 
-@packages["PackageGroups"].each do |packageGroup|
-  
+@packages.each do |packageGroup|
+
   @packageGroupCode = packageGroup["PackageGroupCode"]
   @vintage = packageGroup["Vintage"]
-  
+
   packageGroup["Packages"].each do |package|
-  
+
     @packageCode = package["PackageCode"]
-    
+
     package["Files"].each do |file|
-    
-      @fileName = file["FileName"]
+      
+      @fileName = file["Filename"]
       @fileHash = file["Md5Hash"]
       @fileLength = file["Size"]
 
       # Get download URI for file
       @downloadUri = ElectronicUpdates.getDownloadUri(@fileName, @fileHash)
-    
+
       # Download the file to the file system
       # RestClient.get @downloadUri
-    
+
     end
 
   end
@@ -93,6 +92,5 @@ end
 
 This script was tested with the following Ruby versions and platforms:
 
- * Ruby 1.9.3p484 on Ubuntu 14.04.2 LTS;
- * Ruby 2.1.0p0 on OS X Yosemite (10.10.2);
- * Ruby 2.2.2p95 on Windows 8.1 (Build 9600).
+ * Ruby 2.2.6 on Windows 7 Enterprise (Build 7601);
+ * Ruby 2.3.1p112 on Ubuntu 16.04 LTS.

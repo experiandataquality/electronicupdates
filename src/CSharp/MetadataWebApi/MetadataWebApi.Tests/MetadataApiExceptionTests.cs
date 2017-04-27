@@ -9,7 +9,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Xunit;
 
-namespace Experian.Qas.Updates.Metadata.WebApi.V1
+namespace Experian.Qas.Updates.Metadata.WebApi.V2
 {
     public static class MetadataApiExceptionTests
     {
@@ -21,7 +21,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
 
             // Assert
             Assert.Null(target.InnerException);
-            Assert.Equal("An error was returned by the QAS Electronic Updates Metadata REST API.", target.Message);
+            Assert.Equal("An error was returned by the Electronic Updates Metadata REST API.", target.Message);
         }
 
         [Fact]

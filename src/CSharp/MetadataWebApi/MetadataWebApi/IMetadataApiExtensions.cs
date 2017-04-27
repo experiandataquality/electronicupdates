@@ -8,7 +8,7 @@ using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-namespace Experian.Qas.Updates.Metadata.WebApi.V1
+namespace Experian.Qas.Updates.Metadata.WebApi.V2
 {
     /// <summary>
     /// A class containing extension methods for the <see cref="IMetadataApi"/> class. This class cannot be inherited.

@@ -1,4 +1,4 @@
-# QAS Electronic Updates Metadata REST API VB.NET Sample Integration Code
+# Experian Data Quality Electronic Updates Metadata REST API VB.NET Sample Integration Code
 
 ## Overview
 
@@ -37,8 +37,8 @@ To compile the application, you can do any of the following:
 
 To set up the application for usage you could either:
 
- 1. Set your credentials in the ```QAS_ElectronicUpdates_UserName``` and ```QAS_ElectronicUpdates_Password``` environment variables just before running the application (**recommended**);
- 1. Configure the credentials in the ```MetadataWebApi.exe.config``` configuration file. If you place your credentials in this file ensure that you have adequate security controls in place to protect your account credentials as they are sensitive.
+ 1. Set your authentication token in the ```EDQ_ElectronicUpdates_Token``` environment variable just before running the application (**recommended**);
+ 1. Configure the token in the ```MetadataWebApi.exe.config``` configuration file. If you place your token in this file ensure that you have adequate security controls in place to protect your token.
 
 Other approaches are possible but are considered outside the scope of this documentation.
 
@@ -52,11 +52,10 @@ MetadataWebApi.exe
 
 ## Example Usage
 
-Below is an example set of commands that could be run on Windows to download all the latest data files from QAS Electronic Updates onto the local machine into a ```QASData``` directory in the same directory as the application
+Below is an example set of commands that could be run on Windows to download all the latest data files from Electronic Updates onto the local machine into a ```ExperianData``` directory in the same directory as the application
 
 ```batchfile
-set QAS_ElectronicUpdates_UserName=MyUserName
-set QAS_ElectronicUpdates_Password=MyPassword
+set EDQ_ElectronicUpdates_Token=MyToken
 MetadataWebApi.exe
 ```
 
@@ -64,5 +63,4 @@ MetadataWebApi.exe
 
 This sample code has been compiled and tested on the following platforms:
 
- * Visual Studio Premium 2013 with Update 4 on Windows 8.1 (Build 9600);
- * Visual Studio Enterprise 2015 on Windows 10 (Build 10240).
+ * Visual Studio Enterprise 2015 on Windows 7 Enterprise (Build 7601).

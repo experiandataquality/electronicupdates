@@ -86,13 +86,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.vb" />
-    <Compile Include="AvailablePackagesReply.vb" />
     <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="Package.vb" />
     <Compile Include="DataFile.vb" />
     <Compile Include="FileDownloadReply.vb" />
-    <Compile Include="FileDownloadRequest.vb" />
-    <Compile Include="GetAvailablePackagesRequest.vb" />
     <Compile Include="GetDownloadUriRequest.vb" />
     <Compile Include="IFileStore.vb" />
     <Compile Include="IMetadataApi.vb" />
@@ -101,13 +98,14 @@
     <Compile Include="MetadataApiException.vb" />
     <Compile Include="PackageGroup.vb" />
     <Compile Include="Program.vb" />
-    <Compile Include="UserNamePassword.vb" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\MetadataWebApi.snk">
       <Link>MetadataWebApi.snk</Link>
     </None>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="app.manifest" />
     <None Include="Experian.ico" />
     <None Include="packages.config" />

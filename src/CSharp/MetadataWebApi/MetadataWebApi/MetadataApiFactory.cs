@@ -8,7 +8,7 @@ using System;
 using System.Configuration;
 using System.Globalization;
 
-namespace Experian.Qas.Updates.Metadata.WebApi.V1
+namespace Experian.Qas.Updates.Metadata.WebApi.V2
 {
     /// <summary>
     /// A class representing the default implementation of <see cref="IMetadataApiFactory"/>.
@@ -26,13 +26,12 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         /// </exception>
         public virtual IMetadataApi CreateMetadataApi()
         {
-            // Get the credentials to use to connect to the QAS Electronic Updates Metadata REST API
-            string userName = GetConfigSetting("UserName");
-            string password = GetConfigSetting("Password");
+            // Get the token to use to connect to the QAS Electronic Updates Metadata REST API
+            string token = GetConfigSetting("Token");
 
-            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(token))
             {
-                throw new ConfigurationErrorsException("No QAS Electronic Updates service credentials are configured.");
+                throw new ConfigurationErrorsException("The Electronic Updates authentication token has not been configured.");
             }
 
             // Has the REST API endpoint URI been overridden?
@@ -42,14 +41,14 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
 
             if (!Uri.TryCreate(serviceUrl, UriKind.Absolute, out serviceUri))
             {
-                serviceUri = new Uri("https://ws.updates.qas.com/metadata/V1/");
+                serviceUri = new Uri("https://ws.updates.qas.com/metadata/V2/");
             }
 
             // Create the service implementation
             IMetadataApi service = new MetadataApi(serviceUri);
 
             // Set the credentials to use to authenticate with the service
-            service.SetCredentials(userName, password);
+            service.SetToken(token);
 
             return service;
         }
@@ -64,7 +63,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         internal static string GetAppSetting(string name)
         {
             // Build the full name of the setting
-            string settingName = string.Format(CultureInfo.InvariantCulture, "QAS:ElectronicUpdates:{0}", name);
+            string settingName = string.Format(CultureInfo.InvariantCulture, "EDQ:ElectronicUpdates:{0}", name);
 
             // Is the setting configured in the application configuration file?
             string value = ConfigurationManager.AppSettings[settingName];
@@ -72,7 +71,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
             // If not, try the environment variables
             if (string.IsNullOrEmpty(value))
             {
-                settingName = string.Format(CultureInfo.InvariantCulture, "QAS_ElectronicUpdates_{0}", name);
+                settingName = string.Format(CultureInfo.InvariantCulture, "EDQ_ElectronicUpdates_{0}", name);
                 value = Environment.GetEnvironmentVariable(settingName);
             }
 

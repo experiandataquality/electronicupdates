@@ -4,22 +4,25 @@
 '  </copyright>
 ' -----------------------------------------------------------------------
 
+Imports System.Globalization
 Imports System.Net.Http
 Imports System.Net.Http.Formatting
 Imports System.Net.Http.Headers
 Imports System.Reflection
 
 ''' <summary>
-''' A class representing the default implementation of <see cref="IMetadataApi"/> to access the QAS Electronic Updates Metadata API.
+''' A class representing the default implementation of <see cref="IMetadataApi"/> to access the Experian Data Quality Electronic Updates Metadata API.
 ''' </summary>
-<DebuggerDisplay("{ServiceUri}")> _
+<DebuggerDisplay("{ServiceUri}")>
 Public Class MetadataApi
     Implements IMetadataApi
+
+    Private _token As String
 
     ''' <summary>
     ''' Initializes a new instance of the <see cref="MetadataApi"/> class.
     ''' </summary>
-    ''' <param name="serviceUri">The QAS Electronic Updates Metadata API service URI.</param>
+    ''' <param name="serviceUri">The Electronic Updates Metadata API service URI.</param>
     ''' <exception cref="ArgumentNullException">
     ''' <paramref name="serviceUri"/> is <see langword="Nothing"/>.
     ''' </exception>
@@ -42,14 +45,22 @@ Public Class MetadataApi
     ''' <exception cref="MetadataApiException">
     ''' The available packages could not be retrieved.
     ''' </exception>
-    Public Function GetAvailablePackages() As AvailablePackagesReply Implements IMetadataApi.GetAvailablePackages
-
-        Dim request As New GetAvailablePackagesRequest With { _
-            .Credentials = Me._credentials _
-        }
+    Public Function GetAvailablePackages() As List(Of PackageGroup) Implements IMetadataApi.GetAvailablePackages
 
         Try
-            Return Me.Post(Of GetAvailablePackagesRequest, AvailablePackagesReply)("packages", request)
+            Using client As HttpClient = Me.CreateHttpClient
+
+                Dim formatter As MediaTypeFormatter = Me.CreateMediaTypeFormatter
+
+                Dim tokenHeader As String = String.Format(CultureInfo.InvariantCulture, "x-api-key {0}", Token)
+
+                client.DefaultRequestHeaders.Add("Authorization", tokenHeader)
+
+                Using response As HttpResponseMessage = client.GetAsync("packages").Result
+                    response.EnsureSuccessStatusCode()
+                    Return response.Content.ReadAsAsync(Of List(Of PackageGroup))().Result
+                End Using
+            End Using
         Catch ex As Exception
             Throw New MetadataApiException(ex.Message, ex)
         End Try
@@ -72,20 +83,15 @@ Public Class MetadataApi
     ''' </exception>
     Public Function GetDownloadUri(fileName As String, fileHash As String, startAtByte As Long?, endAtByte As Long?) As Uri Implements IMetadataApi.GetDownloadUri
 
-        Dim fileData As New FileDownloadRequest With { _
-            .EndAtByte = endAtByte, _
-            .FileMD5Hash = fileHash, _
-            .FileName = fileName, _
-            .StartAtByte = startAtByte _
-        }
-
-        Dim request As New GetDownloadUriRequest With { _
-            .Credentials = Me._credentials, _
-            .RequestData = fileData _
+        Dim request As New GetDownloadUriRequest With {
+            .endAtByte = endAtByte,
+            .FileMD5Hash = fileHash,
+            .fileName = fileName,
+            .startAtByte = startAtByte
         }
 
         Try
-            Dim downloadResponse As FileDownloadReply = Me.Post(Of GetDownloadUriRequest, FileDownloadReply)("filedownload", request)
+            Dim downloadResponse As FileDownloadReply = Me.Post(Of GetDownloadUriRequest, FileDownloadReply)("filelink", request, Token)
 
             If (downloadResponse Is Nothing Or downloadResponse.DownloadUri Is Nothing) Then
                 Return Nothing
@@ -100,17 +106,17 @@ Public Class MetadataApi
 
     ''' <summary>
     ''' Creates a new instance of <see cref="HttpClient"/> that can be used to consume
-    ''' the QAS Electronic Updates Metadata Web API.
+    ''' the Electronic Updates Metadata Web API.
     ''' </summary>
     ''' <returns>
     ''' The created instance of <see cref="HttpClient"/>.
     ''' </returns>
     Protected Overridable Function CreateHttpClient() As HttpClient
 
-        Dim assembly As Assembly = assembly.GetEntryAssembly
+        Dim assembly As Assembly = Assembly.GetEntryAssembly
 
         If (assembly Is Nothing) Then
-            assembly = assembly.GetExecutingAssembly
+            assembly = Assembly.GetExecutingAssembly
         End If
 
         Dim assemblyName As AssemblyName = assembly.GetName
@@ -142,13 +148,18 @@ Public Class MetadataApi
     ''' <typeparam name="TResult">The type of the response.</typeparam>
     ''' <param name="requestUri">The relative URI the request is sent to.</param>
     ''' <param name="value">The value to write into the entity body of the request.</param>
+    ''' <param name="token">The authentication token.</param>
     ''' <returns>
     ''' An instance of <typeparamref name="TResult"/> read from the response.
     ''' </returns>
-    Protected Overridable Function Post(Of TRequest, TResult)(ByVal requestUri As String, ByVal value As TRequest) As TResult
+    Protected Overridable Function Post(Of TRequest, TResult)(ByVal requestUri As String, ByVal value As TRequest, ByVal token As String) As TResult
         Using client As HttpClient = Me.CreateHttpClient
 
             Dim formatter As MediaTypeFormatter = Me.CreateMediaTypeFormatter
+
+            Dim tokenHeader As String = String.Format(CultureInfo.InvariantCulture, "x-api-key {0}", token)
+
+            client.DefaultRequestHeaders.Add("Authorization", tokenHeader)
 
             Using response As HttpResponseMessage = client.PostAsync(requestUri, value, formatter).Result
                 response.EnsureSuccessStatusCode()
@@ -168,19 +179,7 @@ Public Class MetadataApi
     End Function
 
     ''' <summary>
-    ''' Gets or sets the password to use to authenticate with the service.
-    ''' </summary>
-    Public Property Password As String Implements IMetadataApi.Password
-        Get
-            Return _credentials.Password
-        End Get
-        Set(ByVal value As String)
-            _credentials.Password = value
-        End Set
-    End Property
-
-    ''' <summary>
-    ''' Gets the URI of the QAS Electronic Updates Metadata API.
+    ''' Gets the URI of the Electronic Updates Metadata API.
     ''' </summary>
     Public ReadOnly Property ServiceUri As Uri
         Get
@@ -191,12 +190,12 @@ Public Class MetadataApi
     ''' <summary>
     ''' Gets or sets the user name to use to authenticate with the service.
     ''' </summary>
-    Public Property UserName As String Implements IMetadataApi.UserName
+    Public Property Token As String Implements IMetadataApi.Token
         Get
-            Return _credentials.UserName
+            Return _token
         End Get
         Set(ByVal value As String)
-            _credentials.UserName = value
+            _token = value
         End Set
     End Property
 
@@ -210,12 +209,7 @@ Public Class MetadataApi
     End Property
 
     ''' <summary>
-    ''' The credentials to use to communicate with the QAS Electronic Updates Metadata API.
-    ''' </summary>
-    Private ReadOnly _credentials As UserNamePassword = New UserNamePassword
-
-    ''' <summary>
-    ''' The QAS Electronic Updates Metadata API URI.
+    ''' The Electronic Updates Metadata API URI.
     ''' </summary>
     Private ReadOnly _serviceUri As Uri
 

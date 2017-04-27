@@ -7,10 +7,10 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Experian.Qas.Updates.Metadata.WebApi.V1
+namespace Experian.Qas.Updates.Metadata.WebApi.V2
 {
     /// <summary>
-    /// Represents error data when an error is returned by the QAS Electronic Updates Metadata API.
+    /// Represents error data when an error is returned by the Experian Data Quality Electronic Updates Metadata API.
     /// </summary>
     [Serializable]
     public class MetadataApiException : Exception
@@ -19,7 +19,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         /// Initializes a new instance of the <see cref="MetadataApiException"/> class.
         /// </summary>
         public MetadataApiException()
-            : base("An error was returned by the QAS Electronic Updates Metadata REST API.")
+            : base("An error was returned by the Electronic Updates Metadata REST API.")
         {
         }
 

@@ -7,7 +7,7 @@
 Imports System.Runtime.Serialization
 
 ''' <summary>
-''' Represents error data when an error is returned by the QAS Electronic Updates Metadata API.
+''' Represents error data when an error is returned by the Experian Data Quality Electronic Updates Metadata API.
 ''' </summary>
 <Serializable> _
 Public Class MetadataApiException
@@ -17,7 +17,7 @@ Public Class MetadataApiException
     ''' Initializes a new instance of the <see cref="MetadataApiException"/> class.
     ''' </summary>
     Public Sub New()
-        MyBase.New("An error was returned by the QAS Electronic Updates Metadata API.")
+        MyBase.New("An error was returned by the Electronic Updates Metadata API.")
     End Sub
 
     ''' <summary>

@@ -13,7 +13,7 @@ Imports System.Security.Cryptography
 Imports System.Text
 
 ''' <summary>
-''' A class representing an example implementation of the QAS Electronic Updates
+''' A class representing an example implementation of the Experian Data Quality Electronic Updates
 ''' Metadata API.  This class cannot be inherited.
 ''' </summary>
 Friend Class Program
@@ -26,38 +26,34 @@ Friend Class Program
         PrintBanner()
 
         Try
-            ' Get the configuration settings to connect to the QAS Electronic Updates Metadata API
-            Dim userName As String = GetAppSetting("UserName")
-            Dim password As String = GetAppSetting("Password")
+            ' Get the configuration settings to connect to the Electronic Updates Metadata API
+            Dim token As String = GetAppSetting("Token")
 
-            Dim downloadRootPath As String = "QASData"
+            Dim downloadRootPath As String = "EDQData"
             Dim verifyDownloads As Boolean = True
 
-            If (String.IsNullOrEmpty(userName) Or String.IsNullOrEmpty(password)) Then
-                Throw New ConfigurationErrorsException("No service credentials are configured.")
+            If (String.IsNullOrEmpty(token)) Then
+                Throw New ConfigurationErrorsException("Authentication token has not been configured.")
             End If
 
-            Dim serviceUri As Uri = New Uri("https://ws.updates.qas.com/metadata/V1/")
+            Dim serviceUri As Uri = New Uri("https://ws.updates.qas.com/metadata/V2/")
 
-            Console.WriteLine("QAS Electronic Updates Metadata REST API: {0}", serviceUri)
-            Console.WriteLine()
-            Console.WriteLine("User Name: {0}", userName)
+            Console.WriteLine("Electronic Updates Metadata REST API: {0}", serviceUri)
             Console.WriteLine()
 
             Dim service As IMetadataApi = New MetadataApi(serviceUri)
 
-            ' Set the credentials to use to authenticate with the service
-            service.UserName = userName
-            service.Password = password
+            ' Set the token used to authenticate with the service
+            service.Token = token
 
             ' Query the packages available to the account
-            Dim response As AvailablePackagesReply = service.GetAvailablePackages()
+            Dim response As List(Of PackageGroup) = service.GetAvailablePackages()
 
             Console.WriteLine("Available Package Groups:")
             Console.WriteLine()
 
             ' Enumerate the package groups and list their packages and files
-            If (Not response.PackageGroups Is Nothing AndAlso response.PackageGroups.Count > 0) Then
+            If (Not response Is Nothing AndAlso response.Count > 0) Then
 
                 Dim stopwatch As Stopwatch = Stopwatch.StartNew()
 
@@ -65,7 +61,7 @@ Friend Class Program
                 ' have already been downloaded from the Metadata API service.
                 Using fileStore As IFileStore = New LocalFileStore()
 
-                    For Each group As PackageGroup In response.PackageGroups
+                    For Each group As PackageGroup In response
 
                         Console.WriteLine("Group Name: {0} ({1})", group.PackageGroupCode, group.Vintage)
                         Console.WriteLine()
@@ -176,7 +172,7 @@ Friend Class Program
     Private Shared Function GetAppSetting(ByVal name As String) As String
 
         '' Build the full name of the setting
-        Dim settingName As String = String.Format(CultureInfo.InvariantCulture, "QAS:ElectronicUpdates:{0}", name)
+        Dim settingName As String = String.Format(CultureInfo.InvariantCulture, "EDQ:ElectronicUpdates:{0}", name)
 
         '' Is the setting configured in the application configuration file?
         Dim value As String = ConfigurationManager.AppSettings.Item(settingName)
@@ -184,7 +180,7 @@ Friend Class Program
         '' If Not, try the environment variables
         If (String.IsNullOrEmpty(value)) Then
 
-            settingName = String.Format(CultureInfo.InvariantCulture, "QAS_ElectronicUpdates_{0}", name)
+            settingName = String.Format(CultureInfo.InvariantCulture, "EDQ_ElectronicUpdates_{0}", name)
             value = Environment.GetEnvironmentVariable(settingName)
 
         End If

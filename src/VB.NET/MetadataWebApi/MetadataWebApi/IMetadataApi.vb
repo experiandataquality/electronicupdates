@@ -5,7 +5,7 @@
 ' -----------------------------------------------------------------------
 
 ''' <summary>
-''' Defines the interface to the QAS Electronic Updates Metadata API.
+''' Defines the interface to the Experian Data Quality Electronic Updates Metadata API.
 ''' </summary>
 Public Interface IMetadataApi
 
@@ -15,7 +15,7 @@ Public Interface IMetadataApi
     ''' <returns>
     ''' The available updates packages.
     ''' </returns>
-    Function GetAvailablePackages() As AvailablePackagesReply
+    Function GetAvailablePackages() As List(Of PackageGroup)
 
     ''' <summary>
     ''' Gets the download <see cref="Uri"/> for the specified file.
@@ -31,13 +31,8 @@ Public Interface IMetadataApi
     Function GetDownloadUri(ByVal fileName As String, ByVal fileHash As String, ByVal startAtByte As Long?, ByVal endAtByte As Long?) As Uri
 
     ''' <summary>
-    ''' Gets or sets the password to use to authenticate with the service.
+    ''' Gets or sets the token used to authenticate with the service.
     ''' </summary>
-    Property Password As String
-
-    ''' <summary>
-    ''' Gets or sets the user name to use to authenticate with the service.
-    ''' </summary>
-    Property UserName As String
+    Property Token As String
 
 End Interface

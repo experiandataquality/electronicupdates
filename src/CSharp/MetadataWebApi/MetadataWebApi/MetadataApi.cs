@@ -5,35 +5,37 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Experian.Qas.Updates.Metadata.WebApi.V1
+namespace Experian.Qas.Updates.Metadata.WebApi.V2
 {
     /// <summary>
-    /// A class representing the default of implementation of <see cref="IMetadataApi"/> to access the QAS Electronic Updates Metadata API.
+    /// A class representing the default of implementation of <see cref="IMetadataApi"/> to access the Experian Data Quality Electronic Updates Metadata API.
     /// </summary>
     [DebuggerDisplay("{ServiceUri}")]
     public class MetadataApi : IMetadataApi
     {
         /// <summary>
-        /// The QAS Electronic Updates Metadata API URI. This field is read-only.
+        /// The Electronic Updates Metadata API URI. This field is read-only.
         /// </summary>
         private readonly Uri _serviceUri;
 
         /// <summary>
-        /// The credentials to use to communicate with the QAS Electronic Updates Metadata API. This field is read-only.
+        /// The authentication token used to communicate with the Metadata API.
         /// </summary>
-        private readonly UserNamePassword _credentials = new UserNamePassword();
+        private string _token;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MetadataApi"/> class.
         /// </summary>
-        /// <param name="serviceUri">The QAS Electronic Updates Metadata API service URI.</param>
+        /// <param name="serviceUri">The Electronic Updates Metadata API service URI.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="serviceUri"/> is <see langword="null"/>.
         /// </exception>
@@ -48,7 +50,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         }
 
         /// <summary>
-        /// Gets the URI of the QAS Electronic Updates Metadata API.
+        /// Gets the URI of the Electronic Updates Metadata API.
         /// </summary>
         public Uri ServiceUri
         {
@@ -56,11 +58,11 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         }
 
         /// <summary>
-        /// Gets the user name to use to authenticate with the service.
+        /// Gets the authentication token used to communicate with the Metadata API.
         /// </summary>
-        public string UserName
+        public string Token
         {
-            get { return _credentials.UserName; }
+            get { return _token; }
         }
 
         /// <summary>
@@ -80,16 +82,21 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         /// <exception cref="MetadataApiException">
         /// The available packages could not be retrieved.
         /// </exception>
-        public virtual async Task<AvailablePackagesReply> GetAvailablePackagesAsync()
+        public virtual async Task<List<PackageGroup>> GetAvailablePackagesAsync()
         {
-            GetAvailablePackagesRequest requestData = new GetAvailablePackagesRequest()
-            {
-                Credentials = _credentials,
-            };
-
             try
             {
-                return await Post<GetAvailablePackagesRequest, AvailablePackagesReply>("packages", requestData);
+                using (HttpClient client = CreateHttpClient())
+                {
+                    var tokenHeader = string.Format(CultureInfo.InvariantCulture, "x-api-key {0}", _token);
+                    client.DefaultRequestHeaders.Add("Authorization", tokenHeader);
+
+                    using (HttpResponseMessage response = await client.GetAsync("packages"))
+                    {
+                        response.EnsureSuccessStatusCode();
+                        return await response.Content.ReadAsAsync<List<PackageGroup>>();
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -113,7 +120,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         /// </exception>
         public virtual async Task<Uri> GetDownloadUriAsync(string fileName, string fileHash, long? startAtByte, long? endAtByte)
         {
-            FileDownloadRequest fileData = new FileDownloadRequest()
+            GetDownloadUriRequest request = new GetDownloadUriRequest()
             {
                 FileMD5Hash = fileHash,
                 FileName = fileName,
@@ -121,15 +128,9 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
                 EndAtByte = endAtByte,
             };
 
-            GetDownloadUriRequest request = new GetDownloadUriRequest()
-            {
-                Credentials = _credentials,
-                RequestData = fileData,
-            };
-
             try
             {
-                FileDownloadReply downloadResponse = await Post<GetDownloadUriRequest, FileDownloadReply>("filedownload", request);
+                FileDownloadReply downloadResponse = await Post<GetDownloadUriRequest, FileDownloadReply>("filelink", request, _token);
 
                 if (downloadResponse == null || downloadResponse.DownloadUri == null)
                 {
@@ -145,19 +146,17 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         }
 
         /// <summary>
-        /// Sets the credentials to use to authenticate with the service.
+        /// Sets the token used to authenticate with the service.
         /// </summary>
-        /// <param name="userName">The web service user name.</param>
-        /// <param name="password">The web service password.</param>
-        public virtual void SetCredentials(string userName, string password)
+        /// <param name="token">The authentication token.</param>
+        public virtual void SetToken(string token)
         {
-            _credentials.UserName = userName;
-            _credentials.Password = password;
+            _token = token;
         }
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpClient"/> that can be used to consume
-        /// the QAS Electronic Updates Metadata Web API.
+        /// the Electronic Updates Metadata Web API.
         /// </summary>
         /// <returns>
         /// The created instance of <see cref="HttpClient"/>.
@@ -196,14 +195,18 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V1
         /// <typeparam name="TResult">The type of the response.</typeparam>
         /// <param name="requestUri">The relative URI the request is sent to.</param>
         /// <param name="value">The value to write into the entity body of the request.</param>
+        /// <param name="token">The authentication token value.</param>
         /// <returns>
         /// A <see cref="Task{T}"/> that will yield an instance of <typeparamref name="TResult"/> read from the response as an asynchronous operation.
         /// </returns>
-        protected virtual async Task<TResult> Post<TRequest, TResult>(string requestUri, TRequest value)
+        protected virtual async Task<TResult> Post<TRequest, TResult>(string requestUri, TRequest value, string token)
         {
             using (HttpClient client = CreateHttpClient())
             {
                 MediaTypeFormatter formatter = CreateMediaTypeFormatter();
+
+                var tokenHeader = string.Format(CultureInfo.InvariantCulture, "x-api-key {0}", token);
+                client.DefaultRequestHeaders.Add("Authorization", tokenHeader);
 
                 using (HttpResponseMessage response = await client.PostAsync(requestUri, value, formatter))
                 {
