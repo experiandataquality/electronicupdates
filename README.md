@@ -7,7 +7,9 @@
 | | Linux/OS X | Windows |
 |:-:|:-:|:-:|
 | **C# Build Status** | [![Build status](https://img.shields.io/travis/experiandataquality/electronicupdates/master.svg)](https://travis-ci.org/experiandataquality/electronicupdates) | [![Build status](https://img.shields.io/appveyor/ci/experiandataquality/electronicupdates/master.svg)](https://ci.appveyor.com/project/experiandataquality/electronicupdates) [![Coverage Status](https://img.shields.io/codecov/c/github/experiandataquality/electronicupdates/master.svg)](https://codecov.io/github/experiandataquality/electronicupdates) |
-| **C# Build History** | [![Build history](https://ci-buildstats.azurewebsites.net/travisci/chart/experiandataquality/electronicupdates?branch=master&includeBuildsFromPullRequest=false)](https://travis-ci.org/experiandataquality/electronicupdates) |  [![Build history](https://ci-buildstats.azurewebsites.net/appveyor/chart/experiandataquality/electronicupdates?branch=master&includeBuildsFromPullRequest=false)](https://ci.appveyor.com/project/experiandataquality/electronicupdates) |
+|Java| - |![Build Status](https://edq-repo.visualstudio.com/_apis/public/build/definitions/034cfbed-e5ea-4de5-898a-85fbf66debfb/548/badge)|
+|Python| - |![Build Status](https://edq-repo.visualstudio.com/_apis/public/build/definitions/034cfbed-e5ea-4de5-898a-85fbf66debfb/548/badge)|
+|VB.Net| - |![Build Status](https://edq-repo.visualstudio.com/_apis/public/build/definitions/034cfbed-e5ea-4de5-898a-85fbf66debfb/548/badge)|
 
 ## Overview
 
