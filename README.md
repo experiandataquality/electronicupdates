@@ -4,12 +4,12 @@
 [![Issues](https://img.shields.io/github/issues/experiandataquality/electronicupdates.svg?label=Issues)](https://github.com/experiandataquality/electronicupdates/issues) [![License](https://img.shields.io/github/license/experiandataquality/electronicupdates.svg?label=License)](https://github.com/experiandataquality/electronicupdates/blob/master/LICENSE)
 -->
 
-| | Linux/OS X | Windows |
+| **Build Status**| **Linux/OS X** | **Windows** |
 |:-:|:-:|:-:|
-| **C# Build Status** | [![Build status](https://img.shields.io/travis/experiandataquality/electronicupdates/master.svg)](https://travis-ci.org/experiandataquality/electronicupdates) | [![Build status](https://img.shields.io/appveyor/ci/experiandataquality/electronicupdates/master.svg)](https://ci.appveyor.com/project/experiandataquality/electronicupdates) [![Coverage Status](https://img.shields.io/codecov/c/github/experiandataquality/electronicupdates/master.svg)](https://codecov.io/github/experiandataquality/electronicupdates) |
-|Java| - |![Build Status](https://edq-repo.visualstudio.com/_apis/public/build/definitions/034cfbed-e5ea-4de5-898a-85fbf66debfb/548/badge)|
-|Python| - |![Build Status](https://edq-repo.visualstudio.com/_apis/public/build/definitions/034cfbed-e5ea-4de5-898a-85fbf66debfb/548/badge)|
-|VB.Net| - |![Build Status](https://edq-repo.visualstudio.com/_apis/public/build/definitions/034cfbed-e5ea-4de5-898a-85fbf66debfb/548/badge)|
+| **C#** | [![Build status](https://img.shields.io/travis/experiandataquality/electronicupdates/master.svg)](https://travis-ci.org/experiandataquality/electronicupdates) | ![Build Status](https://edq-repo.visualstudio.com/_apis/public/build/definitions/034cfbed-e5ea-4de5-898a-85fbf66debfb/548/badge) |
+|**Java**| - |![Build Status](https://edq-repo.visualstudio.com/_apis/public/build/definitions/034cfbed-e5ea-4de5-898a-85fbf66debfb/548/badge)|
+|**Python**| - |![Build Status](https://edq-repo.visualstudio.com/_apis/public/build/definitions/034cfbed-e5ea-4de5-898a-85fbf66debfb/548/badge)|
+|**VB.Net**| - |![Build Status](https://edq-repo.visualstudio.com/_apis/public/build/definitions/034cfbed-e5ea-4de5-898a-85fbf66debfb/548/badge)|
 
 ## Overview
 
