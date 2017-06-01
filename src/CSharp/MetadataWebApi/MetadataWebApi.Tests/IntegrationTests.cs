@@ -10,6 +10,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Xunit;
@@ -98,9 +99,17 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
 
             try
             {
-                using (WebClient client = new WebClient())
+                using (HttpClient client = new HttpClient())
                 {
-                    await client.DownloadFileTaskAsync(result, tempPath);
+                    using (var request = new HttpRequestMessage(HttpMethod.Get, result))
+                    {
+                        using (
+                        Stream contentStream = await (await client.SendAsync(request)).Content.ReadAsStreamAsync(), 
+                        stream = new FileStream(tempPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, true)) 
+                        {
+                          await contentStream.CopyToAsync(stream);
+                        }
+                    }
                 }
 
                 Assert.True(File.Exists(tempPath));
@@ -111,7 +120,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
                 {
                     Assert.Equal(dataFile.Size, stream.Length);
 
-                    using (HashAlgorithm algorithm = HashAlgorithm.Create("MD5"))
+                    using (HashAlgorithm algorithm = MD5.Create())
                     {
                         hash = algorithm.ComputeHash(stream);
                     }
@@ -168,7 +177,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
 
         private static MetadataApi CreateAuthorizedService()
         {
-            MetadataApiFactory factory = new MetadataApiFactory();
+            MetadataApiFactory factory = new MetadataApiFactory(Program.GetConfiguration());
             return factory.CreateMetadataApi() as MetadataApi;
         }
     }

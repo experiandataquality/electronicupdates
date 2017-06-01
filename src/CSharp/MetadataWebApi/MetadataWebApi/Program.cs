@@ -4,6 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -21,12 +22,12 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
     /// <summary>
     /// A class representing an example implementation of the Experian Data Quality Electronic Updates Metadata API.  This class cannot be inherited.
     /// </summary>
-    internal static class Program
+    public static class Program
     {
         /// <summary>
         /// The main entry-point to the application.
         /// </summary>
-        internal static void Main()
+        public static void Main()
         {
             try
             {
@@ -47,13 +48,17 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
         /// <returns>
         /// A <see cref="Task"/> representing the asynchronous operation to download any data files.
         /// </returns>
-        internal static async Task MainAsync()
+        public static async Task MainAsync()
         {
             PrintBanner();
 
+            // Create the service implementation
+            MetadataApiFactory factory = new MetadataApiFactory(GetConfiguration());
+            IMetadataApi service = factory.CreateMetadataApi();
+
             // Get the configuration settings for downloading files
-            string downloadRootPath = MetadataApiFactory.GetAppSetting("DownloadRootPath");
-            string verifyDownloadsString = MetadataApiFactory.GetAppSetting("ValidateDownloads");
+            string downloadRootPath = factory.GetConfigSetting("downloadRootPath");
+            string verifyDownloadsString = factory.GetConfigSetting("validateDownloads");
 
             bool verifyDownloads;
 
@@ -68,10 +73,6 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
             }
 
             downloadRootPath = Path.GetFullPath(downloadRootPath);
-
-            // Create the service implementation
-            IMetadataApiFactory factory = new MetadataApiFactory();
-            IMetadataApi service = factory.CreateMetadataApi();
 
             Console.WriteLine("Electronic Updates Metadata REST API: {0}", service.ServiceUri);
             Console.WriteLine();
@@ -165,6 +166,14 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
                     Console.WriteLine();
                 }
             }
+        }
+
+        public static IConfigurationRoot GetConfiguration()
+        {
+            return new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile($"app.config.json", optional: true)
+                .Build();
         }
 
         /// <summary>
@@ -273,7 +282,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
 
             filePath = Path.GetFullPath(filePath);
 
-            using (HashAlgorithm algorithm = HashAlgorithm.Create("MD5"))
+            using (HashAlgorithm algorithm = MD5.Create())
             {
                 using (Stream stream = File.OpenRead(filePath))
                 {
@@ -308,10 +317,9 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
         /// </summary>
         private static void PrintBanner()
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
+            Assembly assembly = Assembly.GetEntryAssembly();
             AssemblyName currentAssembly = assembly.GetName();
 
-            var copyright = assembly.GetCustomAttribute<AssemblyCopyrightAttribute>();
             var version = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
 
             string welcomeMessage = string.Format(
@@ -320,7 +328,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
                 Environment.NewLine,
                 currentAssembly.Name,
                 version.InformationalVersion,
-                copyright.Copyright);
+                "Experian 2017");
 
             Console.WriteLine(welcomeMessage);
         }

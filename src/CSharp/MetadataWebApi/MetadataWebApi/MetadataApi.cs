@@ -4,14 +4,15 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Net.Http;
-using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Experian.Qas.Updates.Metadata.WebApi.V2
@@ -94,7 +95,8 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
                     using (HttpResponseMessage response = await client.GetAsync("packages"))
                     {
                         response.EnsureSuccessStatusCode();
-                        return await response.Content.ReadAsAsync<List<PackageGroup>>();
+                        var raw = await response.Content.ReadAsStringAsync();
+                        return JsonConvert.DeserializeObject<List<PackageGroup>>(raw);
                     }
                 }
             }
@@ -163,7 +165,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
         /// </returns>
         protected virtual HttpClient CreateHttpClient()
         {
-            var assembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
+            var assembly = Assembly.GetEntryAssembly();
             var assemblyName = assembly.GetName();
 
             var contentTypeHeader = new MediaTypeWithQualityHeaderValue(this.ContentType);
@@ -203,28 +205,17 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
         {
             using (HttpClient client = CreateHttpClient())
             {
-                MediaTypeFormatter formatter = CreateMediaTypeFormatter();
-
                 var tokenHeader = string.Format(CultureInfo.InvariantCulture, "x-api-key {0}", token);
                 client.DefaultRequestHeaders.Add("Authorization", tokenHeader);
 
-                using (HttpResponseMessage response = await client.PostAsync(requestUri, value, formatter))
+                var json = new StringContent(JsonConvert.SerializeObject(value).ToString(), Encoding.UTF8, "application/json");
+                using (HttpResponseMessage response = await client.PostAsync(requestUri, json))
                 {
                     response.EnsureSuccessStatusCode();
-                    return await response.Content.ReadAsAsync<TResult>();
+                    var raw = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<TResult>(raw);
                 }
             }
-        }
-
-        /// <summary>
-        /// Creates a <see cref="MediaTypeFormatter"/> to use to serialize data.
-        /// </summary>
-        /// <returns>
-        /// The created instance of <see cref="MediaTypeFormatter"/>.
-        /// </returns>
-        protected virtual MediaTypeFormatter CreateMediaTypeFormatter()
-        {
-            return new JsonMediaTypeFormatter();
         }
     }
 }

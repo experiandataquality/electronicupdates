@@ -1,49 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetadataWebApi", "MetadataWebApi\MetadataWebApi.csproj", "{B3A7B441-933E-49CF-B567-EF9D6C8333E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetadataWebApi", "MetadataWebApi\MetadataWebApi.csproj", "{63A122EE-46C2-4692-9A38-8896ED680750}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CB89B19A-2982-408E-8EAC-6BAD0EFAE808}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\..\.travis.yml = ..\..\..\.travis.yml
-		..\..\..\appveyor.yml = ..\..\..\appveyor.yml
-		Build.cmd = Build.cmd
-		build.sh = build.sh
-		Experian.ico = Experian.ico
-		FxCopDictionary.xml = FxCopDictionary.xml
-		..\..\..\LICENSE = ..\..\..\LICENSE
-		MetadataWebApi.msbuild = MetadataWebApi.msbuild
-		MetadataWebApi.ruleset = MetadataWebApi.ruleset
-		MetadataWebApi.snk = MetadataWebApi.snk
-		MetadataWebApi.targets = MetadataWebApi.targets
-		..\..\..\README.md = ..\..\..\README.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{E1292E0F-FAA1-4D92-B06C-92E1661F74A9}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\..\LICENSE = ..\..\..\LICENSE
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StyleCop", "StyleCop", "{E2F00DAF-E66E-484E-BAF9-4353A4270F8F}"
-	ProjectSection(SolutionItems) = preProject
-		Tools\StyleCop\StyleCop.Targets = Tools\StyleCop\StyleCop.Targets
-		Tools\StyleCop\stylecop.json = Tools\StyleCop\stylecop.json
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{137CD29F-91BE-4E16-A229-7B9321281179}"
-	ProjectSection(SolutionItems) = preProject
-		Tools\NuGet\NuGet.config = Tools\NuGet\NuGet.config
-		Tools\NuGet\NuGet.exe = Tools\NuGet\NuGet.exe
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetadataWebApi.Tests", "MetadataWebApi.Tests\MetadataWebApi.Tests.csproj", "{6574A1FC-DE2A-47E7-B30D-B042DD00891D}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0744A245-D39F-4355-839A-5ACB481187E0}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetadataWebApi.Tests", "MetadataWebApi.Tests\MetadataWebApi.Tests.csproj", "{88C25730-7132-41B5-A1FF-9453977AF6A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,21 +13,16 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B3A7B441-933E-49CF-B567-EF9D6C8333E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B3A7B441-933E-49CF-B567-EF9D6C8333E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B3A7B441-933E-49CF-B567-EF9D6C8333E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B3A7B441-933E-49CF-B567-EF9D6C8333E5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6574A1FC-DE2A-47E7-B30D-B042DD00891D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6574A1FC-DE2A-47E7-B30D-B042DD00891D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6574A1FC-DE2A-47E7-B30D-B042DD00891D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6574A1FC-DE2A-47E7-B30D-B042DD00891D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63A122EE-46C2-4692-9A38-8896ED680750}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63A122EE-46C2-4692-9A38-8896ED680750}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63A122EE-46C2-4692-9A38-8896ED680750}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63A122EE-46C2-4692-9A38-8896ED680750}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88C25730-7132-41B5-A1FF-9453977AF6A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88C25730-7132-41B5-A1FF-9453977AF6A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88C25730-7132-41B5-A1FF-9453977AF6A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88C25730-7132-41B5-A1FF-9453977AF6A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{E1292E0F-FAA1-4D92-B06C-92E1661F74A9} = {CB89B19A-2982-408E-8EAC-6BAD0EFAE808}
-		{E2F00DAF-E66E-484E-BAF9-4353A4270F8F} = {E1292E0F-FAA1-4D92-B06C-92E1661F74A9}
-		{137CD29F-91BE-4E16-A229-7B9321281179} = {E1292E0F-FAA1-4D92-B06C-92E1661F74A9}
 	EndGlobalSection
 EndGlobal

@@ -4,8 +4,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using Microsoft.Extensions.Configuration;
 using System;
-using System.Configuration;
 using System.Globalization;
 
 namespace Experian.Qas.Updates.Metadata.WebApi.V2
@@ -13,8 +13,14 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
     /// <summary>
     /// A class representing the default implementation of <see cref="IMetadataApiFactory"/>.
     /// </summary>
-    public class MetadataApiFactory : IMetadataApiFactory
+    public class MetadataApiFactory
     {
+        private IConfigurationRoot configuration;
+        public MetadataApiFactory(IConfigurationRoot configuration)
+        {
+            this.configuration = configuration;
+        }
+
         /// <summary>
         /// Creates a new instance of <see cref="IMetadataApi"/>.
         /// </summary>
@@ -27,15 +33,15 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
         public virtual IMetadataApi CreateMetadataApi()
         {
             // Get the token to use to connect to the QAS Electronic Updates Metadata REST API
-            string token = GetConfigSetting("Token");
+            string token = GetConfigSetting("token");
 
             if (string.IsNullOrEmpty(token))
             {
-                throw new ConfigurationErrorsException("The Electronic Updates authentication token has not been configured.");
+                throw new NullReferenceException("The Electronic Updates authentication token has not been configured.");
             }
 
             // Has the REST API endpoint URI been overridden?
-            string serviceUrl = GetConfigSetting("ServiceUri");
+            string serviceUrl = GetConfigSetting("serviceUri");
 
             Uri serviceUri;
 
@@ -54,40 +60,25 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
         }
 
         /// <summary>
-        /// Gets the application configuration setting with the specified name.
-        /// </summary>
-        /// <param name="name">The name of the application configuration setting to obtain.</param>
-        /// <returns>
-        /// The value of the specified application configuration setting, if found; otherwise <see cref="string.Empty"/>.
-        /// </returns>
-        internal static string GetAppSetting(string name)
-        {
-            // Build the full name of the setting
-            string settingName = string.Format(CultureInfo.InvariantCulture, "EDQ:ElectronicUpdates:{0}", name);
-
-            // Is the setting configured in the application configuration file?
-            string value = ConfigurationManager.AppSettings[settingName];
-
-            // If not, try the environment variables
-            if (string.IsNullOrEmpty(value))
-            {
-                settingName = string.Format(CultureInfo.InvariantCulture, "EDQ_ElectronicUpdates_{0}", name);
-                value = Environment.GetEnvironmentVariable(settingName);
-            }
-
-            return value ?? string.Empty;
-        }
-
-        /// <summary>
         /// Gets the configuration setting with the specified name.
         /// </summary>
         /// <param name="name">The name of the configuration setting to obtain.</param>
         /// <returns>
         /// The value of the specified configuration setting, if found; otherwise <see cref="string.Empty"/>.
         /// </returns>
-        protected internal virtual string GetConfigSetting(string name)
+        public string GetConfigSetting(string name)
         {
-            return GetAppSetting(name);
+            // Is the setting configured in the application configuration file?
+            string value = this.configuration[$"appSettings:{name}"];
+
+            // If not, try the environment variables
+            if (string.IsNullOrEmpty(value))
+            {
+                var settingName = string.Format(CultureInfo.InvariantCulture, "EDQ_ElectronicUpdates_{0}", name);
+                value = Environment.GetEnvironmentVariable(settingName);
+            }
+
+            return value ?? string.Empty;
         }
     }
 }
