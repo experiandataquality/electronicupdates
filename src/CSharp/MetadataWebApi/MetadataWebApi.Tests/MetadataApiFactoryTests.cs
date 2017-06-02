@@ -29,7 +29,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
             {"appSettings:serviceUri", ""}
         };
 
-    [Fact]
+        [Fact]
         public void MetadataApiFactory_CreateMetadataApi_Creates_Instance()
         {
             var configuration = new ConfigurationBuilder()
@@ -113,7 +113,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
             var target = new MetadataApiFactory(configuration);
 
             // Act and Assert
-            Assert.Throws<NullReferenceException>(() => target.CreateMetadataApi());
+            Assert.Throws<InvalidOperationException>(() => target.CreateMetadataApi());
         }
 
         [Fact]

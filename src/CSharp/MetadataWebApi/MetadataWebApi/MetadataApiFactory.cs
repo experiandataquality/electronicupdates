@@ -37,7 +37,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
 
             if (string.IsNullOrEmpty(token))
             {
-                throw new NullReferenceException("The Electronic Updates authentication token has not been configured.");
+                throw new InvalidOperationException("The Electronic Updates authentication token has not been configured.");
             }
 
             // Has the REST API endpoint URI been overridden?
