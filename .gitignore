@@ -6,6 +6,7 @@
 .metadata
 .settings
 .vs
+.vscode
 _ReSharper*
 bin
 !/src/Ruby/*/bin
