@@ -86,13 +86,20 @@ To run the application, execute the following command from the directory contain
 #### Linux/OS X
 
 ```sh
-./MetadataWebApi.exe
+dotnet ./MetadataWebApi.dll
 ```
 
 #### Windows
 
+For the .Net Framework exe
+
 ```batchfile
 MetadataWebApi.exe
+```
+or for the .Net core app
+
+```batchfile
+dotnet .\MetadataWebApi.dll
 ```
 
 ## Example Usage
