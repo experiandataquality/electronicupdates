@@ -1,11 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFrameworks>netcoreapp1.1;Net461</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
-    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50;portable-net451+win8</PackageTargetFallback>
     <Copyright>Experian 2017</Copyright>
     <ApplicationIcon>Experian.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -13,16 +11,19 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.2" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="4.3.1" />
     <PackageReference Include="system.runtime.serialization.xml" Version="4.3.0" />
     <PackageReference Include="system.xml.xmlserializer" Version="4.3.*" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
   </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'Net461'">
+    <PackageReference Include="System.Net.Http" Version="4.3.1" />
+  </ItemGroup>
   <ItemGroup>
     <None Update="app.config.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
 </Project>
