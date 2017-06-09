@@ -29,7 +29,7 @@ Choose your preferred runtime from either of below:
   * [Get Started](https://www.microsoft.com/net/core#windowscmd)
   * [.Net Core SDK free download list](https://www.microsoft.com/net/download/core)
 
-By default the code is targetting .Net Core but you can change the build target to work on top of the .Net Framework.
+By default both .Net Core and .Net Framework binaries are generated under ```bin\debug\461``` and ```bin\debug\.netcoreapp1.1``` folders respectively. The build is set to debug for convenience but can be flipped to release if desired.
 
 #### Supported platforms
 
