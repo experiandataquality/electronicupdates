@@ -1,0 +1,8 @@
+﻿{
+  "appSettings": {
+    "token": "",
+    "downloadRootPath": "EDQData",
+    "validateDownloads": "true",
+    "serviceUri": "https://ws.updates.qas.com/metadata/V2/"
+  }
+}

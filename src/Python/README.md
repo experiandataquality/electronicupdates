@@ -1,5 +1,12 @@
 # Python Sample Integration Code
 
+## Build Status
+
+| **Build Status**| **Linux/OS X** | **Windows** |
+|:-:|:-:|:-:|
+| **Python** |  ![Build Status](https://edq-repo.visualstudio.com/_apis/public/build/definitions/034cfbed-e5ea-4de5-898a-85fbf66debfb/550/badge) | ![Build Status](https://edq-repo.visualstudio.com/_apis/public/build/definitions/034cfbed-e5ea-4de5-898a-85fbf66debfb/548/badge) |
+
+
 ## Overview
 
 The following projects are available in Python:

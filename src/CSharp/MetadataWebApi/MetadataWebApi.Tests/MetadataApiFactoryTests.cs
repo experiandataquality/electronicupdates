@@ -5,22 +5,39 @@
 //-----------------------------------------------------------------------
 
 using System;
-using System.Configuration;
-using Moq;
 using Xunit;
+using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 
 namespace Experian.Qas.Updates.Metadata.WebApi.V2
 {
-    public static class MetadataApiFactoryTests
+    public class MetadataApiFactoryTests
     {
-        [Fact]
-        public static void MetadataApiFactory_CreateMetadataApi_Creates_Instance()
+        private IDictionary<string,string> inMemoryConfig = new Dictionary<string,string>
         {
-            // Arrange
-            Mock<MetadataApiFactory> mock = new Mock<MetadataApiFactory>();
+            {"appSettings:token", "AuthToken"},
+            {"appSettings:downloadRootPath", ""},
+            {"appSettings:validateDownloads", ""},
+            {"appSettings:serviceUri", "https://ws.updates.qas.com/metadata/V2/"}
+        };
 
-            mock.CallBase = true;
-            mock.Setup((p) => p.GetConfigSetting("Token")).Returns("AuthToken");
+        private IDictionary<string,string> inMemoryConfigEmpty = new Dictionary<string,string>
+        {
+            {"appSettings:token", ""},
+            {"appSettings:downloadRootPath", ""},
+            {"appSettings:validateDownloads", ""},
+            {"appSettings:serviceUri", ""}
+        };
+
+        [Fact]
+        public void MetadataApiFactory_CreateMetadataApi_Creates_Instance()
+        {
+            var configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(inMemoryConfig)
+                .Build();
+
+            // Arrange
+            MetadataApiFactory target = new MetadataApiFactory(configuration);
 
             Uri expectedUri;
 
@@ -33,8 +50,6 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
                 expectedUri = new Uri("https://ws.updates.qas.com/metadata/V2/");
             }
 
-            MetadataApiFactory target = mock.Object;
-
             // Act
             IMetadataApi result = target.CreateMetadataApi();
 
@@ -46,38 +61,15 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
         }
 
         [Fact]
-        public static void MetadataApiFactory_CreateMetadataApi_Creates_Instance_If_Service_Uri_Configured()
+        public void MetadataApiFactory_CreateMetadataApi_Creates_Instance_If_Service_Uri_Configured()
         {
             // Arrange
-            Mock<MetadataApiFactory> mock = new Mock<MetadataApiFactory>();
+            var configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(inMemoryConfig)
+                .Build();
 
-            mock.CallBase = true;
-            mock.Setup((p) => p.GetConfigSetting("ServiceUri")).Returns("https://localhost/metadata/V2/");
-            mock.Setup((p) => p.GetConfigSetting("Token")).Returns("AuthToken");
-
-            MetadataApiFactory target = mock.Object;
-
-            // Act
-            IMetadataApi result = target.CreateMetadataApi();
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.IsType(typeof(MetadataApi), result);
-            Assert.Equal(new Uri("https://localhost/metadata/V2/"), result.ServiceUri);
-            Assert.Equal("AuthToken", result.Token);
-        }
-
-        [Fact]
-        public static void MetadataApiFactory_CreateMetadataApi_Creates_Instance_If_Invalid_Service_Uri_Configured()
-        {
             // Arrange
-            Mock<MetadataApiFactory> mock = new Mock<MetadataApiFactory>();
-
-            mock.CallBase = true;
-            mock.Setup((p) => p.GetConfigSetting("ServiceUri")).Returns("NotAUri");
-            mock.Setup((p) => p.GetConfigSetting("Token")).Returns("AuthToken");
-
-            MetadataApiFactory target = mock.Object;
+            MetadataApiFactory target = new MetadataApiFactory(configuration);
 
             // Act
             IMetadataApi result = target.CreateMetadataApi();
@@ -90,39 +82,54 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
         }
 
         [Fact]
-        public static void MetadataApiFactory_CreateMetadataApi_Throws_If_No_Token_Configured()
+        public void MetadataApiFactory_CreateMetadataApi_Creates_Instance_If_Invalid_Service_Uri_Configured()
         {
             // Arrange
-            Mock<MetadataApiFactory> mock = new Mock<MetadataApiFactory>();
+            var configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(inMemoryConfig)
+                .Build();
 
-            mock.CallBase = true;
-            mock.Setup((p) => p.GetConfigSetting("Token")).Returns(string.Empty);
+            // Arrange
+            MetadataApiFactory target = new MetadataApiFactory(configuration);
 
-            MetadataApiFactory target = mock.Object;
+            // Act
+            IMetadataApi result = target.CreateMetadataApi();
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType(typeof(MetadataApi), result);
+            Assert.Equal(new Uri("https://ws.updates.qas.com/metadata/V2/"), result.ServiceUri);
+            Assert.Equal("AuthToken", result.Token);
+        }
+
+        [Fact]
+        public void MetadataApiFactory_CreateMetadataApi_Throws_If_No_Token_Configured()
+        {
+            // Arrange
+            var configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(inMemoryConfigEmpty)
+                .Build();
+
+            var target = new MetadataApiFactory(configuration);
 
             // Act and Assert
-            Assert.Throws<ConfigurationErrorsException>(() => target.CreateMetadataApi());
+            Assert.Throws<InvalidOperationException>(() => target.CreateMetadataApi());
         }
 
         [Fact]
         public static void MetadataApiFactory_GetAppSetting_Reads_Settings_Correctly_From_Environment_Variable()
         {
             // Arrange
+            var configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string> { { "appSettings:token", "AuthToken" } })
+                .Build();
+
+            MetadataApiFactory target = new MetadataApiFactory(configuration);
+
             Environment.SetEnvironmentVariable("EDQ_ElectronicUpdates_foo", "bar");
 
             // Act and Assert
-            Assert.Equal("bar", MetadataApiFactory.GetAppSetting("foo"));
-        }
-
-        [Theory]
-        [InlineData(null, "")]
-        [InlineData("", "")]
-        [InlineData("Foobar", "")]
-        [InlineData("MySetting", "MyValue")]
-        public static void MetadataApiFactory_GetAppSetting_Reads_Setting_Value_Correctly(string name, string value)
-        {
-            // Act and Assert
-            Assert.Equal(value, MetadataApiFactory.GetAppSetting(name));
+            Assert.Equal("bar", target.GetConfigSetting("foo"));
         }
     }
 }

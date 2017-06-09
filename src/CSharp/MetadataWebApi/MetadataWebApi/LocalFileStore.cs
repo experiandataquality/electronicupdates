@@ -45,7 +45,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
         /// Initializes a new instance of the <see cref="LocalFileStore" /> class.
         /// </summary>
         /// <param name="dataFileName">The name of the data file storing information about the downloaded files.</param>
-        internal LocalFileStore(string dataFileName)
+        public LocalFileStore(string dataFileName)
         {
             _dataFileName = dataFileName;
 

@@ -12,7 +12,9 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
     /// <summary>
     /// Represents error data when an error is returned by the Experian Data Quality Electronic Updates Metadata API.
     /// </summary>
+    #if NetStandard2_0
     [Serializable]
+    #endif
     public class MetadataApiException : Exception
     {
         /// <summary>
@@ -47,6 +49,7 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
         {
         }
 
+#if NetStandard2_0
         /// <summary>
         /// Initializes a new instance of the <see cref="MetadataApiException"/> class.
         /// </summary>
@@ -59,5 +62,6 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
             : base(info, context)
         {
         }
+#endif
     }
 }

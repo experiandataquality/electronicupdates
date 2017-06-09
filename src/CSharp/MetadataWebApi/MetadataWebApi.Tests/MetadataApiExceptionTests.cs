@@ -5,8 +5,6 @@
 //-----------------------------------------------------------------------
 
 using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using Xunit;
 
 namespace Experian.Qas.Updates.Metadata.WebApi.V2
@@ -36,34 +34,6 @@ namespace Experian.Qas.Updates.Metadata.WebApi.V2
             // Assert
             Assert.Null(target.InnerException);
             Assert.Equal(message, target.Message);
-        }
-
-        [Fact]
-        public static void MetadataApiException_Constructor_For_Serialization_Can_Be_Serialized()
-        {
-            // Arrange
-            InvalidOperationException innerException = new InvalidOperationException();
-            string message = Guid.NewGuid().ToString();
-
-            // Act
-            MetadataApiException target = new MetadataApiException(message, innerException);
-
-            BinaryFormatter formatter = new BinaryFormatter();
-
-            MetadataApiException deserialized;
-
-            using (MemoryStream stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, target);
-                stream.Seek(0L, SeekOrigin.Begin);
-                deserialized = formatter.Deserialize(stream) as MetadataApiException;
-            }
-
-            // Assert
-            Assert.NotNull(deserialized);
-            Assert.NotNull(deserialized.InnerException);
-            Assert.IsType(innerException.GetType(), deserialized.InnerException);
-            Assert.Equal(deserialized.Message, target.Message);
         }
     }
 }
