@@ -38,6 +38,6 @@ $env:EDQ_ElectronicUpdates_Token="MyToken"
 
 ## Compatibility
 
-This script was tested with the following Python versions and platforms:
+This script was tested with the following Powershell versions and platforms:
 
  * Powershell 5.0 on Windows 10 Enterprise (Build 1607);
